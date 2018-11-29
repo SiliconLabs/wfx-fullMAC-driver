@@ -1,4 +1,4 @@
-#WF200 FMAC driver
+# WF200 FMAC driver
 
 The Silicon Labs WF200 is an **Ultra Low Power Wi-Fi® transceiver** or network co-processor (NCP) targeted for applications where optimal RF performance, low-power consumption, and secure end-to-end solution, together with fast time to market, are key requirements.
 The WF200 integrates the Balun, T/R switch, LNA and PA for best possible RF performance. WF200 has been optimized for resource and power constrained devices at the RF, protocol
@@ -7,4 +7,6 @@ Number Generator and OTP memory for confidential encryption key storage. The WF2
 with the external host controller over the SPI or SDIO interface.
 
 WF200 can act as a full-MAC wireless device and WPA2 personal supplicant. The firmware exposes a full-MAC API at the IP packet level.
-It also manages WPA2 personal  authentication process as well as automatic roaming. This FMAC driver enables a user to use WF200 in this configuration. 
+It also manages WPA2 personal  authentication process as well as automatic roaming. This FMAC driver enables a user to use WF200 in this configuration.
+
+The doxygen documentation of the driver is available through the FMAC_driver_doxygen shorcut.
