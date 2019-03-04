@@ -9,4 +9,4 @@ with the external host controller over the SPI or SDIO interface.
 WF200 can act as a full-MAC wireless device and WPA2 personal supplicant. The firmware exposes a full-MAC API at the IP packet level.
 It also manages WPA2 personal  authentication process as well as automatic roaming. This FMAC driver enables a user to use WF200 in this configuration.
 
-The doxygen documentation of the driver is available through the **FMAC_driver_doxygen** shorcut.
+The doxygen documentation of the driver is available at [docs.silabs.com](https://docs.silabs.com/wifi/wf200/rtos/0.1/index).
