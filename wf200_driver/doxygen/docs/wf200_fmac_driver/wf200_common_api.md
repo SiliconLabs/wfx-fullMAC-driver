@@ -14,7 +14,7 @@ For each available command, there is an associated confirmation with the same ID
 
 ## Common API indications
 
-| Indications      | Value | Associated struture    | Description        |
+| Indications      | Value | Associated structure   | Description        |
 | ---------------- | ----- | ---------------------- | ------------------ |
 | HI_EXCEPTION_IND | 0xe0  | ::HiExceptionIndBody_t | Exception          |
 | HI_ERROR_IND     | 0xe4  | ::HiErrorIndBody_t     | Error              |

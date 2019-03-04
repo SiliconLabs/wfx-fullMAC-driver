@@ -67,12 +67,12 @@ In SDIO, these registers are defined for command 53 (::wf200_host_sdio_transfer_
 |---------|-------------|-------------|--------------|
 | CONTROL | 16          | 0x01        | 0x4          |
 
-| Bit   | Reset | Read/Write | description                                         |
-|-------|-------|------------|-----------------------------------------------------|
-| 15:14 | 0x0   | R          | Frame type information                              |
-| 13    | 0x0   | R          | Wlan_rdy (1= wlan is ready, 0 = wlan not ready)     |
-| 12    | 0x0   | R/W        | Wlan_wup (1= init wake up , 0 = do not init wakeup) |
-| 11:0  | 0x0   | R          | Next output Queue item length                       |
+| Bit   | Reset | Read/Write | description                                                                                                                  |
+|-------|-------|------------|------------------------------------------------------------------------------------------------------------------------------|
+| 15:14 | 0x0   | R          | Frame type information : 11 = Wi-Fi data packet 10 = Wi-Fi management packet 01 = any other indication 00 = any confirmation |
+| 13    | 0x0   | R          | Wlan_rdy (1= wlan is ready, 0 = wlan not ready)                                                                              |
+| 12    | 0x0   | R/W        | Wlan_wup (1= init wake up , 0 = do not init wakeup)                                                                          |
+| 11:0  | 0x0   | R          | Next output Queue item length                                                                                                |
 
 # 4. Card Common Control Register (SDIO specific)
 \anchor CCCR_register

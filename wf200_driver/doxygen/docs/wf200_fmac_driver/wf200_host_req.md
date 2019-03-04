@@ -72,7 +72,7 @@ The host must maintain the number of commands/frames not yet acknowledged by a c
 ```c
 sl_status_t wf200_host_transmit_frame( wf200_buffer_t* frame );
 ```
-You can refer to the start up indication structure to retrieve the number of available input buffers (NumInpChBufs in ::HiStartupIndBody_t ).
+You can refer to the startup indication structure to retrieve the number of available input buffers (NumInpChBufs in ::HiStartupIndBody_t ).
 
 ## WF200 receive frame loop
 
