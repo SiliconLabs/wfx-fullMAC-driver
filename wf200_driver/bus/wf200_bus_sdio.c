@@ -25,6 +25,7 @@
 #include "firmware/wf200_registers.h"
 #include "wf200_configuration.h"
 #include <stddef.h>
+#include <string.h>
 
 #ifndef WF200_SDIO_BLOCK_MODE_THRESHOLD
 #define WF200_SDIO_BLOCK_MODE_THRESHOLD     0x200

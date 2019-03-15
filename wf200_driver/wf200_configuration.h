@@ -23,8 +23,12 @@
 #ifndef __WF200_CONFIGURATION_H
 #define __WF200_CONFIGURATION_H
 
-#ifndef ROUND_UP_VALUE
-#define ROUND_UP_VALUE 0 //Used in SDIO Block mode to round up the memory allocation to the block size used. In most case, ROUND_UP_VALUE = WF200_SDIO_BLOCK_SIZE;
+#include "wf200_host_sdio.h"
+
+#ifdef WF200_SDIO_BLOCK_SIZE //Used in SDIO Block mode to round up the memory allocation to the block size used. In most case, ROUND_UP_VALUE = WF200_SDIO_BLOCK_SIZE;
+#define ROUND_UP_VALUE                WF200_SDIO_BLOCK_SIZE  
+#else
+#define ROUND_UP_VALUE                1 
 #endif
 
 #define WF200_DEFAULT_REQUEST_TIMEOUT 5000  // Timeout period in milliseconds
