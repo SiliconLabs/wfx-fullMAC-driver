@@ -17,7 +17,7 @@ Each command for this operational mode is formatted as described below.
 For each command, there can be data in or data out, and data can be any multiple of 16 bit blocks.
 
 ## SDIO
-In SDIO, these registers are defined for command 53 (::wf200_host_sdio_transfer_cmd53). The addresses below are used as the first 6 bits of SDIO command address field. 
+In SDIO, these registers are defined for command 53. The addresses below are used as the first 6 bits of SDIO command address field. 
 
 # 1. Address Map
 

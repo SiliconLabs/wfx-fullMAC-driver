@@ -729,7 +729,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_set_mac_address_cnf_body_s {
    * @brief status of the set request.
    * @details <B>WFM_STATUS_SUCCESS</B>: the set request was completed successfully.
    *          <BR><B>any other value</B>: the set request failed.
-   *          <BR>See wfm_status for enumeration values.
+   *          <BR>See sl_wfx_fmac_status_t for enumeration values.
    */
   uint32_t status;
 } sl_wfx_set_mac_address_cnf_body_t;
@@ -847,7 +847,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_connect_cnf_body_s {
    * @brief status of the connection request.
    * @details <B>WFM_STATUS_SUCCESS</B>: the connection request was accepted. It will be completed by sl_wfx_connect_ind_t.
    *          <BR><B>any other value</B>: the connection request failed.
-   *          <BR>See wfm_status for enumeration values.
+   *          <BR>See sl_wfx_fmac_status_t for enumeration values.
    */
   uint32_t status;
 } sl_wfx_connect_cnf_body_t;
@@ -871,7 +871,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_connect_ind_body_s {
    * @brief status of the connection request.
    * @details <B>WFM_STATUS_SUCCESS</B>: the connection request was completed successfully.
    *          <BR><B>any other value</B>: the connection request failed.
-   *          <BR>See wfm_status for enumeration values.
+   *          <BR>See sl_wfx_fmac_status_t for enumeration values.
    */
   uint32_t status;
   /**
@@ -935,7 +935,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_disconnect_cnf_body_s {
    * @brief status of the disconnection request.
    * @details <B>WFM_STATUS_SUCCESS</B>: the disconnection request was accepted. It will be completed by sl_wfx_disconnect_ind_t.
    *          <BR><B>any other value</B>: the disconnection request failed.
-   *          <BR>See wfm_status for enumeration values.
+   *          <BR>See sl_wfx_fmac_status_t for enumeration values.
    */
   uint32_t status;
 } sl_wfx_disconnect_cnf_body_t;
@@ -1003,7 +1003,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_get_signal_strength_cnf_body_s
    * @brief status of the get request.
    * @details <B>WFM_STATUS_SUCCESS</B>: the get request was completed.
    *          <BR><B>any other value</B>: the get request failed.
-   *          <BR>See wfm_status for enumeration values.
+   *          <BR>See sl_wfx_fmac_status_t for enumeration values.
    */
   uint32_t status;
   /**
@@ -1078,7 +1078,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_set_pm_mode_cnf_body_s {
    * @brief status of the power management request.
    * @details <B>WFM_STATUS_SUCCESS</B>: the power management request was completed.
    *          <BR><B>any other value</B>: the power management request failed.
-   *          <BR>See wfm_status for enumeration values.
+   *          <BR>See sl_wfx_fmac_status_t for enumeration values.
    */
   uint32_t status;
 } sl_wfx_set_pm_mode_cnf_body_t;
@@ -1203,7 +1203,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_start_ap_cnf_body_s {
    * @brief status of the start request.
    * @details <B>WFM_STATUS_SUCCESS</B>: the start request was accepted. It will be completed by sl_wfx_start_ap_ind_t.
    *          <BR><B>any other value</B>: the start request failed.
-   *          <BR>See wfm_status for enumeration values.
+   *          <BR>See sl_wfx_fmac_status_t for enumeration values.
    */
   uint32_t status;
 } sl_wfx_start_ap_cnf_body_t;
@@ -1227,7 +1227,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_start_ap_ind_body_s {
    * @brief status of the start request.
    * @details <B>WFM_STATUS_SUCCESS</B>: the start request was completed successfully.
    *          <BR><B>any other value</B>: the start request failed.
-   *          <BR>See wfm_status for enumeration values.
+   *          <BR>See sl_wfx_fmac_status_t for enumeration values.
    */
   uint32_t status;
 } sl_wfx_start_ap_ind_body_t;
@@ -1298,7 +1298,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_update_ap_cnf_body_s {
    * @brief status of the update request.
    * @details <B>WFM_STATUS_SUCCESS</B>: the update request was completed.
    *          <BR><B>any other value</B>: the update request failed.
-   *          <BR>See wfm_status for enumeration values.
+   *          <BR>See sl_wfx_fmac_status_t for enumeration values.
    */
   uint32_t status;
 } sl_wfx_update_ap_cnf_body_t;
@@ -1336,7 +1336,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_stop_ap_cnf_body_s {
    * @brief status of the stop request.
    * @details <B>WFM_STATUS_SUCCESS</B>: the stop request was accepted. It will be completed by sl_wfx_stop_ap_ind_t.
    *          <BR><B>any other value</B>: the stop request failed.
-   *          <BR>See wfm_status for enumeration values.
+   *          <BR>See sl_wfx_fmac_status_t for enumeration values.
    */
   uint32_t status;
 } sl_wfx_stop_ap_cnf_body_t;
@@ -1453,7 +1453,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_disconnect_ap_client_cnf_body_
    * @brief status of the disconnect request.
    * @details <B>WFM_STATUS_SUCCESS</B>: the disconnect request was completed.
    *          <BR><B>any other value</B>: the disconnect request failed.
-   *          <BR>See wfm_status for enumeration values.
+   *          <BR>See sl_wfx_fmac_status_t for enumeration values.
    */
   uint32_t status;
 } sl_wfx_disconnect_ap_client_cnf_body_t;
@@ -1559,7 +1559,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_send_frame_cnf_body_s {
    * @brief status of the send request.
    * @details <B>WFM_STATUS_SUCCESS</B>: the send request was completed.
    *          <BR><B>any other value</B>: the send request failed.
-   *          <BR>See wfm_status for enumeration values.
+   *          <BR>See sl_wfx_fmac_status_t for enumeration values.
    */
   uint32_t status;
   /**
@@ -1702,7 +1702,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_start_scan_cnf_body_s {
    * @brief status of the scan request.
    * @details <B>WFM_STATUS_SUCCESS</B>: the scan request was accepted. It will be completed by sl_wfx_scan_complete_ind_t.
    *          <BR><B>any other value</B>: the scan request failed.
-   *          <BR>See wfm_status for enumeration values.
+   *          <BR>See sl_wfx_fmac_status_t for enumeration values.
    */
   uint32_t status;
 } sl_wfx_start_scan_cnf_body_t;
@@ -1742,7 +1742,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_stop_scan_cnf_body_s {
    * @brief status of the stop request.
    * @details <B>WFM_STATUS_SUCCESS</B>: the stop request was accepted. It will be completed by sl_wfx_scan_result_ind_t.
    *          <BR><B>any other value</B>: the stop request failed.
-   *          <BR>See wfm_status for enumeration values.
+   *          <BR>See sl_wfx_fmac_status_t for enumeration values.
    */
   uint32_t status;
 } sl_wfx_stop_scan_cnf_body_t;
@@ -1825,7 +1825,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_scan_complete_ind_body_s {
    * @brief status of the scan request.
    * @details <B>WFM_STATUS_SUCCESS</B>: the scan request was completed.
    *          <BR><B>any other value</B>: the scan request failed.
-   *          <BR>See wfm_status for enumeration values.
+   *          <BR>See sl_wfx_fmac_status_t for enumeration values.
    */
   uint32_t status;
 } sl_wfx_scan_complete_ind_body_t;
@@ -1907,7 +1907,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_join_ibss_cnf_body_s {
    * @brief status of the join request.
    * @details <B>WFM_STATUS_SUCCESS</B>: the join request was accepted. It will be completed by sl_wfx_join_ibss_ind_t.
    *          <BR><B>any other value</B>: the join request failed.
-   *          <BR>See wfm_status for enumeration values.
+   *          <BR>See sl_wfx_fmac_status_t for enumeration values.
    */
   uint32_t status;
 } sl_wfx_join_ibss_cnf_body_t;
@@ -1931,7 +1931,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_join_ibss_ind_body_s {
    * @brief status of the join request.
    * @details <B>WFM_STATUS_SUCCESS</B>: the join request was completed successfully.
    *          <BR><B>any other value</B>: the join request failed.
-   *          <BR>See wfm_status for enumeration values.
+   *          <BR>See sl_wfx_fmac_status_t for enumeration values.
    */
   uint32_t status;
   /**
@@ -1980,7 +1980,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_leave_ibss_cnf_body_s {
    * @brief status of the disconnect request.
    * @details <B>WFM_STATUS_SUCCESS</B>: the disconnect request was accepted. It will be completed by sl_wfx_leave_ibss_ind_t.
    *          <BR><B>any other value</B>: the disconnect request failed.
-   *          <BR>See wfm_status for enumeration values.
+   *          <BR>See sl_wfx_fmac_status_t for enumeration values.
    */
   uint32_t status;
 } sl_wfx_leave_ibss_cnf_body_t;
@@ -2054,7 +2054,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_add_multicast_addr_cnf_body_s 
    * @brief status of the add request.
    * @details <B>WFM_STATUS_SUCCESS</B>: the add request was completed successfully.
    *          <BR><B>any other value</B>: the add request failed.
-   *          <BR>See wfm_status for enumeration values.
+   *          <BR>See sl_wfx_fmac_status_t for enumeration values.
    */
   uint32_t status;
 } sl_wfx_add_multicast_addr_cnf_body_t;
@@ -2112,7 +2112,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_remove_multicast_addr_cnf_body
    * @brief status of the remove request.
    * @details <B>WFM_STATUS_SUCCESS</B>: the remove request was completed successfully.
    *          <BR><B>any other value</B>: the remove request failed.
-   *          <BR>See wfm_status for enumeration values.
+   *          <BR>See sl_wfx_fmac_status_t for enumeration values.
    */
   uint32_t status;
 } sl_wfx_remove_multicast_addr_cnf_body_t;
@@ -2174,7 +2174,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_set_max_ap_client_count_cnf_bo
    * @brief status of the set request.
    * @details <B>WFM_STATUS_SUCCESS</B>: the set request was completed successfully.
    *          <BR><B>any other value</B>: the set request failed.
-   *          <BR>See wfm_status for enumeration values.
+   *          <BR>See sl_wfx_fmac_status_t for enumeration values.
    */
   uint32_t status;
 } sl_wfx_set_max_ap_client_count_cnf_body_t;
@@ -2235,7 +2235,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_set_max_ap_client_inactivity_c
    * @brief status of the set request.
    * @details <B>WFM_STATUS_SUCCESS</B>: the set request was completed successfully.
    *          <BR><B>any other value</B>: the set request failed.
-   *          <BR>See wfm_status for enumeration values.
+   *          <BR>See sl_wfx_fmac_status_t for enumeration values.
    */
   uint32_t status;
 } sl_wfx_set_max_ap_client_inactivity_cnf_body_t;
@@ -2332,7 +2332,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_set_roam_parameters_cnf_body_s
    * @brief status of the set request.
    * @details <B>WFM_STATUS_SUCCESS</B>: the set request was completed successfully.
    *          <BR><B>any other value</B>: the set request failed.
-   *          <BR>See wfm_status for enumeration values.
+   *          <BR>See sl_wfx_fmac_status_t for enumeration values.
    */
   uint32_t status;
 } sl_wfx_set_roam_parameters_cnf_body_t;
@@ -2399,7 +2399,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_set_tx_rate_parameters_cnf_bod
    * @brief status of the set request.
    * @details <B>WFM_STATUS_SUCCESS</B>: the set request was completed successfully.
    *          <BR><B>any other value</B>: the set request failed.
-   *          <BR>See wfm_status for enumeration values.
+   *          <BR>See sl_wfx_fmac_status_t for enumeration values.
    */
   uint32_t status;
 } sl_wfx_set_tx_rate_parameters_cnf_body_t;
@@ -2462,7 +2462,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_set_arp_ip_address_cnf_body_s 
    * @brief status of the set request.
    * @details <B>WFM_STATUS_SUCCESS</B>: the set request was completed successfully.
    *          <BR><B>any other value</B>: the set request failed.
-   *          <BR>See wfm_status for enumeration values.
+   *          <BR>See sl_wfx_fmac_status_t for enumeration values.
    */
   uint32_t status;
 } sl_wfx_set_arp_ip_address_cnf_body_t;
@@ -2523,7 +2523,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_set_ns_ip_address_cnf_body_s {
    * @brief status of the set request.
    * @details <B>WFM_STATUS_SUCCESS</B>: the set request was completed successfully.
    *          <BR><B>any other value</B>: the set request failed.
-   *          <BR>See wfm_status for enumeration values.
+   *          <BR>See sl_wfx_fmac_status_t for enumeration values.
    */
   uint32_t status;
 } sl_wfx_set_ns_ip_address_cnf_body_t;
@@ -2588,7 +2588,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_set_broadcast_filter_cnf_body_
    * @brief status of the set request.
    * @details <B>WFM_STATUS_SUCCESS</B>: the set request was completed successfully.
    *          <BR><B>any other value</B>: the set request failed.
-   *          <BR>See wfm_status for enumeration values.
+   *          <BR>See sl_wfx_fmac_status_t for enumeration values.
    */
   uint32_t status;
 } sl_wfx_set_broadcast_filter_cnf_body_t;
@@ -2660,7 +2660,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_set_scan_parameters_cnf_body_s
    * @brief status of the set request.
    * @details <B>WFM_STATUS_SUCCESS</B>: the set request was completed successfully.
    *          <BR><B>any other value</B>: the set request failed.
-   *          <BR>See wfm_status for enumeration values.
+   *          <BR>See sl_wfx_fmac_status_t for enumeration values.
    */
   uint32_t status;
 } sl_wfx_set_scan_parameters_cnf_body_t;
@@ -2723,7 +2723,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_set_unicast_filter_cnf_body_s 
    * @brief status of the set request.
    * @details <B>WFM_STATUS_SUCCESS</B>: the set request was completed successfully.
    *          <BR><B>any other value</B>: the set request failed.
-   *          <BR>See ::wfm_status for enumeration values.
+   *          <BR>See ::sl_wfx_fmac_status_t for enumeration values.
    */
   uint32_t status;
 } sl_wfx_set_unicast_filter_cnf_body_t;
@@ -2784,7 +2784,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_add_whitelist_addr_cnf_body_s 
    * @brief status of the add request.
    * @details <B>WFM_STATUS_SUCCESS</B>: the add request was completed successfully.
    *          <BR><B>any other value</B>: the add request failed.
-   *          <BR>See ::wfm_status for enumeration values.
+   *          <BR>See ::sl_wfx_fmac_status_t for enumeration values.
    */
   uint32_t status;
 } sl_wfx_add_whitelist_addr_cnf_body_t;
@@ -2845,7 +2845,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_add_blacklist_addr_cnf_body_s 
    * @brief status of the add request.
    * @details <B>WFM_STATUS_SUCCESS</B>: the add request was completed successfully.
    *          <BR><B>any other value</B>: the add request failed.
-   *          <BR>See ::wfm_status for enumeration values.
+   *          <BR>See ::sl_wfx_fmac_status_t for enumeration values.
    */
   uint32_t status;
 } sl_wfx_add_blacklist_addr_cnf_body_t;
@@ -2909,7 +2909,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_set_max_tx_power_cnf_body_s {
    * @brief status of the add request.
    * @details <B>WFM_STATUS_SUCCESS</B>: the add request was completed successfully.
    *          <BR><B>any other value</B>: the add request failed.
-   *          <BR>See ::wfm_status for enumeration values.
+   *          <BR>See ::sl_wfx_fmac_status_t for enumeration values.
    */
   uint32_t status;
 } sl_wfx_set_max_tx_power_cnf_body_t;
@@ -2953,7 +2953,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_get_max_tx_power_cnf_body_s {
    * @brief status of the add request.
    * @details <B>WFM_STATUS_SUCCESS</B>: the add request was completed successfully.
    *          <BR><B>any other value</B>: the add request failed.
-   *          <BR>See ::wfm_status for enumeration values.
+   *          <BR>See ::sl_wfx_fmac_status_t for enumeration values.
    */
   uint32_t status;
   /**
@@ -3008,7 +3008,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_get_pmk_cnf_body_s {
    * @brief status of the add request.
    * @details <B>WFM_STATUS_SUCCESS</B>: the get request was completed successfully.
    *          <BR><B>any other value</B>: the get request failed.
-   *          <BR>See ::wfm_status for enumeration values.
+   *          <BR>See ::sl_wfx_fmac_status_t for enumeration values.
    */
   uint32_t status;
   /**

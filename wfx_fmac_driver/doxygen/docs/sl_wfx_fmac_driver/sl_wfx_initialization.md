@@ -2,7 +2,7 @@ Initialization and configuration {#sl_wfx_initialization}
 ============
 
 It is recommended to reset WF200 before running the initialization phase described below.
-Initialization and configuration is performed by ::wf200_init. WF200 initialization phase is as follows:
+Initialization and configuration is performed by ::sl_wfx_init. WF200 initialization phase is as follows:
 * Bus configuration (SPI or SDIO)
 * WF200 initialization
 * Firmware download
@@ -10,7 +10,7 @@ Initialization and configuration is performed by ::wf200_init. WF200 initializat
 * PDS configuration
 
 ## 1. Bus configuration
-The bus configuration is handled by ::wf200_init_bus. It has a specific implementation depending on the bus used.
+The bus configuration is handled by sl_wfx_host_init_bus function implemented by the host. It has a specific implementation depending on the bus used.
 
 ###SPI bus
 
@@ -33,7 +33,7 @@ During the SPI initialization, the host follows the steps below:
 * Set the block size used by the host in the \ref FBR_register "FBR register".
 
 ## 2. WF200 initialization
-The WF200 initialization is handled by ::wf200_init_chip. During this phase, the host interacts with WF200 registers described in \ref wf200_registers.
+The WF200 initialization is handled by ::sl_wfx_init_chip. During this phase, the host interacts with WF200 registers described in \ref sl_wfx_registers.
 * The first step performed is to set the correct values in the General purpose registers. Those values are linked to the crystal used by the hardware.
 * Set the wake-up bit (bit 12) in the \ref control_register "control register".
 * Wait for the wlan_rdy bit (bit 13) to be set in the \ref control_register "control register".
@@ -41,11 +41,11 @@ The WF200 initialization is handled by ::wf200_init_chip. During this phase, the
 
 ## 3. Firmware download 
 
-First, the WF200 clock is enabled in ::wf200_download_run_bootloader and an optional test to verify the SRAM access is performed.
+First, the WF200 clock is enabled in ::sl_wfx_download_run_bootloader and an optional test to verify the SRAM access is performed.
 
-The firmware download is handled by ::wf200_download_run_firmware.
-A firmware binary needs to be loaded to the chip at power-up. The binary is signed and encrypted. This binary file is stored in a c table in wfm_wf200_XX.h (XX depending on the keyset used by WF200).
-Below is a diagram listing the steps followed by ::wf200_download_run_firmware to load the firmware.
+The firmware download is handled by ::sl_wfx_download_run_firmware.
+A firmware binary needs to be loaded to the chip at power-up. The binary is signed and encrypted. This binary file is stored in a c table in wfm_wf200_XX.h (XX depending on the keyset used by the WF200).
+Below is a diagram listing the steps followed by ::sl_wfx_download_run_firmware to load the firmware.
 \msc 
   hscale = "1"; 
 
@@ -68,7 +68,7 @@ After the host notifies the "OK_TO_JUMP" state, the WF200 will issue a startup i
 ## 4. Startup indication
 If the initialization process has been successful up to now the host should receive the startup indication from WF200. 
 
-The start up indication is described in the ::HiStartupIndBody_t structure.
+The start up indication is described in the ::sl_wfx_startup_ind_body_t structure.
 
 ## 5. PDS configuration
 Once the startup indication received, the host can send to WF200 the **PDS configuration** (Platform Data Set). The PDS contains information regarding the WF200 environment. Below are some examples:
@@ -78,7 +78,7 @@ Once the startup indication received, the host can send to WF200 the **PDS confi
 * RF output configuration
 * ...
 
-The PDS is sent using a dedicated function ::wf200_send_configuration.
+The PDS is sent using a dedicated function ::sl_wfx_send_configuration.
 The PDS presents itself in the FMAC driver as several string tables found in wf200_pds.c. Those tables are the results of the compression of a more complete and readable file. 
-You can find more information on the PDS in a dedicated page \ref wf200_pds.
+You can find more information on the PDS in a dedicated page \ref sl_wfx_pds.
 

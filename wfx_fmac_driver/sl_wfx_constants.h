@@ -253,7 +253,7 @@ typedef enum {
  */
 typedef enum {
   SL_WFX_STA_INTERFACE    = 0x00,   /*!< Interface 0, linked to the station */
-  SL_WFX_SOFTAP_INTERFACE = 0x20,   /*!< Interface 1, linked to the softap */
+  SL_WFX_SOFTAP_INTERFACE = 0x02,   /*!< Interface 1, linked to the softap */
 } sl_wfx_interface_t;
 
 /**

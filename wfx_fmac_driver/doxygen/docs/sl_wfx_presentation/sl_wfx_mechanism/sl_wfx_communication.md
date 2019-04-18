@@ -11,7 +11,7 @@ A message sent by the host is a **request** and is always answered back with a *
 
 ## WF200 to HOST
 On top of sending back confirmations, WF200 is sending **indication** messages (e.g. packet reveiced, connection established...). The host is notified through an interrupt that information is available. 
-Depending on the \ref config_register "configuration register" setting, the interrupt is issued on the standard GPIO (GPIO 29 \ref wf200_hardware) or on WIRQ pin (pin 24). 
+Depending on the \ref config_register "configuration register" setting, the interrupt is issued on the standard GPIO (GPIO 29 \ref sl_wfx_hardware) or on WIRQ pin (pin 24). 
 
 ## Message header format
 Message header is a 32bit word starting every messages sent or received by WF200. Below is a diagram to present the header content.
@@ -26,4 +26,4 @@ Message header is a 32bit word starting every messages sent or received by WF200
 		* Reserved (3 bits)
 		* SecLink (2 bits): Always 00 for non-encrypted messages. In secure link mode, the standard header is replaced by a specific one.
 		
-The structure used to describe the message header can be found in the firmware header file in ::HiMsgHdr_t.
+The structure used to describe the message header can be found in the firmware header file in ::sl_wfx_header_t.

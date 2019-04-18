@@ -1,6 +1,13 @@
 Changelog {#changelog}
 ============
 
+(release date 2019-04-18)
+# Release 2.0.1
+* Fix an issue with the soft ap interface
+* Limit the input buffers to avoid running into issues when transmitting data and send regular FMAC commands
+* Update the Doxygen documentation
+* Aligned on firmware 2.2.1
+
 # Release 2.0.0
 (release date 2019-04-12)
 * File name prefixes changed from wf200_ to sl_wfx_

@@ -51,7 +51,7 @@ static uint16_t  sl_wfx_input_buffer_number;
 *               Static Function Declarations
 ******************************************************/
 
-static sl_status_t poll_for_value(uint32_t address, uint32_t polled_value, uint32_t max_retries);
+static sl_status_t sl_wfx_poll_for_value(uint32_t address, uint32_t polled_value, uint32_t max_retries);
 static sl_status_t sl_wfx_init_chip();
 static sl_status_t sl_wfx_download_run_bootloader();
 static sl_status_t sl_wfx_download_run_firmware();
@@ -60,6 +60,11 @@ static sl_status_t sl_wfx_compare_keysets(uint8_t sl_wfx_keyset, char *firmware_
 /******************************************************
 *               Function Definitions
 ******************************************************/
+
+/**************************************************************************//**
+ * @addtogroup DRIVER_API
+ * @{
+ *****************************************************************************/
 
 /**************************************************************************//**
  * @brief Init the Wi-Fi chip
@@ -126,8 +131,8 @@ sl_status_t sl_wfx_init(sl_wfx_context_t *context)
   memcpy(&(context->mac_addr_0.octet), startup_info->body.mac_addr[0], sizeof(sl_wfx_mac_address_t));
   memcpy(&(context->mac_addr_1.octet), startup_info->body.mac_addr[1], sizeof(sl_wfx_mac_address_t));
 
-  /* Storing input buffer limit from Wi-Fi chip  */
-  sl_wfx_input_buffer_number = sl_wfx_htole16(startup_info->body.num_inp_ch_bufs);
+  /* Storing input buffer limit from Wi-Fi chip. -1 to ensure a FMAC command will not exceed the limit */
+  sl_wfx_input_buffer_number = sl_wfx_htole16(startup_info->body.num_inp_ch_bufs - 1);
 
   /* Set the wake up pin of the host */
   sl_wfx_host_set_wake_up_pin(1);
@@ -213,8 +218,8 @@ sl_status_t sl_wfx_set_mac_address(const sl_wfx_mac_address_t *mac, sl_wfx_inter
  *   @arg         WFM_SECURITY_MODE_WEP
  *   @arg         WFM_SECURITY_MODE_WPA2_WPA1_PSK
  *   @arg         WFM_SECURITY_MODE_WPA2_PSK
- * @param prevent_roaming, equal to 1 to prevent automatic roaming between APs
- * @param mgmt_frame_protection, equal to 1 to enable PMF mode
+ * @param prevent_roaming is equal to 1 to prevent automatic roaming between APs
+ * @param management_frame_protection is equal to 1 to enable PMF mode
  * @param passkey is the passkey used by the AP. Can be the WPA hash key to
  * improve connection speed
  * @param passkey_length is the length of the passkey
@@ -299,22 +304,22 @@ sl_status_t sl_wfx_send_disconnect_command(void)
  * @param channel is the channel used by AP. Between 1 and 14
  * @param ssid is the SSID name used by the softap
  * @param ssid_length is the SSID name length
- * @param hidden_ssid, equal to 1 to hide the network
- * @param client_isolation, equal to 1 isolate connected clients from each other
- * @param security is the security level used by the softap
+ * @param hidden_ssid is equal to 1 to hide the network
+ * @param client_isolation is equal to 1 isolate clients from each other
+ * @param security_mode is the security level used by the softap
  *   @arg         WFM_SECURITY_MODE_OPEN
  *   @arg         WFM_SECURITY_MODE_WEP
  *   @arg         WFM_SECURITY_MODE_WPA2_WPA1_PSK
  *   @arg         WFM_SECURITY_MODE_WPA2_PSK
- * @param mgmt_frame_protection, equal to 1 to enable PMF mode
+ * @param management_frame_protection is equal to 1 to enable PMF mode
  * @param passkey is the passkey used by the softap. Only applicable in security
  * modes different from WFM_SECURITY_MODE_OPEN.
  * @param passkey_length is the length of the passkey
  * @param beacon_ie_data is the Vendor-specific IE data to be added to beacons
  * @param beacon_ie_data_length is the length of the beacon IEs
- * @param probe_resp_ie_data is the Vendor-specific IE data to be added to probe
- * responses
- * @param probe_resp_ie_data_length is the length of the probe response IEs
+ * @param probe_response_ie_data is the Vendor-specific IE data to be added to
+ * probe responses
+ * @param probe_response_ie_data_length is the length of the probe response IEs
  * @returns Returns SL_SUCCESS if the command has been sent correctly,
  * SL_ERROR otherwise
  *****************************************************************************/
@@ -383,10 +388,10 @@ sl_status_t sl_wfx_start_ap_command(uint16_t        channel,
  * @brief Update the softap settings
  *
  * @param beacon_ie_data_length is the length of the beacon IEs
- * @param probe_resp_ie_data_length is the length of the probe response IEs
+ * @param probe_response_ie_data_length is the length of the probe response IEs
  * @param beacon_ie_data is the Vendor-specific IE data to be added to beacons
- * @param probe_resp_ie_data is the Vendor-specific IE data to be added to probe
- * responses
+ * @param probe_response_ie_data is the Vendor-specific IE data to be added to
+ * probe responses
  * @returns SL_SUCCESS if the command has been sent correctly,
  * SL_ERROR otherwise
  *****************************************************************************/
@@ -892,13 +897,13 @@ sl_status_t sl_wfx_set_max_ap_client_inactivity(uint32_t inactivity_timeout)
  *****************************************************************************/
 sl_status_t sl_wfx_set_scan_parameters(uint16_t active_channel_time,
                                        uint16_t passive_channel_time,
-                                       uint16_t num_probe_requestuests)
+                                       uint16_t num_probe_requests)
 {
   sl_wfx_set_scan_parameters_req_body_t payload;
 
   payload.active_channel_time   = sl_wfx_htole16(active_channel_time);
   payload.passive_channel_time  = sl_wfx_htole16(passive_channel_time);
-  payload.num_of_probe_requests = sl_wfx_htole16(num_probe_requestuests);
+  payload.num_of_probe_requests = sl_wfx_htole16(num_probe_requests);
   payload.reserved              = 0;
 
   return sl_wfx_send_command(SL_WFX_SET_SCAN_PARAMETERS_REQ_ID, &payload, sizeof(payload), SL_WFX_STA_INTERFACE, NULL);
@@ -1086,7 +1091,7 @@ sl_status_t sl_wfx_send_configuration(const char *pds_data, uint32_t pds_data_le
  *
  * @param gpio_label is the GPIO label to control (defined in the PDS)
  * @param gpio_mode defines how to read or set the GPIO
- * @param error_value returns the read value or the detailed error cause
+ * @param value returns the read value or the detailed error cause
  * @returns SL_SUCCESS if the request has been sent correctly,
  * SL_ERROR otherwise
  *****************************************************************************/
@@ -1166,6 +1171,7 @@ sl_status_t sl_wfx_shutdown(void)
  * @param data is the pointer to the data to be sent by the command
  * @param data_size is the size of the data to be sent
  * @param interface is the interface affected by the command
+ * @param response is a pointer to the response retrieved
  *   @arg         SL_WFX_STA_INTERFACE
  *   @arg         SL_WFX_SOFTAP_INTERFACE
  * @returns SL_SUCCESS if the command is sent correctly, SL_ERROR otherwise
@@ -1528,7 +1534,7 @@ static sl_status_t sl_wfx_download_run_firmware(void)
   SL_WFX_ERROR_CHECK(status);
 
   // wait for INFO_READ state
-  status = poll_for_value(ADDR_DWL_CTRL_AREA_NCP_STATUS, NCP_STATE_INFO_READY, 100);
+  status = sl_wfx_poll_for_value(ADDR_DWL_CTRL_AREA_NCP_STATUS, NCP_STATE_INFO_READY, 100);
   SL_WFX_ERROR_CHECK(status);
 
   // read info
@@ -1545,7 +1551,7 @@ static sl_status_t sl_wfx_download_run_firmware(void)
   SL_WFX_ERROR_CHECK(status);
 
   // wait for READY state
-  status = poll_for_value(ADDR_DWL_CTRL_AREA_NCP_STATUS, NCP_STATE_READY, 100);
+  status = sl_wfx_poll_for_value(ADDR_DWL_CTRL_AREA_NCP_STATUS, NCP_STATE_READY, 100);
   SL_WFX_ERROR_CHECK(status);
 
   // SB misc initialization. Work around for chips < A2.
@@ -1643,7 +1649,7 @@ static sl_status_t sl_wfx_download_run_firmware(void)
   SL_WFX_ERROR_CHECK(status);
 
   // wait for authentication result
-  status = poll_for_value(ADDR_DWL_CTRL_AREA_NCP_STATUS, NCP_STATE_AUTH_OK, 100);
+  status = sl_wfx_poll_for_value(ADDR_DWL_CTRL_AREA_NCP_STATUS, NCP_STATE_AUTH_OK, 100);
   SL_WFX_ERROR_CHECK(status);
 
   // notify NCP that we are happy to run firmware
@@ -1660,14 +1666,14 @@ static sl_status_t sl_wfx_download_run_firmware(void)
  * @brief Poll a value from the Wi-Fi chip
  *
  * @param address is the address of the value to be polled
- * @param polled_value, waiting for the value to be equal to polled_value
+ * @param polled_value waiting for the value to be equal to polled_value
  * @param max_retries is the number of polling to be done before returning
  * SL_TIMEOUT
  * @return SL_SUCCESS if the value is received correctly,
  * SL_TIMEOUT if the value is not found in time,
  * SL_ERROR if not able to poll the value from the Wi-Fi chip
  *****************************************************************************/
-static sl_status_t poll_for_value(uint32_t address, uint32_t polled_value, uint32_t max_retries)
+static sl_status_t sl_wfx_poll_for_value(uint32_t address, uint32_t polled_value, uint32_t max_retries)
 {
   uint32_t    value;
   sl_status_t status = SL_SUCCESS;
@@ -1804,3 +1810,5 @@ sl_status_t sl_wfx_allocate_command_buffer(sl_wfx_generic_message_t **buffer, ui
                                      buffer_size + SL_WFX_SECURE_LINK_HEADER_SIZE,
                                      wait_duration_ms);
 }
+
+/** @} end DRIVER_API */
