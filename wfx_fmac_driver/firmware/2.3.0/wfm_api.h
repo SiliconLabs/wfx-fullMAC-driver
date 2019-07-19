@@ -14,13 +14,10 @@
  * limitations under the License.
  *****************************************************************************/
 
-#ifndef _BASIC_TYPES_H_
-#define _BASIC_TYPES_H_
+#ifndef _CMD_MAP_UMAC_H_
+#define _CMD_MAP_UMAC_H_
 
-#ifdef __KERNEL__
-#include <linux/types.h>
-#else
-#include <stdint.h>
-#endif
+#include "wfm_general_api.h"
+#include "wfm_cmd_api.h"
 
-#endif
+#endif /* _CMD_MAP_UMAC_H_ */

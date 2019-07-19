@@ -17,15 +17,10 @@
 #ifndef SL_WFX_H
 #define SL_WFX_H
 
-#include "sl_wfx_constants.h"
-#include "sl_wfx_configuration.h"
 #include "sl_wfx_host_api.h"
-#include "sl/sl_status.h"
+#include "sl_wfx_configuration.h"
 #include "bus/sl_wfx_bus.h"
 #include "firmware/sl_wfx_registers.h"
-#include "sl/sl_status.h"
-#include "wfm_api.h"
-#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -56,6 +51,8 @@ sl_status_t sl_wfx_prevent_rollback(uint32_t magic_word);
 
 sl_status_t sl_wfx_get_opn(uint8_t **opn);
 
+sl_status_t sl_wfx_get_status_code(uint32_t wfx_status, uint8_t command_id);
+
 /*
  * Send Ethernet frame
  */
@@ -85,6 +82,10 @@ sl_status_t sl_wfx_set_mac_address(const sl_wfx_mac_address_t *mac, sl_wfx_inter
 sl_status_t sl_wfx_set_power_mode(sl_wfx_pm_mode_t mode, uint16_t interval);
 
 sl_status_t sl_wfx_set_wake_up_bit(uint8_t state);
+
+sl_status_t sl_wfx_enable_device_power_save(void);
+
+sl_status_t sl_wfx_disable_device_power_save(void);
 
 sl_status_t sl_wfx_join_ibss_command(const uint8_t *ssid,
                                      uint32_t ssid_length,
@@ -134,6 +135,8 @@ sl_status_t sl_wfx_set_max_tx_power(int32_t max_tx_power, sl_wfx_interface_t int
 sl_status_t sl_wfx_get_max_tx_power(int32_t *max_tx_power_rf_port_1,
                                     int32_t *max_tx_power_rf_port_2,
                                     sl_wfx_interface_t interface);
+
+sl_status_t sl_wfx_get_ap_client_signal_strength(const sl_wfx_mac_address_t *client, uint32_t *signal_strength);
 
 /*
  * Asynchronous WF200 commands
@@ -185,16 +188,14 @@ sl_status_t sl_wfx_stop_ap_command(void);
 
 sl_status_t sl_wfx_disconnect_ap_client_command(const sl_wfx_mac_address_t *client);
 
-/*
- * WF200 test mode
- */
-
 sl_status_t sl_wfx_set_antenna_config(sl_wfx_antenna_config_t config);
 
 sl_status_t sl_wfx_allocate_command_buffer(sl_wfx_generic_message_t **buffer,
                                            uint32_t command_id,
-                                           uint32_t buffer_size,
-                                           uint32_t wait_duration_ms);
+                                           sl_wfx_buffer_type_t type,
+                                           uint32_t buffer_size);
+
+sl_status_t sl_wfx_free_command_buffer(sl_wfx_generic_message_t *buffer, uint32_t command_id, sl_wfx_buffer_type_t type);
 
 #ifdef __cplusplus
 } /*extern "C" */

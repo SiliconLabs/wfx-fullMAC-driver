@@ -17,7 +17,7 @@
 #ifndef _WFM_CMD_API_H_
 #define _WFM_CMD_API_H_
 
-#include "general_api.h"
+#include "wfm_general_api.h"
 
 /**
  * @addtogroup FULL_MAC_API
@@ -103,36 +103,37 @@
  * @brief WFM API request message IDs.
  */
 typedef enum sl_wfx_requests_ids_e {
-  SL_WFX_SET_MAC_ADDRESS_REQ_ID                   = 0x42,///< \b SET_MAC_ADDRESS request ID use body SL_WFX_SET_MAC_ADDRESS_REQ_BODY and returns SL_WFX_SET_MAC_ADDRESS_CNF_BODY
-  SL_WFX_CONNECT_REQ_ID                           = 0x43,///< \b CONNECT request ID use body SL_WFX_CONNECT_REQ_BODY and returns SL_WFX_CONNECT_CNF_BODY
-  SL_WFX_DISCONNECT_REQ_ID                        = 0x44,///< \b DISCONNECT request ID use body SL_WFX_DISCONNECT_REQ_BODY and returns SL_WFX_DISCONNECT_CNF_BODY
-  SL_WFX_START_AP_REQ_ID                          = 0x45,///< \b START_AP request ID use body SL_WFX_START_AP_REQ_BODY and returns SL_WFX_START_AP_CNF_BODY
-  SL_WFX_UPDATE_AP_REQ_ID                         = 0x46,///< \b UPDATE_AP request ID use body SL_WFX_UPDATE_AP_REQ_BODY and returns SL_WFX_UPDATE_AP_CNF_BODY
-  SL_WFX_STOP_AP_REQ_ID                           = 0x47,///< \b STOP_AP request ID use body SL_WFX_STOP_AP_REQ_BODY and returns SL_WFX_STOP_AP_CNF_BODY
-  SL_WFX_SEND_FRAME_REQ_ID                        = 0x4a,///< \b SEND_FRAME request ID use body SL_WFX_SEND_FRAME_REQ_BODY and returns SL_WFX_SEND_FRAME_CNF_BODY
-  SL_WFX_START_SCAN_REQ_ID                        = 0x4b,///< \b START_SCAN request ID use body SL_WFX_START_SCAN_REQ_BODY and returns SL_WFX_START_SCAN_CNF_BODY
-  SL_WFX_STOP_SCAN_REQ_ID                         = 0x4c,///< \b STOP_SCAN request ID use body SL_WFX_STOP_SCAN_REQ_BODY and returns SL_WFX_STOP_SCAN_CNF_BODY
-  SL_WFX_GET_SIGNAL_STRENGTH_REQ_ID               = 0x4e,///< \b GET_SIGNAL_STRENGTH request ID use body SL_WFX_GET_SIGNAL_STRENGTH_REQ_BODY and returns SL_WFX_GET_SIGNAL_STRENGTH_CNF_BODY
-  SL_WFX_DISCONNECT_AP_CLIENT_REQ_ID              = 0x4f,///< \b DISCONNECT_AP_CLIENT request ID use body SL_WFX_DISCONNECT_AP_CLIENT_REQ_BODY and returns SL_WFX_DISCONNECT_AP_CLIENT_CNF_BODY
-  SL_WFX_JOIN_IBSS_REQ_ID                         = 0x50,///< \b JOIN_IBSS request ID use body SL_WFX_JOIN_IBSS_REQ_BODY and returns SL_WFX_JOIN_IBSS_CNF_BODY
-  SL_WFX_LEAVE_IBSS_REQ_ID                        = 0x51,///< \b LEAVE_IBSS request ID use body SL_WFX_LEAVE_IBSS_REQ_BODY and returns SL_WFX_LEAVE_IBSS_CNF_BODY
-  SL_WFX_SET_PM_MODE_REQ_ID                       = 0x52,///< \b SET_PM_MODE request ID use body SL_WFX_SET_PM_MODE_REQ_BODY and returns SL_WFX_SET_PM_MODE_CNF_BODY
-  SL_WFX_ADD_MULTICAST_ADDR_REQ_ID                = 0x53,///< \b ADD_MULTICAST_ADDR request ID use body SL_WFX_ADD_MULTICAST_ADDR_REQ_BODY and returns SL_WFX_ADD_MULTICAST_ADDR_CNF_BODY
-  SL_WFX_REMOVE_MULTICAST_ADDR_REQ_ID             = 0x54,///< \b REMOVE_MULTICAST_ADDR request ID use body SL_WFX_REMOVE_MULTICAST_ADDR_REQ_BODY and returns SL_WFX_REMOVE_MULTICAST_ADDR_CNF_BODY
-  SL_WFX_SET_MAX_AP_CLIENT_COUNT_REQ_ID           = 0x55,///< \b SET_MAX_AP_CLIENT_COUNT request ID use body SL_WFX_SET_MAX_AP_CLIENT_COUNT_REQ_BODY and returns SL_WFX_SET_MAX_AP_CLIENT_COUNT_CNF_BODY
-  SL_WFX_SET_MAX_AP_CLIENT_INACTIVITY_REQ_ID      = 0x56,///< \b SET_MAX_AP_CLIENT_INACTIVITY request ID use body SL_WFX_SET_MAX_AP_CLIENT_INACTIVITY_REQ_BODY and returns SL_WFX_SET_MAX_AP_CLIENT_INACTIVITY_CNF_BODY
-  SL_WFX_SET_ROAM_PARAMETERS_REQ_ID               = 0x57,///< \b SET_ROAM_PARAMETERS request ID use body SL_WFX_SET_ROAM_PARAMETERS_REQ_BODY and returns SL_WFX_SET_ROAM_PARAMETERS_CNF_BODY
-  SL_WFX_SET_TX_RATE_PARAMETERS_REQ_ID            = 0x58,///< \b SET_TX_RATE_PARAMETERS request ID use body SL_WFX_SET_TX_RATE_PARAMETERS_REQ_BODY and returns SL_WFX_SET_TX_RATE_PARAMETERS_CNF_BODY
-  SL_WFX_SET_ARP_IP_ADDRESS_REQ_ID                = 0x59,///< \b SET_ARP_IP_ADDRESS request ID use body SL_WFX_SET_ARP_IP_ADDRESS_REQ_BODY and returns SL_WFX_SET_ARP_IP_ADDRESS_CNF_BODY
-  SL_WFX_SET_NS_IP_ADDRESS_REQ_ID                 = 0x5A,///< \b SET_NS_IP_ADDRESS request ID use body SL_WFX_SET_NS_IP_ADDRESS_REQ_BODY and returns SL_WFX_SET_NS_IP_ADDRESS_CNF_BODY
-  SL_WFX_SET_BROADCAST_FILTER_REQ_ID              = 0x5B,///< \b SET_BROADCAST_FILTER request ID use body SL_WFX_SET_BROADCAST_FILTER_REQ_BODY and returns SL_WFX_SET_BROADCAST_FILTER_CNF_BODY
-  SL_WFX_SET_SCAN_PARAMETERS_REQ_ID               = 0x5C,///< \b SET_SCAN_PARAMETERS request ID use body SL_WFX_SET_SCAN_PARAMETERS_REQ_BODY and returns SL_WFX_SET_SCAN_PARAMETERS_CNF_BODY
-  SL_WFX_SET_UNICAST_FILTER_REQ_ID                = 0x5D,///< \b SET_UNICAST_FILTER request ID use body SL_WFX_SET_UNICAST_FILTER_REQ_BODY and returns SL_WFX_SET_UNICAST_FILTER_CNF_BODY
-  SL_WFX_ADD_WHITELIST_ADDR_REQ_ID                = 0x5E,///< \b ADD_WHITELIST_ADDR request ID use body SL_WFX_ADD_WHITELIST_ADDR_REQ_BODY and returns SL_WFX_ADD_WHITELIST_ADDR_CNF_BODY
-  SL_WFX_ADD_BLACKLIST_ADDR_REQ_ID                = 0x5F,///< \b ADD_BLACKLIST_ADDR request ID use body SL_WFX_ADD_BLACKLIST_ADDR_REQ_BODY and returns SL_WFX_ADD_BLACKLIST_ADDR_CNF_BODY
-  SL_WFX_SET_MAX_TX_POWER_REQ_ID                  = 0x60,///< \b SET_MAX_TX_POWER request ID use body SL_WFX_SET_MAX_TX_POWER_REQ_BODY and returns SL_WFX_SET_MAX_TX_POWER_CNF_BODY
-  SL_WFX_GET_MAX_TX_POWER_REQ_ID                  = 0x61,///< \b GET_MAX_TX_POWER request ID use body SL_WFX_GET_MAX_TX_POWER_REQ_BODY and returns SL_WFX_GET_MAX_TX_POWER_CNF_BODY
-  SL_WFX_GET_PMK_REQ_ID                           = 0x62///< \b GET_PMK request ID use body SL_WFX_GET_PMK_REQ_BODY and returns SL_WFX_GET_PMK_CNF_BODY
+  SL_WFX_SET_MAC_ADDRESS_REQ_ID                   = 0x42,///< \b SET_MAC_ADDRESS request ID uses body SL_WFX_SET_MAC_ADDRESS_REQ_BODY and returns SL_WFX_SET_MAC_ADDRESS_CNF_BODY
+  SL_WFX_CONNECT_REQ_ID                           = 0x43,///< \b CONNECT request ID uses body SL_WFX_CONNECT_REQ_BODY and returns SL_WFX_CONNECT_CNF_BODY
+  SL_WFX_DISCONNECT_REQ_ID                        = 0x44,///< \b DISCONNECT request ID uses body SL_WFX_DISCONNECT_REQ_BODY and returns SL_WFX_DISCONNECT_CNF_BODY
+  SL_WFX_START_AP_REQ_ID                          = 0x45,///< \b START_AP request ID uses body SL_WFX_START_AP_REQ_BODY and returns SL_WFX_START_AP_CNF_BODY
+  SL_WFX_UPDATE_AP_REQ_ID                         = 0x46,///< \b UPDATE_AP request ID uses body SL_WFX_UPDATE_AP_REQ_BODY and returns SL_WFX_UPDATE_AP_CNF_BODY
+  SL_WFX_STOP_AP_REQ_ID                           = 0x47,///< \b STOP_AP request ID uses body SL_WFX_STOP_AP_REQ_BODY and returns SL_WFX_STOP_AP_CNF_BODY
+  SL_WFX_SEND_FRAME_REQ_ID                        = 0x4a,///< \b SEND_FRAME request ID uses body SL_WFX_SEND_FRAME_REQ_BODY and returns SL_WFX_SEND_FRAME_CNF_BODY
+  SL_WFX_START_SCAN_REQ_ID                        = 0x4b,///< \b START_SCAN request ID uses body SL_WFX_START_SCAN_REQ_BODY and returns SL_WFX_START_SCAN_CNF_BODY
+  SL_WFX_STOP_SCAN_REQ_ID                         = 0x4c,///< \b STOP_SCAN request ID uses body SL_WFX_STOP_SCAN_REQ_BODY and returns SL_WFX_STOP_SCAN_CNF_BODY
+  SL_WFX_GET_SIGNAL_STRENGTH_REQ_ID               = 0x4e,///< \b GET_SIGNAL_STRENGTH request ID uses body SL_WFX_GET_SIGNAL_STRENGTH_REQ_BODY and returns SL_WFX_GET_SIGNAL_STRENGTH_CNF_BODY
+  SL_WFX_DISCONNECT_AP_CLIENT_REQ_ID              = 0x4f,///< \b DISCONNECT_AP_CLIENT request ID uses body SL_WFX_DISCONNECT_AP_CLIENT_REQ_BODY and returns SL_WFX_DISCONNECT_AP_CLIENT_CNF_BODY
+  SL_WFX_JOIN_IBSS_REQ_ID                         = 0x50,///< \b JOIN_IBSS request ID uses body SL_WFX_JOIN_IBSS_REQ_BODY and returns SL_WFX_JOIN_IBSS_CNF_BODY
+  SL_WFX_LEAVE_IBSS_REQ_ID                        = 0x51,///< \b LEAVE_IBSS request ID uses body SL_WFX_LEAVE_IBSS_REQ_BODY and returns SL_WFX_LEAVE_IBSS_CNF_BODY
+  SL_WFX_SET_PM_MODE_REQ_ID                       = 0x52,///< \b SET_PM_MODE request ID uses body SL_WFX_SET_PM_MODE_REQ_BODY and returns SL_WFX_SET_PM_MODE_CNF_BODY
+  SL_WFX_ADD_MULTICAST_ADDR_REQ_ID                = 0x53,///< \b ADD_MULTICAST_ADDR request ID uses body SL_WFX_ADD_MULTICAST_ADDR_REQ_BODY and returns SL_WFX_ADD_MULTICAST_ADDR_CNF_BODY
+  SL_WFX_REMOVE_MULTICAST_ADDR_REQ_ID             = 0x54,///< \b REMOVE_MULTICAST_ADDR request ID uses body SL_WFX_REMOVE_MULTICAST_ADDR_REQ_BODY and returns SL_WFX_REMOVE_MULTICAST_ADDR_CNF_BODY
+  SL_WFX_SET_MAX_AP_CLIENT_COUNT_REQ_ID           = 0x55,///< \b SET_MAX_AP_CLIENT_COUNT request ID uses body SL_WFX_SET_MAX_AP_CLIENT_COUNT_REQ_BODY and returns SL_WFX_SET_MAX_AP_CLIENT_COUNT_CNF_BODY
+  SL_WFX_SET_MAX_AP_CLIENT_INACTIVITY_REQ_ID      = 0x56,///< \b SET_MAX_AP_CLIENT_INACTIVITY request ID uses body SL_WFX_SET_MAX_AP_CLIENT_INACTIVITY_REQ_BODY and returns SL_WFX_SET_MAX_AP_CLIENT_INACTIVITY_CNF_BODY
+  SL_WFX_SET_ROAM_PARAMETERS_REQ_ID               = 0x57,///< \b SET_ROAM_PARAMETERS request ID uses body SL_WFX_SET_ROAM_PARAMETERS_REQ_BODY and returns SL_WFX_SET_ROAM_PARAMETERS_CNF_BODY
+  SL_WFX_SET_TX_RATE_PARAMETERS_REQ_ID            = 0x58,///< \b SET_TX_RATE_PARAMETERS request ID uses body SL_WFX_SET_TX_RATE_PARAMETERS_REQ_BODY and returns SL_WFX_SET_TX_RATE_PARAMETERS_CNF_BODY
+  SL_WFX_SET_ARP_IP_ADDRESS_REQ_ID                = 0x59,///< \b SET_ARP_IP_ADDRESS request ID uses body SL_WFX_SET_ARP_IP_ADDRESS_REQ_BODY and returns SL_WFX_SET_ARP_IP_ADDRESS_CNF_BODY
+  SL_WFX_SET_NS_IP_ADDRESS_REQ_ID                 = 0x5A,///< \b SET_NS_IP_ADDRESS request ID uses body SL_WFX_SET_NS_IP_ADDRESS_REQ_BODY and returns SL_WFX_SET_NS_IP_ADDRESS_CNF_BODY
+  SL_WFX_SET_BROADCAST_FILTER_REQ_ID              = 0x5B,///< \b SET_BROADCAST_FILTER request ID uses body SL_WFX_SET_BROADCAST_FILTER_REQ_BODY and returns SL_WFX_SET_BROADCAST_FILTER_CNF_BODY
+  SL_WFX_SET_SCAN_PARAMETERS_REQ_ID               = 0x5C,///< \b SET_SCAN_PARAMETERS request ID uses body SL_WFX_SET_SCAN_PARAMETERS_REQ_BODY and returns SL_WFX_SET_SCAN_PARAMETERS_CNF_BODY
+  SL_WFX_SET_UNICAST_FILTER_REQ_ID                = 0x5D,///< \b SET_UNICAST_FILTER request ID uses body SL_WFX_SET_UNICAST_FILTER_REQ_BODY and returns SL_WFX_SET_UNICAST_FILTER_CNF_BODY
+  SL_WFX_ADD_WHITELIST_ADDR_REQ_ID                = 0x5E,///< \b ADD_WHITELIST_ADDR request ID uses body SL_WFX_ADD_WHITELIST_ADDR_REQ_BODY and returns SL_WFX_ADD_WHITELIST_ADDR_CNF_BODY
+  SL_WFX_ADD_BLACKLIST_ADDR_REQ_ID                = 0x5F,///< \b ADD_BLACKLIST_ADDR request ID uses body SL_WFX_ADD_BLACKLIST_ADDR_REQ_BODY and returns SL_WFX_ADD_BLACKLIST_ADDR_CNF_BODY
+  SL_WFX_SET_MAX_TX_POWER_REQ_ID                  = 0x60,///< \b SET_MAX_TX_POWER request ID uses body SL_WFX_SET_MAX_TX_POWER_REQ_BODY and returns SL_WFX_SET_MAX_TX_POWER_CNF_BODY
+  SL_WFX_GET_MAX_TX_POWER_REQ_ID                  = 0x61,///< \b GET_MAX_TX_POWER request ID uses body SL_WFX_GET_MAX_TX_POWER_REQ_BODY and returns SL_WFX_GET_MAX_TX_POWER_CNF_BODY
+  SL_WFX_GET_PMK_REQ_ID                           = 0x62,///< \b GET_PMK request ID uses body SL_WFX_GET_PMK_REQ_BODY and returns SL_WFX_GET_PMK_CNF_BODY
+  SL_WFX_GET_AP_CLIENT_SIGNAL_STRENGTH_REQ_ID     = 0x63///< \b GET_AP_CLIENT_SIGNAL_STRENGTH request ID uses body SL_WFX_GET_AP_CLIENT_SIGNAL_STRENGTH_BODY and returns SL_WFX_GET_AP_CLIENT_SIGNAL_STRENGTH_CNF_BODY
 } sl_wfx_requests_ids_t;
 
 /**
@@ -186,7 +187,8 @@ typedef enum sl_wfx_confirmations_ids_e {
   SL_WFX_ADD_BLACKLIST_ADDR_CNF_ID                = 0x5F,///< \b ADD_BLACKLIST_ADDR confirmation Id. Returns body SL_WFX_ADD_BLACKLIST_ADDR_CNF_BODY
   SL_WFX_SET_MAX_TX_POWER_CNF_ID                  = 0x60,///< \b SET_MAX_TX_POWER confirmation Id. Returns body SL_WFX_SET_MAX_TX_POWER_CNF_BODY
   SL_WFX_GET_MAX_TX_POWER_CNF_ID                  = 0x61,///< \b GET_MAX_TX_POWER confirmation Id. Returns body SL_WFX_GET_MAX_TX_POWER_CNF_BODY
-  SL_WFX_GET_PMK_CNF_ID                           = 0x62///< \b GET_PMK confirmation Id. Returns body SL_WFX_GET_PMK_CNF_BODY
+  SL_WFX_GET_PMK_CNF_ID                           = 0x62,///< \b GET_PMK confirmation Id. Returns body SL_WFX_GET_PMK_CNF_BODY
+  SL_WFX_GET_AP_CLIENT_SIGNAL_STRENGTH_CNF_ID     = 0x63///< \b GET_AP_CLIENT_SIGNAL_STRENGTH confirmation Id. Returns body SL_WFX_GET_AP_CLIENT_SIGNAL_STRENGTH_CNF_BODY
 } sl_wfx_confirmations_ids_t;
 
 /**
@@ -199,7 +201,7 @@ typedef union wfm_message_ids_u {
   sl_wfx_confirmations_ids_t Confirmations;
   /** Indication messages sent from the device to the host. */
   sl_wfx_indications_ids_t Indications;
-} sl_wfx_message_ids_t_t;
+} sl_wfx_message_ids_t;
 
 /**
  * @}
@@ -321,12 +323,14 @@ typedef enum sl_wfx_security_mode_e {
  * A value of zero indicates the request has completed successfully.
  */
 typedef enum sl_wfx_fmac_status_e {
-  WFM_STATUS_SUCCESS                         = 0x0,             ///< The device has successfully completed a request.
-  WFM_STATUS_INVALID_PARAMETER               = 0x1,             ///< A request contains one or more invalid parameters.
-  WFM_STATUS_WRONG_STATE                     = 0x2,             ///< The request cannot be performed because the device is in an inappropriate state.
+  WFM_STATUS_SUCCESS                         = 0x0,         ///< The device has successfully completed a request.
+  WFM_STATUS_INVALID_PARAMETER               = 0x1,         ///< A request contains one or more invalid parameters.
+  WFM_STATUS_WRONG_STATE                     = 0x2,         ///< The request cannot be performed because the device is in an inappropriate state.
   WFM_STATUS_GENERAL_FAILURE                 = 0x3,         ///< The request failed due to an error.
-  WFM_STATUS_CHANNEL_NOT_ALLOWED             = 0x4,             ///< The request failed due to regulatory limitations.
-  WFM_STATUS_WARNING                         = 0x5              ///< The request is successful but some parameters have been ignored.
+  WFM_STATUS_CHANNEL_NOT_ALLOWED             = 0x4,         ///< The request failed due to regulatory limitations.
+  WFM_STATUS_WARNING                         = 0x5,         ///< The request is successful but some parameters have been ignored.
+  WFM_STATUS_RETRY_EXCEEDED                  = 0x13,        ///< The request failed because the retry limit was exceeded.
+  WFM_STATUS_TX_LIFETIME_EXCEEDED            = 0x14         ///< The request failed because the MSDU life time was exceeded.
 } sl_wfx_fmac_status_t;
 
 /**
@@ -3035,6 +3039,64 @@ typedef struct __attribute__((__packed__)) sl_wfx_get_pmk_cnf_s {
   /** Confirmation message body. */
   sl_wfx_get_pmk_cnf_body_t body;
 } sl_wfx_get_pmk_cnf_t;
+
+/**
+ * @brief Request message body for sl_wfx_get_ap_client_signal_strength_req_t.
+ */
+typedef struct __attribute__((__packed__)) sl_wfx_get_ap_client_signal_strength_req_body_s {
+  /**
+   * @brief MAC address of the station.
+   */
+  uint8_t mac[SL_WFX_MAC_ADDR_SIZE];
+} sl_wfx_get_ap_client_signal_strength_req_body_t;
+
+/**
+ * @brief Request message for retrieving the signal strength of a client of the started Wi-Fi network.
+ * @details The host can use this request to retrieve the signal strength of a client of the started Wi-Fi network.
+ *          | Interface mode | Request allowed |
+ *          |:---------------|:----------------|
+ *          | idle           | No              |
+ *          | station        | No              |
+ *          | AP             | Yes             |
+ *          | IBSS           | No              |
+ *          <BR>
+ * @ingroup WFM_GROUP_MODE_AP
+ */
+typedef struct __attribute__((__packed__)) sl_wfx_get_ap_client_signal_strength_req_s {
+  /** Common message header. */
+  sl_wfx_header_t header;
+  /** Request message body. */
+  sl_wfx_get_ap_client_signal_strength_req_body_t body;
+} sl_wfx_get_ap_client_signal_strength_req_t;
+
+/**
+ * @brief Confirmation message body for sl_wfx_get_ap_client_signal_strength_cnf_t.
+ */
+typedef struct __attribute__((__packed__)) sl_wfx_get_ap_client_signal_strength_cnf_body_s {
+  /**
+   * @brief Status of the get request.
+   * @details <B>WFM_STATUS_SUCCESS</B>: the get request was completed.
+   *          <BR><B>any other value</B>: the get request failed.
+   *          <BR>See WFM_STATUS for enumeration values.
+   */
+  uint32_t status;
+  /**
+   * @brief Received Channel Power Indicator (RCPI) of the client.
+   * @details See @ref WFM_CONCEPT_RCPI for further details.
+   */
+  uint32_t rcpi;
+} sl_wfx_get_ap_client_signal_strength_cnf_body_t;
+
+/**
+ * @brief Confirmation message for sl_wfx_get_ap_client_signal_strength_cnf_t.
+ * @ingroup WFM_GROUP_MODE_AP
+ */
+typedef struct __attribute__((__packed__)) sl_wfx_get_ap_client_signal_strength_cnf_s {
+  /** Common message header. */
+  sl_wfx_header_t header;
+  /** Confirmation message body. */
+  sl_wfx_get_ap_client_signal_strength_cnf_body_t body;
+} sl_wfx_get_ap_client_signal_strength_cnf_t;
 
 /**************************************************/
 

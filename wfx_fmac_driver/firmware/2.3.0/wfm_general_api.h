@@ -14,14 +14,10 @@
  * limitations under the License.
  *****************************************************************************/
 
-#ifndef _GENERAL_API_H_
-#define _GENERAL_API_H_
+#ifndef _WFM_GENERAL_API_H_
+#define _WFM_GENERAL_API_H_
 
-#ifdef __KERNEL__ // Linux kernel does not accept standard headers
-#include <linux/types.h>
-#else
 #include <stdint.h>
-#endif
 
 //< API Internal Version encoding
 #define SL_WFX_API_VERSION_MINOR    0x02
@@ -114,7 +110,7 @@ typedef enum sl_wfx_rate_index_e {
  */
 typedef struct __attribute__((__packed__)) sl_wfx_header_s {
   uint16_t length;       ///< Message length in bytes including this uint16_t. Maximum value is 8188 but maximum Request size is FW dependent and reported in the ::sl_wfx_startup_ind_body_t::size_inp_ch_buf
-  uint8_t  id;           ///< TODO comment missing
+  uint8_t  id;           ///< Contains the message Id indexed by sl_wfx_general_commands_ids_t or sl_wfx_message_ids_t.
   uint8_t  info;         ///< TODO comment missing
 } sl_wfx_header_t;
 
@@ -167,8 +163,8 @@ typedef enum sl_wfx_generic_requests_ids_e {
   SL_WFX_CONFIGURATION_REQ_ID                         = 0x09,///< \b CONFIGURATION request Id use body sl_wfx_configuration_req_body_t and returns sl_wfx_configuration_cnf_body_t
   SL_WFX_CONTROL_GPIO_REQ_ID                          = 0x26,///< \b CONTROL_GPIO request Id use body sl_wfx_control_gpio_req_body_t and returns sl_wfx_control_gpio_cnf_body_t
   SL_WFX_SET_SL_MAC_KEY_REQ_ID                        = 0x27,///< \b SET_SL_MAC_KEY request Id use body sl_wfx_set_sl_mac_key_req_body_t and returns sl_wfx_set_sl_mac_key_cnf_body_t
-  SL_WFX_SECURELINK_EXCHANGE_PUB_KEYS_REQ_ID                  = 0x28,///< \b SL_EXCHANGE_PUB_KEYS request Id use body sl_wfx_securelink_exchange_pub_keys_req_body_t and returns sl_wfx_securelink_exchange_pub_keys_cnf_body_t
-  SL_WFX_SECURELINK_CONFIGURE_REQ_ID                          = 0x29,///< \b SL_CONFIGURE request Id use body sl_wfx_securelink_configure_req_body_t and returns sl_wfx_securelink_exchange_pub_keys_cnf_body_t
+  SL_WFX_SECURELINK_EXCHANGE_PUB_KEYS_REQ_ID          = 0x28,///< \b SL_EXCHANGE_PUB_KEYS request Id use body sl_wfx_securelink_exchange_pub_keys_req_body_t and returns sl_wfx_securelink_exchange_pub_keys_cnf_body_t
+  SL_WFX_SECURELINK_CONFIGURE_REQ_ID                  = 0x29,///< \b SL_CONFIGURE request Id use body sl_wfx_securelink_configure_req_body_t and returns sl_wfx_securelink_exchange_pub_keys_cnf_body_t
   SL_WFX_PREVENT_ROLLBACK_REQ_ID                      = 0x2a,///< \b PREVENT_ROLLBACK request Id use body sl_wfx_prevent_rollback_req_body_t and returns sl_wfx_prevent_rollback_cnf_body_t
   SL_WFX_SHUT_DOWN_REQ_ID                             = 0x32,///< \b SHUT_DOWN request Id use body sl_wfx_shut_down_req_t and never returns
 } sl_wfx_generic_requests_ids_t;
@@ -183,9 +179,9 @@ typedef enum sl_wfx_general_confirmations_ids_e {
   SL_WFX_CONFIGURATION_CNF_ID                         = 0x09,///< \b CONFIGURATION confirmation Id returns body sl_wfx_configuration_cnf_body_t
   SL_WFX_CONTROL_GPIO_CNF_ID                          = 0x26,///< \b CONTROL_GPIO confirmation Id returns body sl_wfx_control_gpio_cnf_body_t
   SL_WFX_SET_SL_MAC_KEY_CNF_ID                        = 0x27,///< \b SET_SL_MAC_KEY confirmation Id returns body sl_wfx_set_sl_mac_key_cnf_body_t
-  SL_WFX_SECURELINK_EXCHANGE_PUB_KEYS_CNF_ID                  = 0x28,///< \b SL_EXCHANGE_PUB_KEYS confirmation Id returns body sl_wfx_securelink_exchange_pub_keys_cnf_body_t
-  SL_WFX_SECURELINK_CONFIGURE_CNF_ID                          = 0x29,///< \b SL_CONFIGURE confirmation Id returns body sl_wfx_securelink_configure_cnf_body_t
-  SL_WFX_PREVENT_ROLLBACK_CNF_ID                      = 0xe7,///< \b PREVENT_ROLLBACK confirmation Id use body sl_wfx_prevent_rollback_cnf_body_t
+  SL_WFX_SECURELINK_EXCHANGE_PUB_KEYS_CNF_ID          = 0x28,///< \b SL_EXCHANGE_PUB_KEYS confirmation Id returns body sl_wfx_securelink_exchange_pub_keys_cnf_body_t
+  SL_WFX_SECURELINK_CONFIGURE_CNF_ID                  = 0x29,///< \b SL_CONFIGURE confirmation Id returns body sl_wfx_securelink_configure_cnf_body_t
+  SL_WFX_PREVENT_ROLLBACK_CNF_ID                      = 0x2a,///< \b PREVENT_ROLLBACK confirmation Id use body sl_wfx_prevent_rollback_cnf_body_t
 } sl_wfx_general_confirmations_ids_t;
 
 /**
@@ -197,8 +193,10 @@ typedef enum sl_wfx_general_confirmations_ids_e {
 typedef enum sl_wfx_general_indications_ids_e {
   SL_WFX_EXCEPTION_IND_ID                             = 0xe0,///< \b EXCEPTION indication Id content is sl_wfx_exception_ind_body_t
   SL_WFX_STARTUP_IND_ID                               = 0xe1,///< \b STARTUP indication Id content is sl_wfx_startup_ind_body_t
+  SL_WFX_WAKEUP_IND_ID                                = 0xe2,///< \b WAKE UP indication Id has no content
   SL_WFX_GENERIC_IND_ID                               = 0xe3,///< \b GENERIC indication Id content is sl_wfx_generic_ind_body_t
-  SL_WFX_ERROR_IND_ID                                 = 0xe4///< \b ERROR indication Id content is sl_wfx_error_ind_body_t
+  SL_WFX_ERROR_IND_ID                                 = 0xe4,///< \b ERROR indication Id content is sl_wfx_error_ind_body_t
+  SL_WFX_SECURELINK_EXCHANGE_PUB_KEYS_IND_ID          = 0xe5///< \b SECURELINK_EXCHANGE_PUB_KEYS indication Id content is sl_wfx_securelink_exchange_pub_keys_ind_body_t
 } sl_wfx_general_indications_ids_t;
 
 /**
@@ -321,6 +319,17 @@ typedef struct __attribute__((__packed__)) sl_wfx_startup_ind_s {
   sl_wfx_header_t header;
   sl_wfx_startup_ind_body_t body;
 } sl_wfx_startup_ind_t;
+
+/**
+ * @brief Wake-up indication message.
+ * @since API1.4.0
+ *
+ * Its body is empty. It signals that the chip is awake and ready to receive commands after a wake-up request from the host.
+ * It generates a DATA_IRQ to the host driver when ready.
+ * It can be replaced or passed by another message that would have appeared concurrently like a Rx frame.
+ * */
+
+typedef sl_wfx_header_t sl_wfx_wakeup_ind_t;
 
 /**
  * @brief Configure the device.
@@ -582,21 +591,33 @@ typedef struct __attribute__((__packed__)) sl_wfx_securelink_exchange_pub_keys_r
   sl_wfx_securelink_exchange_pub_keys_req_body_t body;
 } sl_wfx_securelink_exchange_pub_keys_req_t;
 
-#define SL_WFX_NCP_PUB_KEY_SIZE                            32
-#define SL_WFX_NCP_PUB_KEY_MAC_SIZE                        64
 /**
  * @brief Confirmation for exchange of Secure Link Public Keys
  * */
 typedef struct __attribute__((__packed__)) sl_wfx_securelink_exchange_pub_keys_cnf_body_s {
   uint32_t   status;                            ///<Request status (see enum sl_wfx_status_t)
-  uint8_t    ncp_pub_key[SL_WFX_NCP_PUB_KEY_SIZE];             ///<Device Public Key
-  uint8_t    ncp_pub_key_mac[SL_WFX_NCP_PUB_KEY_MAC_SIZE];          ///<Device Public Key MAC
 } sl_wfx_securelink_exchange_pub_keys_cnf_body_t;
 
 typedef struct __attribute__((__packed__)) sl_wfx_securelink_exchange_pub_keys_cnf_s {
   sl_wfx_header_t header;
   sl_wfx_securelink_exchange_pub_keys_cnf_body_t body;
 } sl_wfx_securelink_exchange_pub_keys_cnf_t;
+
+#define SL_WFX_NCP_PUB_KEY_SIZE                            32
+#define SL_WFX_NCP_PUB_KEY_MAC_SIZE                        64
+/**
+ * @brief Indication for exchange of Secure Link Public Keys
+ * */
+typedef struct __attribute__((__packed__)) sl_wfx_securelink_exchange_pub_keys_ind_body_s {
+  uint32_t   status;                            ///<Request status (see enum sl_wfx_status_t)
+  uint8_t    ncp_pub_key[SL_WFX_NCP_PUB_KEY_SIZE];             ///<Device Public Key
+  uint8_t    ncp_pub_key_mac[SL_WFX_NCP_PUB_KEY_MAC_SIZE];          ///<Device Public Key MAC
+} sl_wfx_securelink_exchange_pub_keys_ind_body_t;
+
+typedef struct __attribute__((__packed__)) sl_wfx_securelink_exchange_pub_keys_ind_s {
+  sl_wfx_header_t header;
+  sl_wfx_securelink_exchange_pub_keys_ind_body_t body;
+} sl_wfx_securelink_exchange_pub_keys_ind_t;
 
 /**
  * @brief used in request message sl_wfx_securelink_configure_req_body_t to trigger *Session Key* invalidation
@@ -619,7 +640,6 @@ typedef enum sl_wfx_securelink_configure_skey_invld_e {
  */
 typedef struct __attribute__((__packed__)) sl_wfx_securelink_configure_req_body_s {
   uint8_t    encr_bmp[SL_WFX_ENCR_BMP_SIZE];             ///<Encryption bitmap
-  uint8_t    skey_invld;                              ///<Invalidate Session Key (see enum sl_configure_skey_invld_t)
 } sl_wfx_securelink_configure_req_body_t;
 
 typedef struct __attribute__((__packed__)) sl_wfx_securelink_configure_req_s {
@@ -720,4 +740,4 @@ typedef struct __attribute__((__packed__)) sl_wfx_prevent_rollback_cnf_s {
  */
 /*end of GENERAL_API */
 
-#endif /* _GENERAL_API_H_ */
+#endif /* _WFM_GENERAL_API_H_ */
