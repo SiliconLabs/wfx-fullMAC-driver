@@ -1,13 +1,22 @@
-Wi-Fi FMAC driver release note
+Wi-Fi FMAC Driver Release Note
 ==============================
+
+# Release 2.1.1
+(release date 2019-08-28)
+
+##New Features/Improvements/Bug fixes
+* Fix a bug in sl_wfx_send_ethernet_frame() where the header payload sent could be corrupted
+* Aligned on firmware 2.3.0
 
 # Release 2.1.0
 (release date 2019-07-19)
+
+##New Features/Improvements/Bug fixes
 * Introduce device power save management
 * Add the following functions to the driver API:
   * sl_wfx_get_ap_client_signal_strength()
-	* sl_wfx_enable_device_power_save()
-	* sl_wfx_disable_device_power_save()
+  * sl_wfx_enable_device_power_save()
+  * sl_wfx_disable_device_power_save()
 * Add the following functions to the host API:
 	* sl_wfx_host_sleep_grant()
 * Rename sl_wfx_context_t used_buffer_number attribute to used_buffers
@@ -18,8 +27,13 @@ Wi-Fi FMAC driver release note
 * Remove the Doxygen documentation and replace it by a link to docs.silabs.com
 * Aligned on firmware 2.3.0
 
+## Known issues
+* sl_wfx_send_ethernet_frame() can send a corrupted header if the memory allocated for sl_wfx_send_frame_req_t \*frame is not set to 0
+
 # Release 2.0.1
 (release date 2019-04-18)
+
+##New Features/Improvements/Bug fixes
 * Fix an issue with the softAP interface
 * Limit the input buffers to avoid running into issues when transmitting data
 	and sending regular FMAC commands
@@ -28,6 +42,8 @@ Wi-Fi FMAC driver release note
 
 # Release 2.0.0
 (release date 2019-04-12)
+
+##New Features/Improvements/Bug fixes
 * File name prefixes changed from wf200_ to sl_wfx_
 * Function name prefixes changed from wf200_ to sl_wfx_
 * Structure name prefixes changed from wf200_ to sl_wfx_
@@ -60,8 +76,13 @@ Wi-Fi FMAC driver release note
 * Align existing driver APIs to firmware APIs
 * Aligned on firmware 2.2.1
 
+## Known issues
+* The softAP interface is not set correctly by the driver
+
 # Release 1.0.1
 (release date 2019-03-04)
+
+##New Features/Improvements/Bug fixes
 * Modification in wf200_bus_sdio.c to improve SDIO support
 * Removed Doxygen HTML output
 * Aligned on firmware 2.0.0

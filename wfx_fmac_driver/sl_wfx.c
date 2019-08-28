@@ -266,7 +266,7 @@ sl_status_t sl_wfx_send_join_command(const uint8_t  *ssid,
   result = sl_wfx_allocate_command_buffer(&frame, SL_WFX_CONNECT_REQ_ID, SL_WFX_CONTROL_BUFFER, request_length);
   SL_WFX_ERROR_CHECK(result);
 
-  frame->header.info |= SL_WFX_STA_INTERFACE << SL_WFX_MSG_INFO_INTERFACE_OFFSET;
+  frame->header.info = SL_WFX_STA_INTERFACE << SL_WFX_MSG_INFO_INTERFACE_OFFSET;
 
   connect_request                        = (sl_wfx_connect_req_body_t *)&frame->body;
   connect_request->ssid_def.ssid_length  = sl_wfx_htole32(ssid_length);
@@ -365,7 +365,7 @@ sl_status_t sl_wfx_start_ap_command(uint16_t        channel,
   result = sl_wfx_allocate_command_buffer(&frame, SL_WFX_START_AP_REQ_ID, SL_WFX_CONTROL_BUFFER, request_length);
   SL_WFX_ERROR_CHECK(result);
 
-  frame->header.info |= SL_WFX_SOFTAP_INTERFACE << SL_WFX_MSG_INFO_INTERFACE_OFFSET;
+  frame->header.info = SL_WFX_SOFTAP_INTERFACE << SL_WFX_MSG_INFO_INTERFACE_OFFSET;
 
   start_ap_request                            = (sl_wfx_start_ap_req_body_t *)&frame->body;
   start_ap_request->ssid_def.ssid_length      = sl_wfx_htole32(ssid_length);
@@ -430,7 +430,7 @@ sl_status_t sl_wfx_update_ap_command(uint16_t beacon_ie_data_length,
   result = sl_wfx_allocate_command_buffer(&frame, SL_WFX_UPDATE_AP_REQ_ID, SL_WFX_CONTROL_BUFFER, request_length);
   SL_WFX_ERROR_CHECK(result);
 
-  frame->header.info |= SL_WFX_SOFTAP_INTERFACE << SL_WFX_MSG_INFO_INTERFACE_OFFSET;
+  frame->header.info = SL_WFX_SOFTAP_INTERFACE << SL_WFX_MSG_INFO_INTERFACE_OFFSET;
 
   update_ap_request                            = (sl_wfx_update_ap_req_body_t *)&frame->body;
   update_ap_request->beacon_ie_data_length     = sl_wfx_htole16(beacon_ie_data_length);
@@ -494,7 +494,7 @@ sl_status_t sl_wfx_send_ethernet_frame(sl_wfx_send_frame_req_t *frame,
 
   frame->header.length           = sl_wfx_htole16(data_length + sizeof(sl_wfx_send_frame_req_t));
   frame->header.id               = SL_WFX_SEND_FRAME_REQ_ID;
-  frame->header.info            |= (interface << SL_WFX_MSG_INFO_INTERFACE_OFFSET) & SL_WFX_MSG_INFO_INTERFACE_MASK;
+  frame->header.info             = (interface << SL_WFX_MSG_INFO_INTERFACE_OFFSET) & SL_WFX_MSG_INFO_INTERFACE_MASK;
   frame->body.frame_type         = WFM_FRAME_TYPE_DATA;
   frame->body.priority           = priority;
   frame->body.packet_id          = sl_wfx_htole16(sl_wfx_context->data_frame_id);
@@ -543,7 +543,7 @@ sl_status_t sl_wfx_send_scan_command(uint16_t               scan_mode,
   result = sl_wfx_allocate_command_buffer(&frame, SL_WFX_START_SCAN_REQ_ID, SL_WFX_CONTROL_BUFFER, request_total_length);
   SL_WFX_ERROR_CHECK(result);
 
-  frame->header.info |= SL_WFX_STA_INTERFACE << SL_WFX_MSG_INFO_INTERFACE_OFFSET;
+  frame->header.info = SL_WFX_STA_INTERFACE << SL_WFX_MSG_INFO_INTERFACE_OFFSET;
 
   scan_request = (sl_wfx_start_scan_req_body_t *)frame->body;
 
@@ -953,7 +953,7 @@ sl_status_t sl_wfx_set_roam_parameters(uint8_t rcpi_threshold,
   result = sl_wfx_allocate_command_buffer(&frame, SL_WFX_SET_ROAM_PARAMETERS_REQ_ID, SL_WFX_CONTROL_BUFFER, request_length);
   SL_WFX_ERROR_CHECK(result);
 
-  frame->header.info |= SL_WFX_STA_INTERFACE << SL_WFX_MSG_INFO_INTERFACE_OFFSET;
+  frame->header.info = SL_WFX_STA_INTERFACE << SL_WFX_MSG_INFO_INTERFACE_OFFSET;
 
   request = (sl_wfx_set_roam_parameters_req_body_t *)frame->body;
 
@@ -1108,7 +1108,7 @@ sl_status_t sl_wfx_send_configuration(const char *pds_data, uint32_t pds_data_le
   result = sl_wfx_allocate_command_buffer(&frame, SL_WFX_CONFIGURATION_REQ_ID, SL_WFX_CONTROL_BUFFER, request_length);
   SL_WFX_ERROR_CHECK(result);
 
-  frame->header.info |= SL_WFX_STA_INTERFACE << SL_WFX_MSG_INFO_INTERFACE_OFFSET;
+  frame->header.info = SL_WFX_STA_INTERFACE << SL_WFX_MSG_INFO_INTERFACE_OFFSET;
 
   config_request = (sl_wfx_configuration_req_body_t *)&frame->body;
   config_request->length = sl_wfx_htole16(pds_data_length);
@@ -1196,7 +1196,7 @@ sl_status_t sl_wfx_shutdown(void)
   result = sl_wfx_allocate_command_buffer(&frame, SL_WFX_SHUT_DOWN_REQ_ID, SL_WFX_CONTROL_BUFFER, sizeof(sl_wfx_shut_down_req_t));
   SL_WFX_ERROR_CHECK(result);
 
-  frame->header.info |= SL_WFX_STA_INTERFACE << SL_WFX_MSG_INFO_INTERFACE_OFFSET;
+  frame->header.info = SL_WFX_STA_INTERFACE << SL_WFX_MSG_INFO_INTERFACE_OFFSET;
 
   result = sl_wfx_send_request(SL_WFX_SHUT_DOWN_REQ_ID, frame, sizeof(sl_wfx_shut_down_req_t) );
   SL_WFX_ERROR_CHECK(result);
@@ -1251,7 +1251,7 @@ sl_status_t sl_wfx_send_command(uint8_t command_id,
   result = sl_wfx_allocate_command_buffer(&request, command_id, SL_WFX_CONTROL_BUFFER, request_length);
   SL_WFX_ERROR_CHECK(result);
 
-  request->header.info |= (interface << SL_WFX_MSG_INFO_INTERFACE_OFFSET) & SL_WFX_MSG_INFO_INTERFACE_MASK;
+  request->header.info = (interface << SL_WFX_MSG_INFO_INTERFACE_OFFSET) & SL_WFX_MSG_INFO_INTERFACE_MASK;
 
   if (data != NULL) {
     memcpy(request->body, data, data_size);
