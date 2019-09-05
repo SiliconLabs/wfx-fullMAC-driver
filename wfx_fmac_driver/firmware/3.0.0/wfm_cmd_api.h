@@ -103,104 +103,104 @@
  * @brief WFM API request message IDs.
  */
 typedef enum sl_wfx_requests_ids_e {
-  SL_WFX_SET_MAC_ADDRESS_REQ_ID                   = 0x42,///< \b SET_MAC_ADDRESS request ID uses body SL_WFX_SET_MAC_ADDRESS_REQ_BODY and returns SL_WFX_SET_MAC_ADDRESS_CNF_BODY
-  SL_WFX_CONNECT_REQ_ID                           = 0x43,///< \b CONNECT request ID uses body SL_WFX_CONNECT_REQ_BODY and returns SL_WFX_CONNECT_CNF_BODY
-  SL_WFX_DISCONNECT_REQ_ID                        = 0x44,///< \b DISCONNECT request ID uses body SL_WFX_DISCONNECT_REQ_BODY and returns SL_WFX_DISCONNECT_CNF_BODY
-  SL_WFX_START_AP_REQ_ID                          = 0x45,///< \b START_AP request ID uses body SL_WFX_START_AP_REQ_BODY and returns SL_WFX_START_AP_CNF_BODY
-  SL_WFX_UPDATE_AP_REQ_ID                         = 0x46,///< \b UPDATE_AP request ID uses body SL_WFX_UPDATE_AP_REQ_BODY and returns SL_WFX_UPDATE_AP_CNF_BODY
-  SL_WFX_STOP_AP_REQ_ID                           = 0x47,///< \b STOP_AP request ID uses body SL_WFX_STOP_AP_REQ_BODY and returns SL_WFX_STOP_AP_CNF_BODY
-  SL_WFX_SEND_FRAME_REQ_ID                        = 0x4a,///< \b SEND_FRAME request ID uses body SL_WFX_SEND_FRAME_REQ_BODY and returns SL_WFX_SEND_FRAME_CNF_BODY
-  SL_WFX_START_SCAN_REQ_ID                        = 0x4b,///< \b START_SCAN request ID uses body SL_WFX_START_SCAN_REQ_BODY and returns SL_WFX_START_SCAN_CNF_BODY
-  SL_WFX_STOP_SCAN_REQ_ID                         = 0x4c,///< \b STOP_SCAN request ID uses body SL_WFX_STOP_SCAN_REQ_BODY and returns SL_WFX_STOP_SCAN_CNF_BODY
-  SL_WFX_GET_SIGNAL_STRENGTH_REQ_ID               = 0x4e,///< \b GET_SIGNAL_STRENGTH request ID uses body SL_WFX_GET_SIGNAL_STRENGTH_REQ_BODY and returns SL_WFX_GET_SIGNAL_STRENGTH_CNF_BODY
-  SL_WFX_DISCONNECT_AP_CLIENT_REQ_ID              = 0x4f,///< \b DISCONNECT_AP_CLIENT request ID uses body SL_WFX_DISCONNECT_AP_CLIENT_REQ_BODY and returns SL_WFX_DISCONNECT_AP_CLIENT_CNF_BODY
-  SL_WFX_JOIN_IBSS_REQ_ID                         = 0x50,///< \b JOIN_IBSS request ID uses body SL_WFX_JOIN_IBSS_REQ_BODY and returns SL_WFX_JOIN_IBSS_CNF_BODY
-  SL_WFX_LEAVE_IBSS_REQ_ID                        = 0x51,///< \b LEAVE_IBSS request ID uses body SL_WFX_LEAVE_IBSS_REQ_BODY and returns SL_WFX_LEAVE_IBSS_CNF_BODY
-  SL_WFX_SET_PM_MODE_REQ_ID                       = 0x52,///< \b SET_PM_MODE request ID uses body SL_WFX_SET_PM_MODE_REQ_BODY and returns SL_WFX_SET_PM_MODE_CNF_BODY
-  SL_WFX_ADD_MULTICAST_ADDR_REQ_ID                = 0x53,///< \b ADD_MULTICAST_ADDR request ID uses body SL_WFX_ADD_MULTICAST_ADDR_REQ_BODY and returns SL_WFX_ADD_MULTICAST_ADDR_CNF_BODY
-  SL_WFX_REMOVE_MULTICAST_ADDR_REQ_ID             = 0x54,///< \b REMOVE_MULTICAST_ADDR request ID uses body SL_WFX_REMOVE_MULTICAST_ADDR_REQ_BODY and returns SL_WFX_REMOVE_MULTICAST_ADDR_CNF_BODY
-  SL_WFX_SET_MAX_AP_CLIENT_COUNT_REQ_ID           = 0x55,///< \b SET_MAX_AP_CLIENT_COUNT request ID uses body SL_WFX_SET_MAX_AP_CLIENT_COUNT_REQ_BODY and returns SL_WFX_SET_MAX_AP_CLIENT_COUNT_CNF_BODY
-  SL_WFX_SET_MAX_AP_CLIENT_INACTIVITY_REQ_ID      = 0x56,///< \b SET_MAX_AP_CLIENT_INACTIVITY request ID uses body SL_WFX_SET_MAX_AP_CLIENT_INACTIVITY_REQ_BODY and returns SL_WFX_SET_MAX_AP_CLIENT_INACTIVITY_CNF_BODY
-  SL_WFX_SET_ROAM_PARAMETERS_REQ_ID               = 0x57,///< \b SET_ROAM_PARAMETERS request ID uses body SL_WFX_SET_ROAM_PARAMETERS_REQ_BODY and returns SL_WFX_SET_ROAM_PARAMETERS_CNF_BODY
-  SL_WFX_SET_TX_RATE_PARAMETERS_REQ_ID            = 0x58,///< \b SET_TX_RATE_PARAMETERS request ID uses body SL_WFX_SET_TX_RATE_PARAMETERS_REQ_BODY and returns SL_WFX_SET_TX_RATE_PARAMETERS_CNF_BODY
-  SL_WFX_SET_ARP_IP_ADDRESS_REQ_ID                = 0x59,///< \b SET_ARP_IP_ADDRESS request ID uses body SL_WFX_SET_ARP_IP_ADDRESS_REQ_BODY and returns SL_WFX_SET_ARP_IP_ADDRESS_CNF_BODY
-  SL_WFX_SET_NS_IP_ADDRESS_REQ_ID                 = 0x5A,///< \b SET_NS_IP_ADDRESS request ID uses body SL_WFX_SET_NS_IP_ADDRESS_REQ_BODY and returns SL_WFX_SET_NS_IP_ADDRESS_CNF_BODY
-  SL_WFX_SET_BROADCAST_FILTER_REQ_ID              = 0x5B,///< \b SET_BROADCAST_FILTER request ID uses body SL_WFX_SET_BROADCAST_FILTER_REQ_BODY and returns SL_WFX_SET_BROADCAST_FILTER_CNF_BODY
-  SL_WFX_SET_SCAN_PARAMETERS_REQ_ID               = 0x5C,///< \b SET_SCAN_PARAMETERS request ID uses body SL_WFX_SET_SCAN_PARAMETERS_REQ_BODY and returns SL_WFX_SET_SCAN_PARAMETERS_CNF_BODY
-  SL_WFX_SET_UNICAST_FILTER_REQ_ID                = 0x5D,///< \b SET_UNICAST_FILTER request ID uses body SL_WFX_SET_UNICAST_FILTER_REQ_BODY and returns SL_WFX_SET_UNICAST_FILTER_CNF_BODY
-  SL_WFX_ADD_WHITELIST_ADDR_REQ_ID                = 0x5E,///< \b ADD_WHITELIST_ADDR request ID uses body SL_WFX_ADD_WHITELIST_ADDR_REQ_BODY and returns SL_WFX_ADD_WHITELIST_ADDR_CNF_BODY
-  SL_WFX_ADD_BLACKLIST_ADDR_REQ_ID                = 0x5F,///< \b ADD_BLACKLIST_ADDR request ID uses body SL_WFX_ADD_BLACKLIST_ADDR_REQ_BODY and returns SL_WFX_ADD_BLACKLIST_ADDR_CNF_BODY
-  SL_WFX_SET_MAX_TX_POWER_REQ_ID                  = 0x60,///< \b SET_MAX_TX_POWER request ID uses body SL_WFX_SET_MAX_TX_POWER_REQ_BODY and returns SL_WFX_SET_MAX_TX_POWER_CNF_BODY
-  SL_WFX_GET_MAX_TX_POWER_REQ_ID                  = 0x61,///< \b GET_MAX_TX_POWER request ID uses body SL_WFX_GET_MAX_TX_POWER_REQ_BODY and returns SL_WFX_GET_MAX_TX_POWER_CNF_BODY
-  SL_WFX_GET_PMK_REQ_ID                           = 0x62,///< \b GET_PMK request ID uses body SL_WFX_GET_PMK_REQ_BODY and returns SL_WFX_GET_PMK_CNF_BODY
-  SL_WFX_GET_AP_CLIENT_SIGNAL_STRENGTH_REQ_ID     = 0x63///< \b GET_AP_CLIENT_SIGNAL_STRENGTH request ID uses body SL_WFX_GET_AP_CLIENT_SIGNAL_STRENGTH_BODY and returns SL_WFX_GET_AP_CLIENT_SIGNAL_STRENGTH_CNF_BODY
+  SL_WFX_SET_MAC_ADDRESS_REQ_ID                  = 0x42,   ///< \b SET_MAC_ADDRESS request ID uses body SL_WFX_SET_MAC_ADDRESS_REQ_BODY and returns SL_WFX_SET_MAC_ADDRESS_CNF_BODY
+  SL_WFX_CONNECT_REQ_ID                          = 0x43,   ///< \b CONNECT request ID uses body SL_WFX_CONNECT_REQ_BODY and returns SL_WFX_CONNECT_CNF_BODY
+  SL_WFX_DISCONNECT_REQ_ID                       = 0x44,   ///< \b DISCONNECT request ID uses body SL_WFX_DISCONNECT_REQ_BODY and returns SL_WFX_DISCONNECT_CNF_BODY
+  SL_WFX_START_AP_REQ_ID                         = 0x45,   ///< \b START_AP request ID uses body SL_WFX_START_AP_REQ_BODY and returns SL_WFX_START_AP_CNF_BODY
+  SL_WFX_UPDATE_AP_REQ_ID                        = 0x46,   ///< \b UPDATE_AP request ID uses body SL_WFX_UPDATE_AP_REQ_BODY and returns SL_WFX_UPDATE_AP_CNF_BODY
+  SL_WFX_STOP_AP_REQ_ID                          = 0x47,   ///< \b STOP_AP request ID uses body SL_WFX_STOP_AP_REQ_BODY and returns SL_WFX_STOP_AP_CNF_BODY
+  SL_WFX_SEND_FRAME_REQ_ID                       = 0x4a,   ///< \b SEND_FRAME request ID uses body SL_WFX_SEND_FRAME_REQ_BODY and returns SL_WFX_SEND_FRAME_CNF_BODY
+  SL_WFX_START_SCAN_REQ_ID                       = 0x4b,   ///< \b START_SCAN request ID uses body SL_WFX_START_SCAN_REQ_BODY and returns SL_WFX_START_SCAN_CNF_BODY
+  SL_WFX_STOP_SCAN_REQ_ID                        = 0x4c,   ///< \b STOP_SCAN request ID uses body SL_WFX_STOP_SCAN_REQ_BODY and returns SL_WFX_STOP_SCAN_CNF_BODY
+  SL_WFX_GET_SIGNAL_STRENGTH_REQ_ID              = 0x4e,   ///< \b GET_SIGNAL_STRENGTH request ID uses body SL_WFX_GET_SIGNAL_STRENGTH_REQ_BODY and returns SL_WFX_GET_SIGNAL_STRENGTH_CNF_BODY
+  SL_WFX_DISCONNECT_AP_CLIENT_REQ_ID             = 0x4f,   ///< \b DISCONNECT_AP_CLIENT request ID uses body SL_WFX_DISCONNECT_AP_CLIENT_REQ_BODY and returns SL_WFX_DISCONNECT_AP_CLIENT_CNF_BODY
+  SL_WFX_JOIN_IBSS_REQ_ID                        = 0x50,   ///< \b JOIN_IBSS request ID uses body SL_WFX_JOIN_IBSS_REQ_BODY and returns SL_WFX_JOIN_IBSS_CNF_BODY
+  SL_WFX_LEAVE_IBSS_REQ_ID                       = 0x51,   ///< \b LEAVE_IBSS request ID uses body SL_WFX_LEAVE_IBSS_REQ_BODY and returns SL_WFX_LEAVE_IBSS_CNF_BODY
+  SL_WFX_SET_PM_MODE_REQ_ID                      = 0x52,   ///< \b SET_PM_MODE request ID uses body SL_WFX_SET_PM_MODE_REQ_BODY and returns SL_WFX_SET_PM_MODE_CNF_BODY
+  SL_WFX_ADD_MULTICAST_ADDR_REQ_ID               = 0x53,   ///< \b ADD_MULTICAST_ADDR request ID uses body SL_WFX_ADD_MULTICAST_ADDR_REQ_BODY and returns SL_WFX_ADD_MULTICAST_ADDR_CNF_BODY
+  SL_WFX_REMOVE_MULTICAST_ADDR_REQ_ID            = 0x54,   ///< \b REMOVE_MULTICAST_ADDR request ID uses body SL_WFX_REMOVE_MULTICAST_ADDR_REQ_BODY and returns SL_WFX_REMOVE_MULTICAST_ADDR_CNF_BODY
+  SL_WFX_SET_MAX_AP_CLIENT_COUNT_REQ_ID          = 0x55,   ///< \b SET_MAX_AP_CLIENT_COUNT request ID uses body SL_WFX_SET_MAX_AP_CLIENT_COUNT_REQ_BODY and returns SL_WFX_SET_MAX_AP_CLIENT_COUNT_CNF_BODY
+  SL_WFX_SET_MAX_AP_CLIENT_INACTIVITY_REQ_ID     = 0x56,   ///< \b SET_MAX_AP_CLIENT_INACTIVITY request ID uses body SL_WFX_SET_MAX_AP_CLIENT_INACTIVITY_REQ_BODY and returns SL_WFX_SET_MAX_AP_CLIENT_INACTIVITY_CNF_BODY
+  SL_WFX_SET_ROAM_PARAMETERS_REQ_ID              = 0x57,   ///< \b SET_ROAM_PARAMETERS request ID uses body SL_WFX_SET_ROAM_PARAMETERS_REQ_BODY and returns SL_WFX_SET_ROAM_PARAMETERS_CNF_BODY
+  SL_WFX_SET_TX_RATE_PARAMETERS_REQ_ID           = 0x58,   ///< \b SET_TX_RATE_PARAMETERS request ID uses body SL_WFX_SET_TX_RATE_PARAMETERS_REQ_BODY and returns SL_WFX_SET_TX_RATE_PARAMETERS_CNF_BODY
+  SL_WFX_SET_ARP_IP_ADDRESS_REQ_ID               = 0x59,   ///< \b SET_ARP_IP_ADDRESS request ID uses body SL_WFX_SET_ARP_IP_ADDRESS_REQ_BODY and returns SL_WFX_SET_ARP_IP_ADDRESS_CNF_BODY
+  SL_WFX_SET_NS_IP_ADDRESS_REQ_ID                = 0x5A,   ///< \b SET_NS_IP_ADDRESS request ID uses body SL_WFX_SET_NS_IP_ADDRESS_REQ_BODY and returns SL_WFX_SET_NS_IP_ADDRESS_CNF_BODY
+  SL_WFX_SET_BROADCAST_FILTER_REQ_ID             = 0x5B,   ///< \b SET_BROADCAST_FILTER request ID uses body SL_WFX_SET_BROADCAST_FILTER_REQ_BODY and returns SL_WFX_SET_BROADCAST_FILTER_CNF_BODY
+  SL_WFX_SET_SCAN_PARAMETERS_REQ_ID              = 0x5C,   ///< \b SET_SCAN_PARAMETERS request ID uses body SL_WFX_SET_SCAN_PARAMETERS_REQ_BODY and returns SL_WFX_SET_SCAN_PARAMETERS_CNF_BODY
+  SL_WFX_SET_UNICAST_FILTER_REQ_ID               = 0x5D,   ///< \b SET_UNICAST_FILTER request ID uses body SL_WFX_SET_UNICAST_FILTER_REQ_BODY and returns SL_WFX_SET_UNICAST_FILTER_CNF_BODY
+  SL_WFX_ADD_WHITELIST_ADDR_REQ_ID               = 0x5E,   ///< \b ADD_WHITELIST_ADDR request ID uses body SL_WFX_ADD_WHITELIST_ADDR_REQ_BODY and returns SL_WFX_ADD_WHITELIST_ADDR_CNF_BODY
+  SL_WFX_ADD_BLACKLIST_ADDR_REQ_ID               = 0x5F,   ///< \b ADD_BLACKLIST_ADDR request ID uses body SL_WFX_ADD_BLACKLIST_ADDR_REQ_BODY and returns SL_WFX_ADD_BLACKLIST_ADDR_CNF_BODY
+  SL_WFX_SET_MAX_TX_POWER_REQ_ID                 = 0x60,   ///< \b SET_MAX_TX_POWER request ID uses body SL_WFX_SET_MAX_TX_POWER_REQ_BODY and returns SL_WFX_SET_MAX_TX_POWER_CNF_BODY
+  SL_WFX_GET_MAX_TX_POWER_REQ_ID                 = 0x61,   ///< \b GET_MAX_TX_POWER request ID uses body SL_WFX_GET_MAX_TX_POWER_REQ_BODY and returns SL_WFX_GET_MAX_TX_POWER_CNF_BODY
+  SL_WFX_GET_PMK_REQ_ID                          = 0x62,   ///< \b GET_PMK request ID uses body SL_WFX_GET_PMK_REQ_BODY and returns SL_WFX_GET_PMK_CNF_BODY
+  SL_WFX_GET_AP_CLIENT_SIGNAL_STRENGTH_REQ_ID    = 0x63    ///< \b GET_AP_CLIENT_SIGNAL_STRENGTH request ID uses body SL_WFX_GET_AP_CLIENT_SIGNAL_STRENGTH_BODY and returns SL_WFX_GET_AP_CLIENT_SIGNAL_STRENGTH_CNF_BODY
 } sl_wfx_requests_ids_t;
-
-/**
- * @brief WFM API indication message IDs.
- */
-typedef enum sl_wfx_indications_ids_e {
-  SL_WFX_CONNECT_IND_ID                           = 0xc3,///< \b CONNECT indication id. Content is SL_WFX_CONNECT_IND_BODY
-  SL_WFX_DISCONNECT_IND_ID                        = 0xc4,///< \b DISCONNECT indication id. Content is SL_WFX_DISCONNECT_IND_BODY
-  SL_WFX_START_AP_IND_ID                          = 0xc5,///< \b START_AP indication id. Content is SL_WFX_START_AP_IND_BODY
-  SL_WFX_STOP_AP_IND_ID                           = 0xc7,///< \b STOP_AP indication id. Content is SL_WFX_STOP_AP_IND_BODY
-  SL_WFX_RECEIVED_IND_ID                          = 0xca,///< \b RECEIVED indication id. Content is SL_WFX_RECEIVED_IND_BODY
-  SL_WFX_SCAN_RESULT_IND_ID                       = 0xcb,///< \b SCAN_RESULT indication id. Content is SL_WFX_SCAN_RESULT_IND_BODY
-  SL_WFX_SCAN_COMPLETE_IND_ID                     = 0xcc,///< \b SCAN_COMPLETE indication id. Content is SL_WFX_SCAN_COMPLETE_IND_BODY
-  SL_WFX_AP_CLIENT_CONNECTED_IND_ID               = 0xcd,///< \b AP_CLIENT_CONNECTED indication id. Content is SL_WFX_AP_CLIENT_CONNECTED_IND_BODY
-  SL_WFX_AP_CLIENT_REJECTED_IND_ID                = 0xce,///< \b AP_CLIENT_REJECTED indication id. Content is SL_WFX_AP_CLIENT_REJECTED_IND_BODY
-  SL_WFX_AP_CLIENT_DISCONNECTED_IND_ID            = 0xcf,///< \b AP_CLIENT_DISCONNECTED indication id. Content is SL_WFX_AP_CLIENT_DISCONNECTED_IND_BODY
-  SL_WFX_JOIN_IBSS_IND_ID                         = 0xd0,///< \b JOIN_IBSS indication id. Content is SL_WFX_JOIN_IBSS_IND_BODY
-  SL_WFX_LEAVE_IBSS_IND_ID                        = 0xd1///< \b LEAVE_IBSS indication id. Content is SL_WFX_LEAVE_IBSS_IND_BODY
-} sl_wfx_indications_ids_t;
 
 /**
  * @brief WFM API confirmation message IDs.
  */
 typedef enum sl_wfx_confirmations_ids_e {
-  SL_WFX_SET_MAC_ADDRESS_CNF_ID                   = 0x42,///< \b SET_MAC_ADDRESS confirmation Id. Returns body SL_WFX_SET_MAC_ADDRESS_CNF_BODY
-  SL_WFX_CONNECT_CNF_ID                           = 0x43,///< \b CONNECT confirmation Id. Returns body SL_WFX_CONNECT_CNF_BODY
-  SL_WFX_DISCONNECT_CNF_ID                        = 0x44,///< \b DISCONNECT confirmation Id. Returns body SL_WFX_DISCONNECT_CNF_BODY
-  SL_WFX_START_AP_CNF_ID                          = 0x45,///< \b START_AP confirmation Id. Returns body SL_WFX_START_AP_CNF_BODY
-  SL_WFX_UPDATE_AP_CNF_ID                         = 0x46,///< \b UPDATE_AP confirmation Id. Returns body SL_WFX_UPDATE_AP_CNF_BODY
-  SL_WFX_STOP_AP_CNF_ID                           = 0x47,///< \b STOP_AP confirmation Id. Returns body SL_WFX_STOP_AP_CNF_BODY
-  SL_WFX_SEND_FRAME_CNF_ID                        = 0x4a,///< \b SEND_FRAME confirmation Id. Returns body SL_WFX_SEND_FRAME_CNF_BODY
-  SL_WFX_START_SCAN_CNF_ID                        = 0x4b,///< \b START_SCAN confirmation Id. Returns body SL_WFX_START_SCAN_CNF_BODY
-  SL_WFX_STOP_SCAN_CNF_ID                         = 0x4c,///< \b STOP_SCAN confirmation Id. Returns body SL_WFX_STOP_SCAN_CNF_BODY
-  SL_WFX_GET_SIGNAL_STRENGTH_CNF_ID               = 0x4e,///< \b GET_SIGNAL_STRENGTH confirmation Id. Returns body SL_WFX_GET_SIGNAL_STRENGTH_CNF_BODY
-  SL_WFX_DISCONNECT_AP_CLIENT_CNF_ID              = 0x4f,///< \b DISCONNECT_AP_CLIENT confirmation Id. Returns body SL_WFX_DISCONNECT_AP_CLIENT_CNF_BODY
-  SL_WFX_JOIN_IBSS_CNF_ID                         = 0x50,///< \b JOIN_IBSS confirmation Id. Returns body SL_WFX_JOIN_IBSS_CNF_BODY
-  SL_WFX_LEAVE_IBSS_CNF_ID                        = 0x51,///< \b LEAVE_IBSS confirmation Id. Returns body SL_WFX_LEAVE_IBSS_CNF_BODY
-  SL_WFX_SET_PM_MODE_CNF_ID                       = 0x52,///< \b SET_PM_MODE confirmation Id. Returns body SL_WFX_SET_PM_MODE_CNF_BODY
-  SL_WFX_ADD_MULTICAST_ADDR_CNF_ID                = 0x53,///< \b ADD_MULTICAST_ADDR confirmation Id. Returns body SL_WFX_ADD_MULTICAST_ADDR_CNF_BODY
-  SL_WFX_REMOVE_MULTICAST_ADDR_CNF_ID             = 0x54,///< \b REMOVE_MULTICAST_ADDR confirmation Id. Returns body SL_WFX_REMOVE_MULTICAST_ADDR_CNF_BODY
-  SL_WFX_SET_MAX_AP_CLIENT_COUNT_CNF_ID           = 0x55,///< \b SET_MAX_AP_CLIENT_COUNT confirmation Id. Returns body SL_WFX_SET_MAX_AP_CLIENT_COUNT_CNF_BODY
-  SL_WFX_SET_MAX_AP_CLIENT_INACTIVITY_CNF_ID      = 0x56,///< \b SET_MAX_AP_CLIENT_INACTIVITY confirmation Id. Returns body SL_WFX_SET_MAX_AP_CLIENT_INACTIVITY_CNF_BODY
-  SL_WFX_SET_ROAM_PARAMETERS_CNF_ID               = 0x57,///< \b SET_ROAM_PARAMETERS confirmation Id. Returns body SL_WFX_SET_ROAM_PARAMETERS_CNF_BODY
-  SL_WFX_SET_TX_RATE_PARAMETERS_CNF_ID            = 0x58,///< \b SET_TX_RATE_PARAMETERS confirmation Id. Returns body SL_WFX_SET_TX_RATE_PARAMETERS_CNF_BODY
-  SL_WFX_SET_ARP_IP_ADDRESS_CNF_ID                = 0x59,///< \b SET_ARP_IP_ADDRESS confirmation Id. Returns body SL_WFX_SET_ARP_IP_ADDRESS_CNF_BODY
-  SL_WFX_SET_NS_IP_ADDRESS_CNF_ID                 = 0x5A,///< \b SET_NS_IP_ADDRESS confirmation Id. Returns body SL_WFX_SET_NS_IP_ADDRESS_CNF_BODY
-  SL_WFX_SET_BROADCAST_FILTER_CNF_ID              = 0x5B,///< \b SET_BROADCAST_FILTER confirmation Id. Returns body SL_WFX_SET_BROADCAST_FILTER_CNF_BODY
-  SL_WFX_SET_SCAN_PARAMETERS_CNF_ID               = 0x5C,///< \b SET_SCAN_PARAMETERS confirmation Id. Returns body SL_WFX_SET_SCAN_PARAMETERS_CNF_BODY
-  SL_WFX_SET_UNICAST_FILTER_CNF_ID                = 0x5D,///< \b SET_UNICAST_FILTER confirmation Id. Returns body SL_WFX_SET_UNICAST_FILTER_CNF_BODY
-  SL_WFX_ADD_WHITELIST_ADDR_CNF_ID                = 0x5E,///< \b ADD_WHITELIST_ADDR confirmation Id. Returns body SL_WFX_ADD_WHITELIST_ADDR_CNF_BODY
-  SL_WFX_ADD_BLACKLIST_ADDR_CNF_ID                = 0x5F,///< \b ADD_BLACKLIST_ADDR confirmation Id. Returns body SL_WFX_ADD_BLACKLIST_ADDR_CNF_BODY
-  SL_WFX_SET_MAX_TX_POWER_CNF_ID                  = 0x60,///< \b SET_MAX_TX_POWER confirmation Id. Returns body SL_WFX_SET_MAX_TX_POWER_CNF_BODY
-  SL_WFX_GET_MAX_TX_POWER_CNF_ID                  = 0x61,///< \b GET_MAX_TX_POWER confirmation Id. Returns body SL_WFX_GET_MAX_TX_POWER_CNF_BODY
-  SL_WFX_GET_PMK_CNF_ID                           = 0x62,///< \b GET_PMK confirmation Id. Returns body SL_WFX_GET_PMK_CNF_BODY
-  SL_WFX_GET_AP_CLIENT_SIGNAL_STRENGTH_CNF_ID     = 0x63///< \b GET_AP_CLIENT_SIGNAL_STRENGTH confirmation Id. Returns body SL_WFX_GET_AP_CLIENT_SIGNAL_STRENGTH_CNF_BODY
+  SL_WFX_SET_MAC_ADDRESS_CNF_ID                  = 0x42,   ///< \b SET_MAC_ADDRESS confirmation Id. Returns body SL_WFX_SET_MAC_ADDRESS_CNF_BODY
+  SL_WFX_CONNECT_CNF_ID                          = 0x43,   ///< \b CONNECT confirmation Id. Returns body SL_WFX_CONNECT_CNF_BODY
+  SL_WFX_DISCONNECT_CNF_ID                       = 0x44,   ///< \b DISCONNECT confirmation Id. Returns body SL_WFX_DISCONNECT_CNF_BODY
+  SL_WFX_START_AP_CNF_ID                         = 0x45,   ///< \b START_AP confirmation Id. Returns body SL_WFX_START_AP_CNF_BODY
+  SL_WFX_UPDATE_AP_CNF_ID                        = 0x46,   ///< \b UPDATE_AP confirmation Id. Returns body SL_WFX_UPDATE_AP_CNF_BODY
+  SL_WFX_STOP_AP_CNF_ID                          = 0x47,   ///< \b STOP_AP confirmation Id. Returns body SL_WFX_STOP_AP_CNF_BODY
+  SL_WFX_SEND_FRAME_CNF_ID                       = 0x4a,   ///< \b SEND_FRAME confirmation Id. Returns body SL_WFX_SEND_FRAME_CNF_BODY
+  SL_WFX_START_SCAN_CNF_ID                       = 0x4b,   ///< \b START_SCAN confirmation Id. Returns body SL_WFX_START_SCAN_CNF_BODY
+  SL_WFX_STOP_SCAN_CNF_ID                        = 0x4c,   ///< \b STOP_SCAN confirmation Id. Returns body SL_WFX_STOP_SCAN_CNF_BODY
+  SL_WFX_GET_SIGNAL_STRENGTH_CNF_ID              = 0x4e,   ///< \b GET_SIGNAL_STRENGTH confirmation Id. Returns body SL_WFX_GET_SIGNAL_STRENGTH_CNF_BODY
+  SL_WFX_DISCONNECT_AP_CLIENT_CNF_ID             = 0x4f,   ///< \b DISCONNECT_AP_CLIENT confirmation Id. Returns body SL_WFX_DISCONNECT_AP_CLIENT_CNF_BODY
+  SL_WFX_JOIN_IBSS_CNF_ID                        = 0x50,   ///< \b JOIN_IBSS confirmation Id. Returns body SL_WFX_JOIN_IBSS_CNF_BODY
+  SL_WFX_LEAVE_IBSS_CNF_ID                       = 0x51,   ///< \b LEAVE_IBSS confirmation Id. Returns body SL_WFX_LEAVE_IBSS_CNF_BODY
+  SL_WFX_SET_PM_MODE_CNF_ID                      = 0x52,   ///< \b SET_PM_MODE confirmation Id. Returns body SL_WFX_SET_PM_MODE_CNF_BODY
+  SL_WFX_ADD_MULTICAST_ADDR_CNF_ID               = 0x53,   ///< \b ADD_MULTICAST_ADDR confirmation Id. Returns body SL_WFX_ADD_MULTICAST_ADDR_CNF_BODY
+  SL_WFX_REMOVE_MULTICAST_ADDR_CNF_ID            = 0x54,   ///< \b REMOVE_MULTICAST_ADDR confirmation Id. Returns body SL_WFX_REMOVE_MULTICAST_ADDR_CNF_BODY
+  SL_WFX_SET_MAX_AP_CLIENT_COUNT_CNF_ID          = 0x55,   ///< \b SET_MAX_AP_CLIENT_COUNT confirmation Id. Returns body SL_WFX_SET_MAX_AP_CLIENT_COUNT_CNF_BODY
+  SL_WFX_SET_MAX_AP_CLIENT_INACTIVITY_CNF_ID     = 0x56,   ///< \b SET_MAX_AP_CLIENT_INACTIVITY confirmation Id. Returns body SL_WFX_SET_MAX_AP_CLIENT_INACTIVITY_CNF_BODY
+  SL_WFX_SET_ROAM_PARAMETERS_CNF_ID              = 0x57,   ///< \b SET_ROAM_PARAMETERS confirmation Id. Returns body SL_WFX_SET_ROAM_PARAMETERS_CNF_BODY
+  SL_WFX_SET_TX_RATE_PARAMETERS_CNF_ID           = 0x58,   ///< \b SET_TX_RATE_PARAMETERS confirmation Id. Returns body SL_WFX_SET_TX_RATE_PARAMETERS_CNF_BODY
+  SL_WFX_SET_ARP_IP_ADDRESS_CNF_ID               = 0x59,   ///< \b SET_ARP_IP_ADDRESS confirmation Id. Returns body SL_WFX_SET_ARP_IP_ADDRESS_CNF_BODY
+  SL_WFX_SET_NS_IP_ADDRESS_CNF_ID                = 0x5A,   ///< \b SET_NS_IP_ADDRESS confirmation Id. Returns body SL_WFX_SET_NS_IP_ADDRESS_CNF_BODY
+  SL_WFX_SET_BROADCAST_FILTER_CNF_ID             = 0x5B,   ///< \b SET_BROADCAST_FILTER confirmation Id. Returns body SL_WFX_SET_BROADCAST_FILTER_CNF_BODY
+  SL_WFX_SET_SCAN_PARAMETERS_CNF_ID              = 0x5C,   ///< \b SET_SCAN_PARAMETERS confirmation Id. Returns body SL_WFX_SET_SCAN_PARAMETERS_CNF_BODY
+  SL_WFX_SET_UNICAST_FILTER_CNF_ID               = 0x5D,   ///< \b SET_UNICAST_FILTER confirmation Id. Returns body SL_WFX_SET_UNICAST_FILTER_CNF_BODY
+  SL_WFX_ADD_WHITELIST_ADDR_CNF_ID               = 0x5E,   ///< \b ADD_WHITELIST_ADDR confirmation Id. Returns body SL_WFX_ADD_WHITELIST_ADDR_CNF_BODY
+  SL_WFX_ADD_BLACKLIST_ADDR_CNF_ID               = 0x5F,   ///< \b ADD_BLACKLIST_ADDR confirmation Id. Returns body SL_WFX_ADD_BLACKLIST_ADDR_CNF_BODY
+  SL_WFX_SET_MAX_TX_POWER_CNF_ID                 = 0x60,   ///< \b SET_MAX_TX_POWER confirmation Id. Returns body SL_WFX_SET_MAX_TX_POWER_CNF_BODY
+  SL_WFX_GET_MAX_TX_POWER_CNF_ID                 = 0x61,   ///< \b GET_MAX_TX_POWER confirmation Id. Returns body SL_WFX_GET_MAX_TX_POWER_CNF_BODY
+  SL_WFX_GET_PMK_CNF_ID                          = 0x62,   ///< \b GET_PMK confirmation Id. Returns body SL_WFX_GET_PMK_CNF_BODY
+  SL_WFX_GET_AP_CLIENT_SIGNAL_STRENGTH_CNF_ID    = 0x63    ///< \b GET_AP_CLIENT_SIGNAL_STRENGTH confirmation Id. Returns body SL_WFX_GET_AP_CLIENT_SIGNAL_STRENGTH_CNF_BODY
 } sl_wfx_confirmations_ids_t;
+
+/**
+ * @brief WFM API indication message IDs.
+ */
+typedef enum sl_wfx_indications_ids_e {
+  SL_WFX_CONNECT_IND_ID                          = 0xc3,   ///< \b CONNECT indication id. Content is SL_WFX_CONNECT_IND_BODY
+  SL_WFX_DISCONNECT_IND_ID                       = 0xc4,   ///< \b DISCONNECT indication id. Content is SL_WFX_DISCONNECT_IND_BODY
+  SL_WFX_START_AP_IND_ID                         = 0xc5,   ///< \b START_AP indication id. Content is SL_WFX_START_AP_IND_BODY
+  SL_WFX_STOP_AP_IND_ID                          = 0xc7,   ///< \b STOP_AP indication id. Content is SL_WFX_STOP_AP_IND_BODY
+  SL_WFX_RECEIVED_IND_ID                         = 0xca,   ///< \b RECEIVED indication id. Content is SL_WFX_RECEIVED_IND_BODY
+  SL_WFX_SCAN_RESULT_IND_ID                      = 0xcb,   ///< \b SCAN_RESULT indication id. Content is SL_WFX_SCAN_RESULT_IND_BODY
+  SL_WFX_SCAN_COMPLETE_IND_ID                    = 0xcc,   ///< \b SCAN_COMPLETE indication id. Content is SL_WFX_SCAN_COMPLETE_IND_BODY
+  SL_WFX_AP_CLIENT_CONNECTED_IND_ID              = 0xcd,   ///< \b AP_CLIENT_CONNECTED indication id. Content is SL_WFX_AP_CLIENT_CONNECTED_IND_BODY
+  SL_WFX_AP_CLIENT_REJECTED_IND_ID               = 0xce,   ///< \b AP_CLIENT_REJECTED indication id. Content is SL_WFX_AP_CLIENT_REJECTED_IND_BODY
+  SL_WFX_AP_CLIENT_DISCONNECTED_IND_ID           = 0xcf,   ///< \b AP_CLIENT_DISCONNECTED indication id. Content is SL_WFX_AP_CLIENT_DISCONNECTED_IND_BODY
+  SL_WFX_JOIN_IBSS_IND_ID                        = 0xd0,   ///< \b JOIN_IBSS indication id. Content is SL_WFX_JOIN_IBSS_IND_BODY
+  SL_WFX_LEAVE_IBSS_IND_ID                       = 0xd1    ///< \b LEAVE_IBSS indication id. Content is SL_WFX_LEAVE_IBSS_IND_BODY
+} sl_wfx_indications_ids_t;
 
 /**
  * @brief WFM API message IDs.
  */
 typedef union wfm_message_ids_u {
   /** Request messages sent from the host to the device. */
-  sl_wfx_requests_ids_t Requests;
+  sl_wfx_requests_ids_t requests;
   /** Confirmation messages sent from the device to the host. */
-  sl_wfx_confirmations_ids_t Confirmations;
+  sl_wfx_confirmations_ids_t confirmations;
   /** Indication messages sent from the device to the host. */
-  sl_wfx_indications_ids_t Indications;
+  sl_wfx_indications_ids_t indications;
 } sl_wfx_message_ids_t;
 
 /**
@@ -213,30 +213,30 @@ typedef union wfm_message_ids_u {
  */
 
 /** Length of MAC address element. */
-#define SL_WFX_FMAC_MAC_ADDR_SIZE                   SL_WFX_MAC_ADDR_SIZE
+#define SL_WFX_FMAC_MAC_ADDR_SIZE                SL_WFX_MAC_ADDR_SIZE
 /** Length of BSSID element. */
-#define SL_WFX_FMAC_BSSID_SIZE                      SL_WFX_BSSID_SIZE
+#define SL_WFX_FMAC_BSSID_SIZE                   SL_WFX_BSSID_SIZE
 /** Length of password element. */
-#define SL_WFX_PASSWORD_SIZE                           64
+#define SL_WFX_PASSWORD_SIZE                     64
 /** Maximum length of channel list element. */
-#define SL_WFX_CHANNEL_NUMBER_SIZE                     14
+#define SL_WFX_CHANNEL_NUMBER_SIZE               14
 /** Maximum length of SSID list element. */
-#define SL_WFX_SSID_DEF_SIZE                           2
+#define SL_WFX_SSID_DEF_SIZE                     2
 /** Length of Service Set Identifier (SSID) element. */
-#define SL_WFX_FMAC_SSID_SIZE                       SL_WFX_SSID_SIZE
+#define SL_WFX_FMAC_SSID_SIZE                    SL_WFX_SSID_SIZE
 /** Length of ARP IP address list element. */
-#define SL_WFX_ARP_IP_ADDR_SIZE                        2
+#define SL_WFX_ARP_IP_ADDR_SIZE                  2
 /** Length of NS IP address list element. */
-#define SL_WFX_NS_IP_ADDR_SIZE                         2
+#define SL_WFX_NS_IP_ADDR_SIZE                   2
 /** Length of IPv6 address element. */
-#define SL_WFX_IPV6_ADDR_SIZE                          16
+#define SL_WFX_IPV6_ADDR_SIZE                    16
 
 /**
  * @brief Client Isolation toggling
  */
 typedef enum sl_wfx_client_isolation_e {
-  WFM_CLIENT_ISOLATION_DISABLED              = 0x0,         ///< Client isolation disabled
-  WFM_CLIENT_ISOLATION_ENABLED               = 0x1          ///< Client isolation enabled
+  WFM_CLIENT_ISOLATION_DISABLED                  = 0x0,    ///< Client isolation disabled
+  WFM_CLIENT_ISOLATION_ENABLED                   = 0x1     ///< Client isolation enabled
 } sl_wfx_client_isolation_t;
 
 /**
@@ -246,74 +246,74 @@ typedef enum sl_wfx_client_isolation_e {
  * Support for the other types will be added later.
  */
 typedef enum sl_wfx_frame_type_e {
-  WFM_FRAME_TYPE_MGMT                        = 0x0,         ///< Management Frame
-  WFM_FRAME_TYPE_ACTION                      = 0x4,         ///< Action Frame
-  WFM_FRAME_TYPE_DATA                        = 0x8          ///< Data Frame
+  WFM_FRAME_TYPE_MGMT                            = 0x0,    ///< Management Frame
+  WFM_FRAME_TYPE_ACTION                          = 0x4,    ///< Action Frame
+  WFM_FRAME_TYPE_DATA                            = 0x8     ///< Data Frame
 } sl_wfx_frame_type_t;
 
 /**
  * @brief Hidden SSID toggling
  */
 typedef enum sl_wfx_hidden_ssid_e {
-  WFM_HIDDEN_SSID_FALSE                      = 0x0,         ///< SSID not hidden
-  WFM_HIDDEN_SSID_TRUE                       = 0x1          ///< SSID hidden
+  WFM_HIDDEN_SSID_FALSE                          = 0x0,    ///< SSID not hidden
+  WFM_HIDDEN_SSID_TRUE                           = 0x1     ///< SSID hidden
 } sl_wfx_hidden_ssid_t;
 
 /**
  * @brief Device Protected Management Frame mode.
  */
 typedef enum sl_wfx_mgmt_frame_protection_e {
-  WFM_MGMT_FRAME_PROTECTION_DISABLED         = 0x0,         ///< PMF disabled
-  WFM_MGMT_FRAME_PROTECTION_OPTIONAL         = 0x1,         ///< PMF optional
-  WFM_MGMT_FRAME_PROTECTION_MANDATORY        = 0x2          ///< PMF mandatory
+  WFM_MGMT_FRAME_PROTECTION_DISABLED             = 0x0,    ///< PMF disabled
+  WFM_MGMT_FRAME_PROTECTION_OPTIONAL             = 0x1,    ///< PMF optional
+  WFM_MGMT_FRAME_PROTECTION_MANDATORY            = 0x2     ///< PMF mandatory
 } sl_wfx_mgmt_frame_protection_t;
 
 /**
  * @brief Device power management mode.
  */
 typedef enum sl_wfx_pm_mode_e {
-  WFM_PM_MODE_ACTIVE                         = 0x0,         ///< Always on
-  WFM_PM_MODE_PS                             = 0x1,         ///< Use power_save and wake up on beacons
-  WFM_PM_MODE_DTIM                           = 0x2          ///< Use power_save and wake up on DTIM
+  WFM_PM_MODE_ACTIVE                             = 0x0,    ///< Always on
+  WFM_PM_MODE_PS                                 = 0x1,    ///< Use power_save and wake up on beacons
+  WFM_PM_MODE_DTIM                               = 0x2     ///< Use power_save and wake up on DTIM
 } sl_wfx_pm_mode_t;
 
 /**
  * @brief Data priority level
  */
 typedef enum sl_wfx_priority_e {
-  WFM_PRIORITY_BE                            = 0x0,             ///< Best Effort
-  WFM_PRIORITY_BK                            = 0x1,             ///< Background
-  WFM_PRIORITY_VI                            = 0x2,             ///< Video
-  WFM_PRIORITY_VO                            = 0x3              ///< Voice
+  WFM_PRIORITY_BE                                = 0x0,    ///< Best Effort
+  WFM_PRIORITY_BK                                = 0x1,    ///< Background
+  WFM_PRIORITY_VI                                = 0x2,    ///< Video
+  WFM_PRIORITY_VO                                = 0x3     ///< Voice
 } sl_wfx_priority_t;
 
 /**
  * @brief Reasons for Ineo AP to reject or disconnect a client
  */
 typedef enum sl_wfx_reason_e {
-  WFM_REASON_UNSPECIFIED                     = 0x0,         ///< Unspecified reason (unused)
-  WFM_REASON_TIMEOUT                         = 0x1,         ///< Client timed out
-  WFM_REASON_LEAVING_BSS                     = 0x2,         ///< Client left
-  WFM_REASON_UNKNOWN_STA                     = 0x3,         ///< Client not authenticated
-  WFM_REASON_AP_FULL                         = 0x4          ///< Too many clients already connected
+  WFM_REASON_UNSPECIFIED                         = 0x0,    ///< Unspecified reason (unused)
+  WFM_REASON_TIMEOUT                             = 0x1,    ///< Client timed out
+  WFM_REASON_LEAVING_BSS                         = 0x2,    ///< Client left
+  WFM_REASON_UNKNOWN_STA                         = 0x3,    ///< Client not authenticated
+  WFM_REASON_AP_FULL                             = 0x4     ///< Too many clients already connected
 } sl_wfx_reason_t;
 
 /**
  * @brief Scan mode to be used
  */
 typedef enum sl_wfx_scan_mode_e {
-  WFM_SCAN_MODE_PASSIVE                      = 0x0,         ///< Passive scan: listen for beacons only
-  WFM_SCAN_MODE_ACTIVE                       = 0x1          ///< Active scan: send probe requests
+  WFM_SCAN_MODE_PASSIVE                          = 0x0,    ///< Passive scan: listen for beacons only
+  WFM_SCAN_MODE_ACTIVE                           = 0x1     ///< Active scan: send probe requests
 } sl_wfx_scan_mode_t;
 
 /**
  * @brief Security mode of a network.
  */
 typedef enum sl_wfx_security_mode_e {
-  WFM_SECURITY_MODE_OPEN                     = 0x0,         ///< No security
-  WFM_SECURITY_MODE_WEP                      = 0x1,         ///< Use WEP
-  WFM_SECURITY_MODE_WPA2_WPA1_PSK            = 0x2,         ///< Use WPA1 or WPA2
-  WFM_SECURITY_MODE_WPA2_PSK                 = 0x4          ///< Use only WPA2
+  WFM_SECURITY_MODE_OPEN                         = 0x0,    ///< No security
+  WFM_SECURITY_MODE_WEP                          = 0x1,    ///< Use WEP
+  WFM_SECURITY_MODE_WPA2_WPA1_PSK                = 0x2,    ///< Use WPA1 or WPA2
+  WFM_SECURITY_MODE_WPA2_PSK                     = 0x4     ///< Use only WPA2
 } sl_wfx_security_mode_t;
 
 /**
@@ -323,14 +323,14 @@ typedef enum sl_wfx_security_mode_e {
  * A value of zero indicates the request has completed successfully.
  */
 typedef enum sl_wfx_fmac_status_e {
-  WFM_STATUS_SUCCESS                         = 0x0,         ///< The device has successfully completed a request.
-  WFM_STATUS_INVALID_PARAMETER               = 0x1,         ///< A request contains one or more invalid parameters.
-  WFM_STATUS_WRONG_STATE                     = 0x2,         ///< The request cannot be performed because the device is in an inappropriate state.
-  WFM_STATUS_GENERAL_FAILURE                 = 0x3,         ///< The request failed due to an error.
-  WFM_STATUS_CHANNEL_NOT_ALLOWED             = 0x4,         ///< The request failed due to regulatory limitations.
-  WFM_STATUS_WARNING                         = 0x5,         ///< The request is successful but some parameters have been ignored.
-  WFM_STATUS_RETRY_EXCEEDED                  = 0x13,        ///< The request failed because the retry limit was exceeded.
-  WFM_STATUS_TX_LIFETIME_EXCEEDED            = 0x14         ///< The request failed because the MSDU life time was exceeded.
+  WFM_STATUS_SUCCESS                             = 0x0,    ///< The device has successfully completed a request.
+  WFM_STATUS_INVALID_PARAMETER                   = 0x1,    ///< A request contains one or more invalid parameters.
+  WFM_STATUS_WRONG_STATE                         = 0x2,    ///< The request cannot be performed because the device is in an inappropriate state.
+  WFM_STATUS_GENERAL_FAILURE                     = 0x3,    ///< The request failed due to an error.
+  WFM_STATUS_CHANNEL_NOT_ALLOWED                 = 0x4,    ///< The request failed due to regulatory limitations.
+  WFM_STATUS_WARNING                             = 0x5,    ///< The request is successful but some parameters have been ignored.
+  WFM_STATUS_RETRY_EXCEEDED                      = 0x13,   ///< The request failed because the retry limit was exceeded.
+  WFM_STATUS_TX_LIFETIME_EXCEEDED                = 0x14    ///< The request failed because the MSDU life time was exceeded.
 } sl_wfx_fmac_status_t;
 
 /**
@@ -354,47 +354,47 @@ typedef struct __attribute__((__packed__)) sl_wfx_ssid_def_s {
    */
   uint32_t ssid_length;
   /** SSID data. */
-  uint8_t ssid[SL_WFX_SSID_SIZE];
+  uint8_t  ssid[SL_WFX_SSID_SIZE];
 } sl_wfx_ssid_def_t;
 
 /**
  * @brief Security mode bitmask for scan results. Empty if Open network.
  */
 typedef struct __attribute__((__packed__)) sl_wfx_security_mode_bitmask_s {
-  uint8_t    wep : 1;                                ///< Network supports WEP
-  uint8_t    wpa : 1;                                ///< Network supports WPA. If both WPA bits are set the network supports mixed mode.
-  uint8_t    wpa2 : 1;                               ///< Network supports WPA2. If both WPA bits are set the network supports mixed mode.
-  uint8_t    unused : 3;                             ///< Reserved, set to zero
-  uint8_t    psk : 1;                                ///< Network supports Personal authentication
-  uint8_t    eap : 1;                                ///< Network supports Enterprise authentication
+  uint8_t  wep : 1;                                        ///< Network supports WEP
+  uint8_t  wpa : 1;                                        ///< Network supports WPA. If both WPA bits are set the network supports mixed mode.
+  uint8_t  wpa2 : 1;                                       ///< Network supports WPA2. If both WPA bits are set the network supports mixed mode.
+  uint8_t  unused : 3;                                     ///< Reserved, set to zero
+  uint8_t  psk : 1;                                        ///< Network supports Personal authentication
+  uint8_t  eap : 1;                                        ///< Network supports Enterprise authentication
 } sl_wfx_security_mode_bitmask_t;
 
 /**
  * @brief Device TX rate set bitmask used in sl_wfx_set_tx_rate_parameters_req_body_t.
  */
 typedef struct __attribute__((__packed__)) sl_wfx_rate_set_bitmask_s {
-  uint8_t    b1Mbps : 1;                             ///< If set, the device may use 802.11b 1Mbps data rate.
-  uint8_t    b2Mbps : 1;                             ///< If set, the device may use 802.11b 2Mbps data rate.
-  uint8_t    b5P5Mbps : 1;                           ///< If set, the device may use 802.11b 5.5Mbps data rate.
-  uint8_t    b11Mbps : 1;                            ///< If set, the device may use 802.11b 11Mbps data rate.
-  uint8_t    unused : 4;                             ///< Reserved, set to zero
-  uint8_t    g6Mbps : 1;                             ///< If set, the device may use 802.11g 6Mbps data rate.
-  uint8_t    g9Mbps : 1;                             ///< If set, the device may use 802.11g 9Mbps data rate.
-  uint8_t    g12Mbps : 1;                            ///< If set, the device may use 802.11g 12Mbps data rate.
-  uint8_t    g18Mbps : 1;                            ///< If set, the device may use 802.11g 18Mbps data rate.
-  uint8_t    g24Mbps : 1;                            ///< If set, the device may use 802.11g 24Mbps data rate.
-  uint8_t    g36Mbps : 1;                            ///< If set, the device may use 802.11g 36Mbps data rate.
-  uint8_t    g48Mbps : 1;                            ///< If set, the device may use 802.11g 48Mbps data rate.
-  uint8_t    g54Mbps : 1;                            ///< If set, the device may use 802.11g 54Mbps data rate.
-  uint8_t    mcs0 : 1;                               ///< If set, the device may use 802.11n 6.5Mbps data rate.
-  uint8_t    mcs1 : 1;                               ///< If set, the device may use 802.11n 13Mbps data rate.
-  uint8_t    mcs2 : 1;                               ///< If set, the device may use 802.11n 19.5Mbps data rate.
-  uint8_t    mcs3 : 1;                               ///< If set, the device may use 802.11n 26Mbps data rate.
-  uint8_t    mcs4 : 1;                               ///< If set, the device may use 802.11n 39Mbps data rate.
-  uint8_t    mcs5 : 1;                               ///< If set, the device may use 802.11n 52Mbps data rate.
-  uint8_t    mcs6 : 1;                               ///< If set, the device may use 802.11n 58.5Mbps data rate.
-  uint8_t    mcs7 : 1;                               ///< If set, the device may use 802.11n 65Mbps data rate.
-  uint8_t    unused2;                                ///< Reserved, set to zero
+  uint8_t  b1Mbps : 1;                                     ///< If set, the device may use 802.11b 1Mbps data rate.
+  uint8_t  b2Mbps : 1;                                     ///< If set, the device may use 802.11b 2Mbps data rate.
+  uint8_t  b5P5Mbps : 1;                                   ///< If set, the device may use 802.11b 5.5Mbps data rate.
+  uint8_t  b11Mbps : 1;                                    ///< If set, the device may use 802.11b 11Mbps data rate.
+  uint8_t  unused : 4;                                     ///< Reserved, set to zero
+  uint8_t  g6Mbps : 1;                                     ///< If set, the device may use 802.11g 6Mbps data rate.
+  uint8_t  g9Mbps : 1;                                     ///< If set, the device may use 802.11g 9Mbps data rate.
+  uint8_t  g12Mbps : 1;                                    ///< If set, the device may use 802.11g 12Mbps data rate.
+  uint8_t  g18Mbps : 1;                                    ///< If set, the device may use 802.11g 18Mbps data rate.
+  uint8_t  g24Mbps : 1;                                    ///< If set, the device may use 802.11g 24Mbps data rate.
+  uint8_t  g36Mbps : 1;                                    ///< If set, the device may use 802.11g 36Mbps data rate.
+  uint8_t  g48Mbps : 1;                                    ///< If set, the device may use 802.11g 48Mbps data rate.
+  uint8_t  g54Mbps : 1;                                    ///< If set, the device may use 802.11g 54Mbps data rate.
+  uint8_t  mcs0 : 1;                                       ///< If set, the device may use 802.11n 6.5Mbps data rate.
+  uint8_t  mcs1 : 1;                                       ///< If set, the device may use 802.11n 13Mbps data rate.
+  uint8_t  mcs2 : 1;                                       ///< If set, the device may use 802.11n 19.5Mbps data rate.
+  uint8_t  mcs3 : 1;                                       ///< If set, the device may use 802.11n 26Mbps data rate.
+  uint8_t  mcs4 : 1;                                       ///< If set, the device may use 802.11n 39Mbps data rate.
+  uint8_t  mcs5 : 1;                                       ///< If set, the device may use 802.11n 52Mbps data rate.
+  uint8_t  mcs6 : 1;                                       ///< If set, the device may use 802.11n 58.5Mbps data rate.
+  uint8_t  mcs7 : 1;                                       ///< If set, the device may use 802.11n 65Mbps data rate.
+  uint8_t  unused2;                                        ///< Reserved, set to zero
 } sl_wfx_rate_set_bitmask_t;
 
 /**
@@ -404,7 +404,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_rate_set_bitmask_s {
  */
 typedef struct __attribute__((__packed__)) sl_wfx_ns_ip_addr_s {
   /** NS IP address. */
-  uint8_t ipv6_addr[SL_WFX_IPV6_ADDR_SIZE];
+  uint8_t  ipv6_addr[SL_WFX_IPV6_ADDR_SIZE];
 } sl_wfx_ns_ip_addr_t;
 
 /**
@@ -698,7 +698,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_ns_ip_addr_s {
  */
 typedef struct __attribute__((__packed__)) sl_wfx_set_mac_address_req_body_s {
   /** MAC address of the interface. */
-  uint8_t mac_addr[SL_WFX_MAC_ADDR_SIZE];
+  uint8_t  mac_addr[SL_WFX_MAC_ADDR_SIZE];
   /** Reserved, set to zero. */
   uint16_t reserved;
 } sl_wfx_set_mac_address_req_body_t;
@@ -763,7 +763,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_connect_req_body_s {
    *          <BR><B>unicast address</B>: The device will only connect to the given access point.
    *          <BR>See @ref WFM_CONCEPT_BSSID for further details.
    */
-  uint8_t bssid[SL_WFX_BSSID_SIZE];
+  uint8_t  bssid[SL_WFX_BSSID_SIZE];
   /**
    * @brief Channel of the access point.
    * @details <B>0</B>: The device will connect to a matching access point on any channel.
@@ -778,13 +778,13 @@ typedef struct __attribute__((__packed__)) sl_wfx_connect_req_body_s {
    *          <BR><B>WFM_SECURITY_MODE_WPA2_PSK</B>: The device will only connect to a WPA2-Personal access point.
    *          <BR>See wfm_security_mode for enumeration values.
    */
-  uint8_t security_mode;
+  uint8_t  security_mode;
   /**
    * @brief Boolean option to prevent roaming between access points.
    * @details <B>0</B>: The device may roam to any matching access point within the same network.
    *          <BR><B>1</B>: The device will not roam to any other access point.
    */
-  uint8_t prevent_roaming;
+  uint8_t  prevent_roaming;
   /**
    * @brief Protected Management Frames (PMF) mode.
    * @details <B>WFM_MGMT_FRAME_PROTECTION_DISABLED</B>: The device will not use PMF even if supported by the access point.
@@ -806,7 +806,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_connect_req_body_s {
    *          <BR><B>WPA PMK</B>: 64 bytes in HEX format.
    *          <BR>See @ref WFM_CONCEPT_PASSWORD for further details.
    */
-  uint8_t password[SL_WFX_PASSWORD_SIZE];
+  uint8_t  password[SL_WFX_PASSWORD_SIZE];
   /**
    * @brief Length of vendor-specific Information Element (IE) data.
    * @details <B>0 - 255</B>: The amount of bytes.
@@ -818,7 +818,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_connect_req_body_s {
    *          It may contain multiple concatenated IEs, up to the maximum length.
    *          <BR>See @ref WFM_CONCEPT_VENDOR_IE for further details.
    */
-  uint8_t ie_data[0];
+  uint8_t  ie_data[0];
 } sl_wfx_connect_req_body_t;
 
 /**
@@ -881,7 +881,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_connect_ind_body_s {
   /**
    * @brief MAC address of the connected access point.
    */
-  uint8_t mac[SL_WFX_MAC_ADDR_SIZE];
+  uint8_t  mac[SL_WFX_MAC_ADDR_SIZE];
   /**
    * @brief Channel of the connected access point.
    * @details <B>1 - 13</B>: Channel number.
@@ -890,12 +890,12 @@ typedef struct __attribute__((__packed__)) sl_wfx_connect_ind_body_s {
   /**
    * @brief Beacon Interval of the connected access point.
    */
-  uint8_t beacon_interval;
+  uint8_t  beacon_interval;
   /**
    * @brief DTIM period of the connected access point.
    * @details <B>1 - 255</B>: DTIM period.
    */
-  uint8_t dtim_period;
+  uint8_t  dtim_period;
   /**
    * @brief Maximum PHY data rate supported by the connection.
    * @details See sl_wfx_rate_index_t for enumeration values.
@@ -962,7 +962,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_disconnect_ind_body_s {
   /**
    * @brief MAC address of the access point.
    */
-  uint8_t mac[SL_WFX_MAC_ADDR_SIZE];
+  uint8_t  mac[SL_WFX_MAC_ADDR_SIZE];
   /**
    * @brief Reason for disconnection.
    * @details <B>WFM_REASON_UNSPECIFIED</B>: The device was disconnected or it disconnected on its own.
@@ -1113,7 +1113,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_start_ap_req_body_s {
    *                        to stations that specify the SSID.
    *          <BR>See @ref WFM_CONCEPT_HIDDEN for further details.
    */
-  uint8_t hidden_ssid;
+  uint8_t  hidden_ssid;
   /**
    * @brief Boolean option to isolate connected clients from each other.
    * @details <B>0</B>: The device will allow connected clients to communicate with each other.
@@ -1121,7 +1121,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_start_ap_req_body_s {
    *          <BR>Regardless of the value, the connected stations will always be able to communicate with the device.
    *          <BR>See @ref WFM_CONCEPT_ISOLATION for further details.
    */
-  uint8_t client_isolation;
+  uint8_t  client_isolation;
   /**
    * @brief Security mode of the access point.
    * @details <B>WFM_SECURITY_MODE_OPEN</B>: The device will only allow unsecured connections.
@@ -1130,7 +1130,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_start_ap_req_body_s {
    *          <BR><B>WFM_SECURITY_MODE_WPA2_PSK</B>: The device will only allow WPA2-Personal connections.
    *          <BR>See wfm_security_mode for enumeration values.
    */
-  uint8_t security_mode;
+  uint8_t  security_mode;
   /**
    * @brief Protected Management Frames (PMF) mode.
    * @details <B>WFM_MGMT_FRAME_PROTECTION_DISABLED</B>: The device will not use PMF even if supported by the connecting station.
@@ -1138,7 +1138,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_start_ap_req_body_s {
    *          <BR><B>WFM_MGMT_FRAME_PROTECTION_MANDATORY</B>: The device will only allow connecting stations that support PMF.
    *          <BR>See wfm_mgmt_frame_protection for enumeration values.
    */
-  uint8_t mgmt_frame_protection;
+  uint8_t  mgmt_frame_protection;
   /**
    * @brief Channel of the access point.
    * @details <B>1 - 13</B>: The device will create the access point on the given channel.
@@ -1157,7 +1157,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_start_ap_req_body_s {
    *          <BR><B>WPA PMK</B>: 64 bytes in HEX format.
    *          <BR>See @ref WFM_CONCEPT_PASSWORD for further details.
    */
-  uint8_t password[SL_WFX_PASSWORD_SIZE];
+  uint8_t  password[SL_WFX_PASSWORD_SIZE];
   /**
    * @brief Length of vendor-specific Information Element (IE) data in 802.11 Beacon frames.
    * @details <B>0 - 255</B>: The amount of bytes.
@@ -1177,7 +1177,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_start_ap_req_body_s {
    *          to the Probe Response frames.
    *          <BR>See @ref WFM_CONCEPT_VENDOR_IE for further details.
   */
-  uint8_t ie_data[0];
+  uint8_t  ie_data[0];
 } sl_wfx_start_ap_req_body_t;
 
 /**
@@ -1272,7 +1272,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_update_ap_req_body_s {
    *          to the Probe Response frames.
    *          <BR>See @ref WFM_CONCEPT_VENDOR_IE for further details.
   */
-  uint8_t ie_data[0];
+  uint8_t  ie_data[0];
 } sl_wfx_update_ap_req_body_t;
 
 /**
@@ -1373,7 +1373,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_ap_client_connected_ind_body_s
   /**
    * @brief MAC address of the station.
    */
-  uint8_t mac[SL_WFX_MAC_ADDR_SIZE];
+  uint8_t  mac[SL_WFX_MAC_ADDR_SIZE];
 } sl_wfx_ap_client_connected_ind_body_t;
 
 /**
@@ -1396,7 +1396,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_ap_client_rejected_ind_body_s 
   /**
    * @brief MAC address of the station.
    */
-  uint8_t mac[SL_WFX_MAC_ADDR_SIZE];
+  uint8_t  mac[SL_WFX_MAC_ADDR_SIZE];
   /**
    * @brief Reason for rejection.
    * @details <B>WFM_REASON_TIMEOUT</B>: A timeout occurred during a station connection attempt.
@@ -1427,7 +1427,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_disconnect_ap_client_req_body_
   /**
    * @brief MAC address of the station.
    */
-  uint8_t mac[SL_WFX_MAC_ADDR_SIZE];
+  uint8_t  mac[SL_WFX_MAC_ADDR_SIZE];
 } sl_wfx_disconnect_ap_client_req_body_t;
 
 /**
@@ -1480,7 +1480,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_ap_client_disconnected_ind_bod
   /**
    * @brief MAC address of the station.
    */
-  uint8_t mac[SL_WFX_MAC_ADDR_SIZE];
+  uint8_t  mac[SL_WFX_MAC_ADDR_SIZE];
   /**
    * @brief Reason for disconnection.
    * @details <B>WFM_REASON_LEAVING_BSS</B>: The station was disconnected or it disconnected on its own.
@@ -1510,12 +1510,12 @@ typedef struct __attribute__((__packed__)) sl_wfx_send_frame_req_body_s {
    * @brief Type of the packet.
    * @details <B>0</B>: Data packet with Ethernet II frame header.
    */
-  uint8_t frame_type;
+  uint8_t  frame_type;
   /**
    * @brief User Priority level.
    * @details <B>0 - 7</B>: 802.1D Priority field value.
    */
-  uint8_t priority;
+  uint8_t  priority;
   /**
    * @brief Packet ID number.
    * @details <B>0 - 65535</B>: Host-assigned unique number for the packet.
@@ -1531,7 +1531,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_send_frame_req_body_s {
    * @brief Data of the packet.
    * @details See @ref WFM_CONCEPT_PACKET for further details.
    */
-  uint8_t packet_data[0];
+  uint8_t  packet_data[0];
 } sl_wfx_send_frame_req_body_t;
 
 /**
@@ -1597,12 +1597,12 @@ typedef struct __attribute__((__packed__)) sl_wfx_received_ind_body_s {
    * @brief Type of the packet.
    * @details <B>0</B>: Data packet with Ethernet II frame header.
    */
-  uint8_t frame_type;
+  uint8_t  frame_type;
   /**
    * @brief The amount of padding bytes before the packet data.
    * @details <B>0 - 3</B>: The amount of bytes.
    */
-  uint8_t frame_padding;
+  uint8_t  frame_padding;
   /**
    * @brief Length of packet data excluding the padding bytes.
    * @details <B>1 - 2310</B>: The amount of bytes.
@@ -1612,7 +1612,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_received_ind_body_s {
    * @brief Packet data, including the padding bytes before the packet data.
    * @details See @ref WFM_CONCEPT_PACKET for further details.
   */
-  uint8_t frame[0];
+  uint8_t  frame[0];
 } sl_wfx_received_ind_body_t;
 
 /**
@@ -1675,7 +1675,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_start_scan_req_body_s {
    *          It may contain multiple concatenated IEs, up to the maximum length.
    *          <BR>See @ref WFM_CONCEPT_VENDOR_IE for further details.
   */
-  uint8_t data[0];
+  uint8_t  data[0];
 } sl_wfx_start_scan_req_body_t;
 
 /**
@@ -1774,7 +1774,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_scan_result_ind_body_s {
   /**
    * @brief MAC address of the access point.
    */
-  uint8_t mac[SL_WFX_MAC_ADDR_SIZE];
+  uint8_t  mac[SL_WFX_MAC_ADDR_SIZE];
   /**
    * @brief Channel of the access point.
    * @details <B>1 - 13</B>: Channel number.
@@ -1787,7 +1787,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_scan_result_ind_body_s {
   /**
    * @brief Reserved.
    */
-  uint8_t reserved1;
+  uint8_t  reserved1;
   /**
    * @brief Reserved.
    */
@@ -1804,7 +1804,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_scan_result_ind_body_s {
   /**
    * @brief Access point IE data from the 802.11 Beacon or Probe Response frame.
    */
-  uint8_t ie_data[0];
+  uint8_t  ie_data[0];
 } sl_wfx_scan_result_ind_body_t;
 
 /**
@@ -1880,7 +1880,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_join_ibss_req_body_s {
    *          <BR><B>128-bit WEP key</B>: 13 bytes in ASCII format or 26 bytes in HEX format.
    *          <BR>See @ref WFM_CONCEPT_PASSWORD for further details.
    */
-  uint8_t password[SL_WFX_PASSWORD_SIZE];
+  uint8_t  password[SL_WFX_PASSWORD_SIZE];
 } sl_wfx_join_ibss_req_body_t;
 
 /**
@@ -1942,7 +1942,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_join_ibss_ind_body_s {
    * @brief Basic Service Set Identifier (BSSID) of the network.
    * @details <BR>See @ref WFM_CONCEPT_BSSID for further details.
    */
-  uint8_t bssid[SL_WFX_BSSID_SIZE];
+  uint8_t  bssid[SL_WFX_BSSID_SIZE];
   /**
    * @brief Reserved.
    */
@@ -2021,7 +2021,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_add_multicast_addr_req_body_s 
    *          <BR><B>multicast address</B>: The device will add the given address to the whitelist.
    *          <BR>See @ref WFM_CONCEPT_BSSID for further details.
    */
-  uint8_t mac[SL_WFX_MAC_ADDR_SIZE];
+  uint8_t  mac[SL_WFX_MAC_ADDR_SIZE];
 } sl_wfx_add_multicast_addr_req_body_t;
 
 /**
@@ -2084,7 +2084,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_remove_multicast_addr_req_body
    * @details <B>multicast address</B>: The device will remove the given address from the whitelist.
    *          <BR>See @ref WFM_CONCEPT_BSSID for further details.
    */
-  uint8_t mac[SL_WFX_MAC_ADDR_SIZE];
+  uint8_t  mac[SL_WFX_MAC_ADDR_SIZE];
 } sl_wfx_remove_multicast_addr_req_body_t;
 
 /**
@@ -2274,7 +2274,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_set_roam_parameters_req_body_s
    *          <BR><B>1 - 220</B>: RCPI limit for a roaming attempt.
    *          <BR>See @ref WFM_CONCEPT_RCPI for further details.
    */
-  uint8_t rcpi_threshold;
+  uint8_t  rcpi_threshold;
   /**
    * @brief Upper RCPI limit that must be attained before triggering roaming again.
    * @details <B>0</B>: The device will set the limit value to the device default.
@@ -2284,26 +2284,26 @@ typedef struct __attribute__((__packed__)) sl_wfx_set_roam_parameters_req_body_s
    *          rcpi_hysteresis should be set to a value grater than rcpi_threshold.
    *          <BR>See @ref WFM_CONCEPT_RCPI for further details.
    */
-  uint8_t rcpi_hysteresis;
+  uint8_t  rcpi_hysteresis;
   /**
    * @brief Beacon loss limit for a roaming attempt.
    * @details <B>0</B>: The device will set the limit value to the device default.
    *          <BR><B>1 - 255</B>: Beacon loss limit for a roaming attempt.
    */
-  uint8_t beacon_lost_count;
+  uint8_t  beacon_lost_count;
   /**
    * @brief The amount of specific channels to scan.
    * @details <B>0</B>: The device will set the channel list to the device default.
    *          <BR><B>1 - 13</B>: The amount of specific channels to scan.
    */
-  uint8_t channel_list_count;
+  uint8_t  channel_list_count;
   /**
    * @brief List of specific channels to scan.
    * @details <B>1 - 13</B>: The channel number to scan per byte.
    *          <BR>Must contain the same number of channels as specified in channel_list_count.
    *          <BR>See @ref WFM_CONCEPT_SCAN for further details.
    */
-  uint8_t channel_number[0];
+  uint8_t  channel_number[0];
 } sl_wfx_set_roam_parameters_req_body_t;
 
 /**
@@ -2752,7 +2752,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_add_whitelist_addr_req_body_s 
    * @details <B>broadcast address</B>: The device will allow all MAC addresses.
    *          <BR><B>unicast address</B>: The device will add the given address to the whitelist.
    */
-  uint8_t mac[SL_WFX_MAC_ADDR_SIZE];
+  uint8_t  mac[SL_WFX_MAC_ADDR_SIZE];
 } sl_wfx_add_whitelist_addr_req_body_t;
 
 /**
@@ -2813,7 +2813,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_add_blacklist_addr_req_body_s 
    * @details <B>broadcast address</B>: The device will deny all MAC addresses.
    *          <BR><B>unicast address</B>: The device will add the given address to the blacklist.
    */
-  uint8_t mac[SL_WFX_MAC_ADDR_SIZE];
+  uint8_t  mac[SL_WFX_MAC_ADDR_SIZE];
 } sl_wfx_add_blacklist_addr_req_body_t;
 
 /**
@@ -2878,7 +2878,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_set_max_tx_power_req_body_s {
    * @brief Maximum transmit power to set
    * @details Expressed in units of 0.1d_bm.
    */
-  int32_t max_tx_power;
+  int32_t  max_tx_power;
 } sl_wfx_set_max_tx_power_req_body_t;
 
 /**
@@ -2964,12 +2964,12 @@ typedef struct __attribute__((__packed__)) sl_wfx_get_max_tx_power_cnf_body_s {
    * @brief Maximum transmit power for RF port 1.
    * @details Expressed in units of 0.1d_bm.
    */
-  int32_t max_tx_power_rf_port1;
+  int32_t  max_tx_power_rf_port1;
   /**
    * @brief Maximum transmit power for RF port 2.
    * @details Expressed in units of 0.1d_bm.
    */
-  int32_t max_tx_power_rf_port2;
+  int32_t  max_tx_power_rf_port2;
 } sl_wfx_get_max_tx_power_cnf_body_t;
 
 /**
@@ -3025,7 +3025,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_get_pmk_cnf_body_s {
    * @details <B>WPA PMK</B>: 64 bytes in HEX format.
    *          <BR>See @ref WFM_CONCEPT_PASSWORD for further details.
    */
-  uint8_t password[SL_WFX_PASSWORD_SIZE];
+  uint8_t  password[SL_WFX_PASSWORD_SIZE];
 } sl_wfx_get_pmk_cnf_body_t;
 
 /**
@@ -3047,7 +3047,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_get_ap_client_signal_strength_
   /**
    * @brief MAC address of the station.
    */
-  uint8_t mac[SL_WFX_MAC_ADDR_SIZE];
+  uint8_t  mac[SL_WFX_MAC_ADDR_SIZE];
 } sl_wfx_get_ap_client_signal_strength_req_body_t;
 
 /**

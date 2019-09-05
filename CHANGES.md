@@ -1,17 +1,39 @@
 Wi-Fi FMAC Driver Release Note
 ==============================
 
-# Release 2.1.1
-(release date 2019-08-28)
+# Release 2.2.0
+(release date 2019-09-05)
 
-##New Features/Improvements/Bug fixes
-* Fix a bug in sl_wfx_send_ethernet_frame() where the header payload sent could be corrupted
-* Aligned on firmware 2.3.0
+## New Features/Improvements/Bug fixes
+* Fix a bug in sl_wfx_send_ethernet_frame() where the header payload could be
+corrupted
+* Add Secure Link (SLK) support
+* Add Packet Traffic Arbitration (PTA) support
+* Add the following functions to the driver API:
+  * sl_wfx_pta_settings()
+  * sl_wfx_pta_priority()
+  * sl_wfx_pta_state()
+  * sl_wfx_secure_link_set_mac_key()
+  * sl_wfx_secure_link_exchange_keys()
+  * sl_wfx_secure_link_renegotiate_session_key()
+  * sl_wfx_secure_link_configure();
+* Add the following functions to the host API:
+  * sl_wfx_host_get_secure_link_mac_key()
+  * sl_wfx_host_compute_pub_key()
+  * sl_wfx_host_verify_pub_key()
+  * sl_wfx_host_decode_secure_link_data()
+  * sl_wfx_host_encode_secure_link_data()
+  * sl_wfx_host_schedule_secure_link_renegotiation()
+* Add the following files to the driver:
+  * secure_link/sl_wfx_secure_link.c
+  * secure_link/sl_wfx_secure_link.h
+  * sl_wfx_version.h
+* Aligned on firmware 3.0.0
 
 # Release 2.1.0
 (release date 2019-07-19)
 
-##New Features/Improvements/Bug fixes
+## New Features/Improvements/Bug fixes
 * Introduce device power save management
 * Add the following functions to the driver API:
   * sl_wfx_get_ap_client_signal_strength()
@@ -28,12 +50,12 @@ Wi-Fi FMAC Driver Release Note
 * Aligned on firmware 2.3.0
 
 ## Known issues
-* sl_wfx_send_ethernet_frame() can send a corrupted header if the memory allocated for sl_wfx_send_frame_req_t \*frame is not set to 0
+* sl_wfx_send_ethernet_frame() can send a corrupted header if the memory allocated for sl_wfx_send_frame_req_t frame is not set to 0
 
 # Release 2.0.1
 (release date 2019-04-18)
 
-##New Features/Improvements/Bug fixes
+## New Features/Improvements/Bug fixes
 * Fix an issue with the softAP interface
 * Limit the input buffers to avoid running into issues when transmitting data
 	and sending regular FMAC commands
@@ -43,7 +65,7 @@ Wi-Fi FMAC Driver Release Note
 # Release 2.0.0
 (release date 2019-04-12)
 
-##New Features/Improvements/Bug fixes
+## New Features/Improvements/Bug fixes
 * File name prefixes changed from wf200_ to sl_wfx_
 * Function name prefixes changed from wf200_ to sl_wfx_
 * Structure name prefixes changed from wf200_ to sl_wfx_
@@ -82,7 +104,7 @@ Wi-Fi FMAC Driver Release Note
 # Release 1.0.1
 (release date 2019-03-04)
 
-##New Features/Improvements/Bug fixes
+## New Features/Improvements/Bug fixes
 * Modification in wf200_bus_sdio.c to improve SDIO support
 * Removed Doxygen HTML output
 * Aligned on firmware 2.0.0
