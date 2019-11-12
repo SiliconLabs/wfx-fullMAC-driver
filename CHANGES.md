@@ -1,6 +1,23 @@
 Wi-Fi FMAC Driver Release Note
 ==============================
 
+# Release 2.3.0
+(release date 2019-11-07)
+
+## New Features/Improvements/Bug Fixes
+* Add a new logging mechanism to debug the driver
+* Add a lock/unlock API to handle driver accesses in an RTOS context
+* Add Secure Link (SLK) fast key negotiation support
+* Add a "bssid" parameter to the sl_wfx_send_scan_command function to support directed unicast scan
+* Add the following function to the driver API:
+  * sl_wfx_get_pmk()
+* Add the following functions to the host API:
+  * sl_wfx_host_lock()
+  * sl_wfx_host_unlock()
+  * sl_wfx_host_log()
+* Rename sl_status_t defines and move sl_status.h location
+* Aligned on firmware 3.3.0
+
 # Release 2.2.0
 (release date 2019-09-05)
 
