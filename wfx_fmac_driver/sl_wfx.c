@@ -157,6 +157,9 @@ sl_status_t sl_wfx_init(sl_wfx_context_t *context)
   /* Storing input buffer limit from Wi-Fi chip */
   sl_wfx_input_buffer_number = sl_wfx_htole16(startup_info->body.num_inp_ch_bufs);
 
+  /* Store the OPN */
+  memcpy(context->wfx_opn, startup_info->body.opn, SL_WFX_OPN_SIZE);
+
   /* Set the wake up pin of the host */
   sl_wfx_host_set_wake_up_pin(1);
 
@@ -1453,7 +1456,7 @@ sl_status_t sl_wfx_shutdown(void)
 /**************************************************************************//**
  * @brief Send a command to WF200
  *
- * @param command_id is the ID of the command to be sent (cf. wfm_fm_api.h)
+ * @param command_id is the ID of the command to be sent (cf. sl_wfx_cmd_api.h)
  * @param data is the pointer to the data to be sent by the command
  * @param data_size is the size of the data to be sent
  * @param interface is the interface affected by the command
@@ -1509,7 +1512,7 @@ sl_status_t sl_wfx_send_command(uint8_t command_id,
 /**************************************************************************//**
  * @brief Send a request to the Wi-Fi chip
  *
- * @param command_id is the ID of the command to be sent (cf. wfm_fm_api.h)
+ * @param command_id is the ID of the command to be sent (cf. sl_wfx_cmd_api.h)
  * @param request is the pointer to the request to be sent
  * @param request_length is the size of the request to be sent
  * @returns SL_STATUS_OK if the command is sent correctly, SL_STATUS_FAIL otherwise

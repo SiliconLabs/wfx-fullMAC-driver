@@ -14,8 +14,8 @@
  * limitations under the License.
  *****************************************************************************/
 
-#ifndef _WFM_GENERAL_API_H_
-#define _WFM_GENERAL_API_H_
+#ifndef _SL_WFX_GENERAL_API_H_
+#define _SL_WFX_GENERAL_API_H_
 
 #include <stdint.h>
 
@@ -836,9 +836,9 @@ typedef enum sl_wfx_grant_state_e {
  * | WlanQuota                |         x          |                    |    x   |        |                   |        |                   |
  *
  * <br/>
- * @image html 3w_timings_sequence.svg "Sequence diagram with 3-wire PTA mode"
+ * @image html 3w-timings-sequence.svg "Sequence diagram with 3-wire PTA mode"
  * <br/>
- * @image html 4w_timings_sequence.svg "Sequence diagram with 4-wire PTA mode"
+ * @image html 4w-timings-sequence.svg "Sequence diagram with 4-wire PTA mode"
  *
  * @note Request will fail if PTA is started.
  *
@@ -982,4 +982,4 @@ typedef struct __attribute__((__packed__)) sl_wfx_pta_state_cnf_s {
  */
 /*end of GENERAL_API */
 
-#endif /* _WFM_GENERAL_API_H_ */
+#endif /* _SL_WFX_GENERAL_API_H_ */

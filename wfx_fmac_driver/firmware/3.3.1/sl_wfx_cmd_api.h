@@ -14,10 +14,10 @@
  * limitations under the License.
  *****************************************************************************/
 
-#ifndef _WFM_CMD_API_H_
-#define _WFM_CMD_API_H_
+#ifndef _SL_WFX_CMD_API_H_
+#define _SL_WFX_CMD_API_H_
 
-#include "wfm_general_api.h"
+#include "sl_wfx_general_api.h"
 
 /**
  * @addtogroup FULL_MAC_API
@@ -276,6 +276,21 @@ typedef enum sl_wfx_pm_mode_e {
   WFM_PM_MODE_PS                                 = 0x1,    ///< Use power_save and wake up on beacons
   WFM_PM_MODE_DTIM                               = 0x2     ///< Use power_save and wake up on DTIM
 } sl_wfx_pm_mode_t;
+
+/**
+ * @brief Data priority level per 802.1D.
+ */
+typedef enum sl_wfx_priority_e {
+  WFM_PRIORITY_BE0                               = 0x0,    ///< Best Effort
+  WFM_PRIORITY_BK1                               = 0x1,    ///< Background
+  WFM_PRIORITY_BK2                               = 0x2,    ///< Background
+  WFM_PRIORITY_BE3                               = 0x3,    ///< Best Effort
+  WFM_PRIORITY_VI4                               = 0x4,    ///< Video
+  WFM_PRIORITY_VI5                               = 0x5,    ///< Video
+  WFM_PRIORITY_VO6                               = 0x6,    ///< Voice
+  WFM_PRIORITY_VO7                               = 0x7     ///< Voice
+} sl_wfx_priority_t;
+
 
 /**
  * @brief Reasons for AP to reject or disconnect a client.
@@ -3115,4 +3130,4 @@ typedef struct __attribute__((__packed__)) sl_wfx_get_ap_client_signal_strength_
  * @}
  */
 
-#endif /* _WFM_CMD_API_H_ */
+#endif /* _SL_WFX_CMD_API_H_ */

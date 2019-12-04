@@ -17,7 +17,7 @@
 #ifndef _CMD_MAP_UMAC_H_
 #define _CMD_MAP_UMAC_H_
 
-#include "wfm_general_api.h"
-#include "wfm_cmd_api.h"
+#include "sl_wfx_general_api.h"
+#include "sl_wfx_cmd_api.h"
 
 #endif /* _CMD_MAP_UMAC_H_ */

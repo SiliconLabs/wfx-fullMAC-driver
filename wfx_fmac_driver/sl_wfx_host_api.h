@@ -17,7 +17,7 @@
 #ifndef SL_WFX_HOST_API_H
 #define SL_WFX_HOST_API_H
 
-#include "wfm_api.h"
+#include "sl_wfx_api.h"
 #include "sl_wfx_constants.h"
 
 /******************************************************
@@ -421,7 +421,7 @@ sl_status_t sl_wfx_host_schedule_secure_link_renegotiation(void);
  * @brief Log information about the driver
  *
  * @param string is a string to display
- * @param any number of arguments
+ * @param ... any number of arguments
  *****************************************************************************/
 #if SL_WFX_DEBUG_MASK
 extern void sl_wfx_host_log(const char *string, ...);

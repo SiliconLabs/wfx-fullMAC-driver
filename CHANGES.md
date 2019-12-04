@@ -1,6 +1,14 @@
 Wi-Fi FMAC Driver Release Note
 ==============================
 
+# Release 2.3.2
+(release date 2019-12-06)
+
+## New Features/Improvements/Bug Fixes
+* Rename firmware files to use sl_wfx prefix
+* Fix sl_wfx_get_opn() function
+* Aligned on firmware 3.3.1
+
 # Release 2.3.0
 (release date 2019-11-07)
 
