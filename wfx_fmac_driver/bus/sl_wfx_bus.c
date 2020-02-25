@@ -25,7 +25,7 @@ static sl_status_t sl_wfx_bus_access(sl_wfx_host_bus_transfer_type_t type,
 
 sl_status_t sl_wfx_reg_read_16(sl_wfx_register_address_t address, uint16_t *value_out)
 {
-  uint8_t tmp[4];
+  uint8_t tmp[2];
   sl_status_t result = sl_wfx_bus_access(SL_WFX_BUS_READ, address, tmp, sizeof(tmp));
 
   *value_out = sl_wfx_unpack_16bit_little_endian(tmp);
@@ -42,7 +42,7 @@ sl_status_t sl_wfx_reg_read_16(sl_wfx_register_address_t address, uint16_t *valu
 
 sl_status_t sl_wfx_reg_write_16(sl_wfx_register_address_t address, uint16_t value_in)
 {
-  uint8_t tmp[4];
+  uint8_t tmp[2];
 
 #if (SL_WFX_DEBUG_MASK & SL_WFX_DEBUG_TX_REG)
   sl_wfx_host_log("TX_REG> addr:%02X, %02X%02X\r\n",
@@ -52,8 +52,6 @@ sl_status_t sl_wfx_reg_write_16(sl_wfx_register_address_t address, uint16_t valu
 #endif
 
   sl_wfx_pack_16bit_little_endian(tmp, value_in);
-  tmp[2] = 0;
-  tmp[3] = 0;
 
   return sl_wfx_bus_access(SL_WFX_BUS_WRITE, address, tmp, sizeof(tmp));
 }
