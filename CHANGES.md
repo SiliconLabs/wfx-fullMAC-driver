@@ -1,6 +1,20 @@
 Wi-Fi FMAC Driver Release Note
 ==============================
 
+# Release 2.4.0
+(release date 2020-03-09)
+
+## New Features/Improvements/Bug Fixes
+* Add the following function to the driver API:
+  * sl_wfx_set_cca_config()
+* Fix handling error when calling sl_wfx_host_lock()
+* Improve SLK negotiation handling robustness
+* Add an error check on the config read in SDIO
+* Do not set up event for:
+  * SL_WFX_SEND_FRAME_REQ_ID request
+  * SL_WFX_SHUT_DOWN_REQ_ID request
+* Aligned on firmware 3.4.1
+
 # Release 2.3.2
 (release date 2019-12-06)
 

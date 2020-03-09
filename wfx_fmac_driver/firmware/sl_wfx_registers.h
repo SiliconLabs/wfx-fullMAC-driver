@@ -80,23 +80,27 @@
 #define BIT(n) (1 << (n))
 
 /* Control register bit set */
+#define SL_WFX_CONT_REGISTER_SIZE      (0x02)
 #define SL_WFX_CONT_NEXT_LEN_MASK      (0x0FFF)
 #define SL_WFX_CONT_WUP_BIT            (BIT(12))
 #define SL_WFX_CONT_RDY_BIT            (BIT(13))
 #define SL_WFX_CONT_FRAME_TYPE_INFO    (BIT(14) | BIT(15))
+#define SL_WFX_CONT_FRAME_TYPE_OFFSET  (0x0E)
 
 /* Config register bit set */
-#define SL_WFX_CONFIG_FRAME_BIT        (BIT(2))
+#define SL_WFX_CONFIG_ERROR_CSN_FRAME     (BIT(0))
+#define SL_WFX_CONFIG_ERROR_READ_UNDERRUN (BIT(1))
+#define SL_WFX_CONFIG_ERROR_READ_LESS     (BIT(2))
+#define SL_WFX_CONFIG_FRAME_READ_ENTRY    (BIT(3))
+#define SL_WFX_CONFIG_ERROR_SEND_OVERRUN  (BIT(4))
+#define SL_WFX_CONFIG_ERROR_SEND_LARGE    (BIT(5))
+#define SL_WFX_CONFIG_ERROR_SEND_ENTRY    (BIT(6))
+#define SL_WFX_CONFIG_CSN_FRAME_BIT       (BIT(7))
+#define SL_WFX_CONFIG_ERROR_MASK          (0x000F)
+/* Word mode config */
 #define SL_WFX_CONFIG_WORD_MODE_BITS   (BIT(8) | BIT(9))
 #define SL_WFX_CONFIG_WORD_MODE_1      (BIT(8))
 #define SL_WFX_CONFIG_WORD_MODE_2      (BIT(9))
-#define SL_WFX_CONFIG_ERROR_0_BIT      (BIT(5))
-#define SL_WFX_CONFIG_ERROR_1_BIT      (BIT(6))
-#define SL_WFX_CONFIG_ERROR_2_BIT      (BIT(7))
-/*  */
-#define SL_WFX_CONFIG_CSN_FRAME_BIT    (BIT(7))
-#define SL_WFX_CONFIG_ERROR_3_BIT      (BIT(8))
-#define SL_WFX_CONFIG_ERROR_4_BIT      (BIT(9))
 /* QueueM */
 #define SL_WFX_CONFIG_ACCESS_MODE_BIT  (BIT(10))
 /* AHB bus */
@@ -107,11 +111,15 @@
 /* CPU reset */
 #define SL_WFX_CONFIG_CPU_RESET_BIT    (BIT(14))
 #define SL_WFX_CONFIG_CLEAR_INT_BIT    (BIT(15))
-
 /* For WF200 the IRQ Enable and Ready Bits are in CONFIG register */
 #define SL_WFX_CONFIG_DATA_IRQ_ENABLE  (BIT(16))
 #define SL_WFX_CONFIG_WUP_IRQ_ENABLE   (BIT(17))
 #define SL_WFX_CONFIG_DATA_WUP_ENABLE  (BIT(16) | BIT(17))
+/* Revision and type */
+#define SL_WFX_CONFIG_REVISION_OFFSET  (0x18)
+#define SL_WFX_CONFIG_REVISION_MASK    (0x7)
+#define SL_WFX_CONFIG_TYPE_OFFSET      (0x1F)
+#define SL_WFX_CONFIG_TYPE_MASK        (0x1)
 
 /* SDIO CCCR register offsets */
 #define SL_WFX_SDIO_CCCR_IO_QUEUE_ENABLE        (0x02)

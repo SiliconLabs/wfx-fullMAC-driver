@@ -1394,6 +1394,30 @@ sl_status_t sl_wfx_pta_state(uint32_t pta_state)
 }
 
 /**************************************************************************//**
+ * @brief Send a request to configure the CCA mode
+ *
+ * @param cca_thr_mode defines the requested mode for CCA
+ *   @arg         SL_WFX_CCA_THR_MODE_RELATIVE
+ *   @arg         SL_WFX_CCA_THR_MODE_ABSOLUTE
+ * @returns SL_STATUS_OK if the request has been sent correctly,
+ * SL_STATUS_FAIL otherwise
+ *****************************************************************************/
+sl_status_t sl_wfx_set_cca_config(uint8_t cca_thr_mode)
+{
+  sl_status_t result;
+  sl_wfx_set_cca_config_req_body_t payload;
+
+  payload.cca_thr_mode = cca_thr_mode;
+  payload.reserved[0] = 0;
+  payload.reserved[1] = 0;
+  payload.reserved[2] = 0;
+
+  result = sl_wfx_send_command(SL_WFX_SET_CCA_CONFIG_REQ_ID, &payload, sizeof(payload), SL_WFX_STA_INTERFACE, NULL);
+
+  return result;
+}
+
+/**************************************************************************//**
  * @brief Prevent Rollback request
  *
  * @param magic_word: Used to prevent mistakenly sent request from burning the OTP
@@ -1577,8 +1601,11 @@ sl_status_t sl_wfx_send_request(uint8_t command_id, sl_wfx_generic_message_t *re
     }
 #endif //SL_WFX_USE_SECURE_LINK
 
-    result = sl_wfx_host_setup_waited_event(command_id);
-    SL_WFX_ERROR_CHECK(result);
+    if (command_id != SL_WFX_SEND_FRAME_REQ_ID
+        && command_id != SL_WFX_SHUT_DOWN_REQ_ID) {
+      result = sl_wfx_host_setup_waited_event(command_id);
+      SL_WFX_ERROR_CHECK(result);
+    }
 
     result = sl_wfx_host_transmit_frame(request, request_length);
     SL_WFX_ERROR_CHECK(result);
@@ -1587,7 +1614,7 @@ sl_status_t sl_wfx_send_request(uint8_t command_id, sl_wfx_generic_message_t *re
   }
 
   error_handler:
-  if (sl_wfx_host_unlock()) {
+  if (result == SL_STATUS_NO_MORE_RESOURCE || sl_wfx_host_unlock()) {
     result = SL_STATUS_FAIL;
   }
 #if (SL_WFX_DEBUG_MASK & SL_WFX_DEBUG_ERROR)
@@ -1636,9 +1663,9 @@ sl_status_t sl_wfx_receive_frame(uint16_t *ctrl_reg)
   /* retrieve the message type from the control register*/
   message_type = (sl_wfx_received_message_type_t)((*ctrl_reg & SL_WFX_CONT_FRAME_TYPE_INFO) >> SL_WFX_CONT_FRAME_TYPE_OFFSET);
 
-  /* critical : '+SL_WFX_CTRL_REGISTER_SIZE' is to read the piggy-back value at
+  /* critical : '+SL_WFX_CONT_REGISTER_SIZE' is to read the piggy-back value at
      the end of the control register. */
-  read_length = frame_size + SL_WFX_CTRL_REGISTER_SIZE;
+  read_length = frame_size + SL_WFX_CONT_REGISTER_SIZE;
 
   /* Depending on the message type provided by the control register, allocate a
      control buffer or a ethernet RX frame */
@@ -1685,7 +1712,7 @@ sl_status_t sl_wfx_receive_frame(uint16_t *ctrl_reg)
     }
 
     // Encrypted data length is Total bytes read - secure link header -  2 extra bytes read of CTRL register - 2 more bytes for message length in clear
-    uint32_t decrypt_length = read_length - SL_WFX_SECURE_LINK_HEADER_SIZE - SL_WFX_SECURE_LINK_CCM_TAG_SIZE - SL_WFX_CTRL_REGISTER_SIZE - 2;
+    uint32_t decrypt_length = read_length - SL_WFX_SECURE_LINK_HEADER_SIZE - SL_WFX_SECURE_LINK_CCM_TAG_SIZE - SL_WFX_CONT_REGISTER_SIZE - 2;
     result = sl_wfx_host_decode_secure_link_data((uint8_t*)network_rx_buffer + SL_WFX_SECURE_LINK_HEADER_SIZE + 2,
                                                  decrypt_length,
                                                  sl_wfx_context->secure_link_session_key);
@@ -1724,7 +1751,7 @@ sl_status_t sl_wfx_receive_frame(uint16_t *ctrl_reg)
     sl_wfx_host_schedule_secure_link_renegotiation();
   }
 #endif //SL_WFX_USE_SECURE_LINK
-  if (sl_wfx_host_unlock()) {
+  if (result == SL_STATUS_NO_MORE_RESOURCE || sl_wfx_host_unlock()) {
     result = SL_STATUS_FAIL;
   }
 #if (SL_WFX_DEBUG_MASK & SL_WFX_DEBUG_ERROR)
@@ -2052,7 +2079,7 @@ static sl_status_t sl_wfx_download_run_firmware(void)
   SL_WFX_ERROR_CHECK(status);
 
   // retrieve WF200 keyset
-  status = sl_wfx_apb_read_32(WFX_PTE_INFO + 12, &value32);
+  status = sl_wfx_apb_read_32(SL_WFX_PTE_INFO + 12, &value32);
   SL_WFX_ERROR_CHECK(status);
   encryption_keyset = (value32 >> 8);
 

@@ -235,7 +235,8 @@ sl_status_t sl_wfx_host_transmit_frame(void *frame, uint32_t frame_len);
 /**************************************************************************//**
  * @brief Called when the driver needs to lock its access
  *
- * @returns Returns SL_STATUS_OK if successful, SL_STATUS_FAIL otherwise
+ * @returns Returns SL_STATUS_OK if successful, SL_STATUS_NO_MORE_RESOURCE
+ * otherwise
  *****************************************************************************/
 sl_status_t sl_wfx_host_lock(void);
 

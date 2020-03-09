@@ -70,6 +70,8 @@ sl_status_t sl_wfx_pta_priority(uint32_t priority);
 
 sl_status_t sl_wfx_pta_state(uint32_t pta_state);
 
+sl_status_t sl_wfx_set_cca_config(uint8_t cca_thr_mode);
+
 sl_status_t sl_wfx_prevent_rollback(uint32_t magic_word);
 
 sl_status_t sl_wfx_get_opn(uint8_t **opn);

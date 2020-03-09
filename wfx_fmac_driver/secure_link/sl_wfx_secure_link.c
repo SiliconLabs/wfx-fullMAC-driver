@@ -113,8 +113,8 @@ uint8_t sl_wfx_secure_link_encryption_required_get(uint8_t request_id)
 sl_status_t sl_wfx_secure_link_set_mac_key(const uint8_t *sl_mac_key, sl_wfx_securelink_mac_key_dest_t destination)
 {
   sl_status_t       status;
-  sl_wfx_set_sl_mac_key_req_body_t request;
-  sl_wfx_set_sl_mac_key_cnf_t *reply = NULL;
+  sl_wfx_set_securelink_mac_key_req_body_t request;
+  sl_wfx_set_securelink_mac_key_cnf_t *reply = NULL;
 
   // Hardcode destination to RAM until we have secure link sorted!!
   destination = SECURE_LINK_MAC_KEY_DEST_RAM;
@@ -122,10 +122,10 @@ sl_status_t sl_wfx_secure_link_set_mac_key(const uint8_t *sl_mac_key, sl_wfx_sec
   request.otp_or_ram= destination;
   memcpy(request.key_value, sl_mac_key, SL_WFX_KEY_VALUE_SIZE);
 
-  status = sl_wfx_send_command(SL_WFX_SET_SL_MAC_KEY_REQ_ID, &request, sizeof(request), SL_WFX_STA_INTERFACE, (sl_wfx_generic_confirmation_t **)&reply);
+  status = sl_wfx_send_command(SL_WFX_SET_SECURELINK_MAC_KEY_REQ_ID, &request, sizeof(request), SL_WFX_STA_INTERFACE, (sl_wfx_generic_confirmation_t **)&reply);
   SL_WFX_ERROR_CHECK(status);
 
-  status = sl_wfx_get_status_code(sl_wfx_htole32(reply->body.status), SL_WFX_SET_SL_MAC_KEY_REQ_ID);
+  status = sl_wfx_get_status_code(sl_wfx_htole32(reply->body.status), SL_WFX_SET_SECURELINK_MAC_KEY_REQ_ID);
 
   error_handler:
   return status;
@@ -190,6 +190,7 @@ sl_status_t sl_wfx_secure_link_renegotiate_session_key(void)
   uint8_t sl_host_pub_key[SL_WFX_HOST_PUB_KEY_SIZE];
 
   sl_wfx_context->secure_link_renegotiation_state = SL_WFX_SECURELINK_RENEGOTIATION_PENDING;
+  memset(&sl_wfx_context->secure_link_exchange_ind, 0, sizeof(sl_wfx_securelink_exchange_pub_keys_ind_t));
 
   result = sl_wfx_secure_link_exchange_keys(sl_wfx_context->secure_link_mac_key, sl_host_pub_key);
   SL_WFX_ERROR_CHECK(result);
@@ -197,8 +198,16 @@ sl_status_t sl_wfx_secure_link_renegotiate_session_key(void)
   result = sl_wfx_host_setup_waited_event(SL_WFX_SECURELINK_EXCHANGE_PUB_KEYS_IND_ID);
   SL_WFX_ERROR_CHECK(result);
 
-  result = sl_wfx_host_wait_for_confirmation(SL_WFX_SECURELINK_EXCHANGE_PUB_KEYS_IND_ID, SL_WFX_DEFAULT_REQUEST_TIMEOUT_MS, (void **)&exchange_pub_keys_ind);
+  if (sl_wfx_context->secure_link_exchange_ind.header.length == 0) {
+    /* Indication not yet in, wait for it */
+    result = sl_wfx_host_wait_for_confirmation(SL_WFX_SECURELINK_EXCHANGE_PUB_KEYS_IND_ID, SL_WFX_DEFAULT_REQUEST_TIMEOUT_MS, (void **)&exchange_pub_keys_ind);
+  } else {
+    /* Indication already in, fetch it from buffer (can happen with slow bus) */
+    exchange_pub_keys_ind = &sl_wfx_context->secure_link_exchange_ind;
+    result = SL_STATUS_OK;
+  }
   SL_WFX_ERROR_CHECK(result);
+
   if (sl_wfx_htole32(exchange_pub_keys_ind->body.status) != SL_WFX_PUB_KEY_EXCHANGE_STATUS_SUCCESS) {
     result = SL_STATUS_WIFI_SECURE_LINK_EXCHANGE_FAILED;
     goto error_handler;
@@ -269,7 +278,7 @@ sl_status_t sl_wfx_secure_link_configure(const uint8_t *encryption_bitmap, uint8
  *****************************************************************************/
 void sl_wfx_secure_link_bitmap_set_all_encrypted(uint8_t *bitmap)
 {
-  /* Enabling secure link on all fullmac/smallmac/mib commands except for the send/receive data commands
+  /* Enabling secure link on all fullmac/splitmac/mib commands except for the send/receive data commands
    * We don't want an attacker to be able to control:
    *    > Connecting or disconnecting from an AP
    *    > Starting or stopping softAP and softAP settings
@@ -285,6 +294,9 @@ void sl_wfx_secure_link_bitmap_set_all_encrypted(uint8_t *bitmap)
   memset(bitmap, 0xFF, SL_WFX_SECURE_LINK_ENCRYPTION_BITMAP_SIZE);
 
   // Some messages ignore the bitmap setting, remove them so that the driver and the device stay in sync
+  sl_wfx_secure_link_bitmap_remove_request_id(bitmap, 4);  /* 3 split mac commands should be excluded */
+  sl_wfx_secure_link_bitmap_remove_request_id(bitmap, 30);
+  sl_wfx_secure_link_bitmap_remove_request_id(bitmap, 132);
   sl_wfx_secure_link_bitmap_remove_request_id(bitmap, SL_WFX_EXCEPTION_IND_ID);
   sl_wfx_secure_link_bitmap_remove_request_id(bitmap, SL_WFX_ERROR_IND_ID);
   sl_wfx_secure_link_bitmap_remove_request_id(bitmap, SL_WFX_STARTUP_IND_ID);

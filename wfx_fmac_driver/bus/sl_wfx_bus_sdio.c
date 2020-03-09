@@ -38,6 +38,7 @@ sl_status_t sl_wfx_reg_read(sl_wfx_register_address_t address, void *buffer, uin
   uint32_t buffer_id = 0;
   uint32_t reg_address;
   uint16_t control_register;
+  uint32_t config_register;
   uint32_t current_transfer_size = (length >= SL_WFX_SDIO_BLOCK_MODE_THRESHOLD) ? SL_WFX_ROUND_UP(length, SL_WFX_SDIO_BLOCK_SIZE) : length;
 
   if (address == SL_WFX_IN_OUT_QUEUE_REG_ID) {
@@ -50,6 +51,8 @@ sl_status_t sl_wfx_reg_read(sl_wfx_register_address_t address, void *buffer, uin
   reg_address = (buffer_id << 7) | (address << 2);
 
   result = sl_wfx_host_sdio_transfer_cmd53(SL_WFX_BUS_READ, 1, reg_address, buffer, current_transfer_size);
+  SL_WFX_ERROR_CHECK(result);
+
   if ( address == SL_WFX_IN_OUT_QUEUE_REG_ID ) {
     /* In block mode, the piggy_back value is at the end of the block. Append it at the end of the frame instead. */
     if (length > SL_WFX_SDIO_BLOCK_MODE_THRESHOLD) {
@@ -58,9 +61,15 @@ sl_status_t sl_wfx_reg_read(sl_wfx_register_address_t address, void *buffer, uin
     /* If the piggy-back value is null, acknowledge the received frame with a dummy configuration register read */
     control_register = sl_wfx_unpack_16bit_little_endian(((uint8_t *)buffer) + length - 2);
     if ((control_register & SL_WFX_CONT_NEXT_LEN_MASK) == 0) {
-      sl_wfx_reg_read_32(SL_WFX_CONFIG_REG_ID, NULL);
+      result = sl_wfx_reg_read_32(SL_WFX_CONFIG_REG_ID, &config_register);
+      SL_WFX_ERROR_CHECK(result);
+      if ((config_register & SL_WFX_CONFIG_ERROR_MASK) != 0) {
+        result = SL_STATUS_FAIL;
+      }
     }
   }
+
+  error_handler:
   return result;
 }
 
