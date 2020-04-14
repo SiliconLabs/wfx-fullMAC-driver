@@ -86,11 +86,6 @@
  */
 
 /**
- * @defgroup WFM_GROUP_MODE_IBSS API messages in IBSS mode
- * @brief WFM API messages applicable for an interface in IBSS mode.
- */
-
-/**
  * @}
  */
 
@@ -114,8 +109,6 @@ typedef enum sl_wfx_requests_ids_e {
   SL_WFX_STOP_SCAN_REQ_ID                        = 0x4c,   ///< \b STOP_SCAN request ID uses body SL_WFX_STOP_SCAN_REQ_BODY and returns SL_WFX_STOP_SCAN_CNF_BODY
   SL_WFX_GET_SIGNAL_STRENGTH_REQ_ID              = 0x4e,   ///< \b GET_SIGNAL_STRENGTH request ID uses body SL_WFX_GET_SIGNAL_STRENGTH_REQ_BODY and returns SL_WFX_GET_SIGNAL_STRENGTH_CNF_BODY
   SL_WFX_DISCONNECT_AP_CLIENT_REQ_ID             = 0x4f,   ///< \b DISCONNECT_AP_CLIENT request ID uses body SL_WFX_DISCONNECT_AP_CLIENT_REQ_BODY and returns SL_WFX_DISCONNECT_AP_CLIENT_CNF_BODY
-  SL_WFX_JOIN_IBSS_REQ_ID                        = 0x50,   ///< \b JOIN_IBSS request ID uses body SL_WFX_JOIN_IBSS_REQ_BODY and returns SL_WFX_JOIN_IBSS_CNF_BODY
-  SL_WFX_LEAVE_IBSS_REQ_ID                       = 0x51,   ///< \b LEAVE_IBSS request ID uses body SL_WFX_LEAVE_IBSS_REQ_BODY and returns SL_WFX_LEAVE_IBSS_CNF_BODY
   SL_WFX_SET_PM_MODE_REQ_ID                      = 0x52,   ///< \b SET_PM_MODE request ID uses body SL_WFX_SET_PM_MODE_REQ_BODY and returns SL_WFX_SET_PM_MODE_CNF_BODY
   SL_WFX_ADD_MULTICAST_ADDR_REQ_ID               = 0x53,   ///< \b ADD_MULTICAST_ADDR request ID uses body SL_WFX_ADD_MULTICAST_ADDR_REQ_BODY and returns SL_WFX_ADD_MULTICAST_ADDR_CNF_BODY
   SL_WFX_REMOVE_MULTICAST_ADDR_REQ_ID            = 0x54,   ///< \b REMOVE_MULTICAST_ADDR request ID uses body SL_WFX_REMOVE_MULTICAST_ADDR_REQ_BODY and returns SL_WFX_REMOVE_MULTICAST_ADDR_CNF_BODY
@@ -151,8 +144,6 @@ typedef enum sl_wfx_confirmations_ids_e {
   SL_WFX_STOP_SCAN_CNF_ID                        = 0x4c,   ///< \b STOP_SCAN confirmation Id. Returns body SL_WFX_STOP_SCAN_CNF_BODY
   SL_WFX_GET_SIGNAL_STRENGTH_CNF_ID              = 0x4e,   ///< \b GET_SIGNAL_STRENGTH confirmation Id. Returns body SL_WFX_GET_SIGNAL_STRENGTH_CNF_BODY
   SL_WFX_DISCONNECT_AP_CLIENT_CNF_ID             = 0x4f,   ///< \b DISCONNECT_AP_CLIENT confirmation Id. Returns body SL_WFX_DISCONNECT_AP_CLIENT_CNF_BODY
-  SL_WFX_JOIN_IBSS_CNF_ID                        = 0x50,   ///< \b JOIN_IBSS confirmation Id. Returns body SL_WFX_JOIN_IBSS_CNF_BODY
-  SL_WFX_LEAVE_IBSS_CNF_ID                       = 0x51,   ///< \b LEAVE_IBSS confirmation Id. Returns body SL_WFX_LEAVE_IBSS_CNF_BODY
   SL_WFX_SET_PM_MODE_CNF_ID                      = 0x52,   ///< \b SET_PM_MODE confirmation Id. Returns body SL_WFX_SET_PM_MODE_CNF_BODY
   SL_WFX_ADD_MULTICAST_ADDR_CNF_ID               = 0x53,   ///< \b ADD_MULTICAST_ADDR confirmation Id. Returns body SL_WFX_ADD_MULTICAST_ADDR_CNF_BODY
   SL_WFX_REMOVE_MULTICAST_ADDR_CNF_ID            = 0x54,   ///< \b REMOVE_MULTICAST_ADDR confirmation Id. Returns body SL_WFX_REMOVE_MULTICAST_ADDR_CNF_BODY
@@ -187,8 +178,6 @@ typedef enum sl_wfx_indications_ids_e {
   SL_WFX_AP_CLIENT_CONNECTED_IND_ID              = 0xcd,   ///< \b AP_CLIENT_CONNECTED indication id. Content is SL_WFX_AP_CLIENT_CONNECTED_IND_BODY
   SL_WFX_AP_CLIENT_REJECTED_IND_ID               = 0xce,   ///< \b AP_CLIENT_REJECTED indication id. Content is SL_WFX_AP_CLIENT_REJECTED_IND_BODY
   SL_WFX_AP_CLIENT_DISCONNECTED_IND_ID           = 0xcf,   ///< \b AP_CLIENT_DISCONNECTED indication id. Content is SL_WFX_AP_CLIENT_DISCONNECTED_IND_BODY
-  SL_WFX_JOIN_IBSS_IND_ID                        = 0xd0,   ///< \b JOIN_IBSS indication id. Content is SL_WFX_JOIN_IBSS_IND_BODY
-  SL_WFX_LEAVE_IBSS_IND_ID                       = 0xd1    ///< \b LEAVE_IBSS indication id. Content is SL_WFX_LEAVE_IBSS_IND_BODY
 } sl_wfx_indications_ids_t;
 
 /**
@@ -291,7 +280,6 @@ typedef enum sl_wfx_priority_e {
   WFM_PRIORITY_VO7                               = 0x7     ///< Voice
 } sl_wfx_priority_t;
 
-
 /**
  * @brief Reasons for AP to reject or disconnect a client.
  */
@@ -303,6 +291,17 @@ typedef enum sl_wfx_reason_e {
   WFM_REASON_AP_FULL                             = 0x4,    ///< Too many clients already connected
   WFM_REASON_AUTHENTICATION_FAILURE              = 0x5     ///< WPA authentication failed
 } sl_wfx_reason_t;
+
+/**
+ * @brief Reasons for STA disconnection
+ */
+typedef enum sl_wfx_disconnected_reason_e {
+  WFM_DISCONNECTED_REASON_UNSPECIFIED            = 0x0,    ///< Unspecified reason
+  WFM_DISCONNECTED_REASON_AP_LOST                = 0x1,    ///< AP timed out
+  WFM_DISCONNECTED_REASON_REJECTED               = 0x2,    ///< Disconnected by AP
+  WFM_DISCONNECTED_REASON_LEAVING_BSS            = 0x3,    ///< Leaving intentionally
+  WFM_DISCONNECTED_REASON_WPA_COUNTERMEASURES    = 0x4     ///< WPA countermeasures triggered a disconnection
+} sl_wfx_disconnected_reason_t;
 
 /**
  * @brief Scan mode to be used.
@@ -727,7 +726,6 @@ typedef struct __attribute__((__packed__)) sl_wfx_set_mac_address_req_body_s {
  *          | idle           | Yes             |
  *          | station        | No              |
  *          | AP             | No              |
- *          | IBSS           | No              |
  *          <BR>
  * @ingroup WFM_GROUP_MODE_IDLE
  */
@@ -845,7 +843,6 @@ typedef struct __attribute__((__packed__)) sl_wfx_connect_req_body_s {
  *          | idle           | Yes             |
  *          | station        | No              |
  *          | AP             | No              |
- *          | IBSS           | No              |
  *          <BR>
  * @ingroup WFM_GROUP_MODE_IDLE
  */
@@ -939,7 +936,6 @@ typedef struct __attribute__((__packed__)) sl_wfx_connect_ind_s {
  *          | idle           | No              |
  *          | station        | Yes             |
  *          | AP             | No              |
- *          | IBSS           | No              |
  * @ingroup WFM_GROUP_MODE_STA
  */
 typedef sl_wfx_header_t sl_wfx_disconnect_req_t;
@@ -978,8 +974,12 @@ typedef struct __attribute__((__packed__)) sl_wfx_disconnect_ind_body_s {
   uint8_t  mac[SL_WFX_MAC_ADDR_SIZE];
   /**
    * @brief Reason for disconnection.
-   * @details <B>WFM_REASON_UNSPECIFIED</B>: The device was disconnected or it disconnected on its own.
-   *          <BR>See sl_wfx_reason_t for enumeration values.
+   * @details <B>WFM_DISCONNECTED_REASON_UNSPECIFIED</B>: The device disconnected because of an internal error.
+   *          <BR><B>WFM_DISCONNECTED_REASON_AP_LOST</B>: The device lost the AP beacons for too long.
+   *          <BR><B>WFM_DISCONNECTED_REASON_REJECTED</B>: The device was disconnected by the AP.
+   *          <BR><B>WFM_DISCONNECTED_REASON_LEAVING_BSS</B>: Disconnection was requested through the device API.
+   *          <BR><B>WFM_DISCONNECTED_REASON_WPA_COUNTERMEASURES</B>: WPA countermeasures triggered a disconnection
+   *          <BR>See sl_wfx_disconnected_reason_t for enumeration values.
    */
   uint16_t reason;
 } sl_wfx_disconnect_ind_body_t;
@@ -1007,7 +1007,6 @@ typedef struct __attribute__((__packed__)) sl_wfx_disconnect_ind_s {
  *          | idle           | No              |
  *          | station        | Yes             |
  *          | AP             | No              |
- *          | IBSS           | No              |
  * @ingroup WFM_GROUP_MODE_STA
  */
 typedef sl_wfx_header_t sl_wfx_get_signal_strength_req_t;
@@ -1076,7 +1075,6 @@ typedef struct __attribute__((__packed__)) sl_wfx_set_pm_mode_req_body_s {
  *          | idle           | No              |
  *          | station        | Yes             |
  *          | AP             | No              |
- *          | IBSS           | No              |
  *          <BR>
  * @ingroup WFM_GROUP_MODE_STA
  */
@@ -1189,7 +1187,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_start_ap_req_body_s {
    *          frames. The remaining part whose length is defined in ProbeRespIeDataLength is added
    *          to the Probe Response frames.
    *          <BR>See @ref WFM_CONCEPT_VENDOR_IE for further details.
-  */
+   */
   uint8_t  ie_data[];
 } sl_wfx_start_ap_req_body_t;
 
@@ -1201,7 +1199,6 @@ typedef struct __attribute__((__packed__)) sl_wfx_start_ap_req_body_s {
  *          | idle           | Yes             |
  *          | station        | No              |
  *          | AP             | No              |
- *          | IBSS           | No              |
  *          <BR>
  * @ingroup WFM_GROUP_MODE_IDLE
  */
@@ -1284,7 +1281,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_update_ap_req_body_s {
    *          frames. The remaining part whose length is defined in ProbeRespIeDataLength is added
    *          to the Probe Response frames.
    *          <BR>See @ref WFM_CONCEPT_VENDOR_IE for further details.
-  */
+   */
   uint8_t  ie_data[];
 } sl_wfx_update_ap_req_body_t;
 
@@ -1296,7 +1293,6 @@ typedef struct __attribute__((__packed__)) sl_wfx_update_ap_req_body_s {
  *          | idle           | No              |
  *          | station        | No              |
  *          | AP             | Yes             |
- *          | IBSS           | No              |
  *          <BR>
  * @ingroup WFM_GROUP_MODE_AP
  */
@@ -1340,7 +1336,6 @@ typedef struct __attribute__((__packed__)) sl_wfx_update_ap_cnf_s {
  *          | idle           | No              |
  *          | station        | No              |
  *          | AP             | Yes             |
- *          | IBSS           | No              |
  * @ingroup WFM_GROUP_MODE_AP
  */
 typedef sl_wfx_header_t sl_wfx_stop_ap_req_t;
@@ -1453,7 +1448,6 @@ typedef struct __attribute__((__packed__)) sl_wfx_disconnect_ap_client_req_body_
  *          | idle           | No              |
  *          | station        | No              |
  *          | AP             | Yes             |
- *          | IBSS           | No              |
  *          <BR>
  * @ingroup WFM_GROUP_MODE_AP
  */
@@ -1557,11 +1551,9 @@ typedef struct __attribute__((__packed__)) sl_wfx_send_frame_req_body_s {
  *          | idle           | No              |
  *          | station        | Yes             |
  *          | AP             | Yes             |
- *          | IBSS           | Yes             |
  *          <BR>
  * @ingroup WFM_GROUP_MODE_STA
  * @ingroup WFM_GROUP_MODE_AP
- * @ingroup WFM_GROUP_MODE_IBSS
  */
 typedef struct __attribute__((__packed__)) sl_wfx_send_frame_req_s {
   /** Common message header. */
@@ -1595,7 +1587,6 @@ typedef struct __attribute__((__packed__)) sl_wfx_send_frame_cnf_body_s {
  * @brief Confirmation message for sl_wfx_send_frame_req_t.
  * @ingroup WFM_GROUP_MODE_STA
  * @ingroup WFM_GROUP_MODE_AP
- * @ingroup WFM_GROUP_MODE_IBSS
  */
 typedef struct __attribute__((__packed__)) sl_wfx_send_frame_cnf_s {
   /** Common message header. */
@@ -1626,7 +1617,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_received_ind_body_s {
   /**
    * @brief Packet data, including the padding bytes before the packet data.
    * @details See @ref WFM_CONCEPT_PACKET for further details.
-  */
+   */
   uint8_t  frame[];
 } sl_wfx_received_ind_body_t;
 
@@ -1636,7 +1627,6 @@ typedef struct __attribute__((__packed__)) sl_wfx_received_ind_body_s {
  *          has been received.
  * @ingroup WFM_GROUP_MODE_STA
  * @ingroup WFM_GROUP_MODE_AP
- * @ingroup WFM_GROUP_MODE_IBSS
  */
 typedef struct __attribute__((__packed__)) sl_wfx_received_ind_s {
   /** Common message header. */
@@ -1672,7 +1662,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_start_scan_req_body_s {
   /**
    * @brief Length of vendor-specific Information Element (IE) data in 802.11 Probe Request frames.
    * @details <B>0 - 255</B>: The amount of bytes.
-  */
+   */
   uint16_t ie_data_length;
   /**
    * @brief Data for the variable-length scan parameters.
@@ -1696,7 +1686,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_start_scan_req_body_s {
    *          <BR>Note that an SSID list must be specified when using the unicast address, otherwise the received
    *          scan results may contain unexpected additional networks.
    *          <BR>See @ref WFM_CONCEPT_BSSID for further details.
-  */
+   */
   uint8_t  data[];
 } sl_wfx_start_scan_req_body_t;
 
@@ -1708,7 +1698,6 @@ typedef struct __attribute__((__packed__)) sl_wfx_start_scan_req_body_s {
  *          | idle           | Yes             |
  *          | station        | Yes             |
  *          | AP             | No              |
- *          | IBSS           | No              |
  *          <BR>
  * @ingroup WFM_GROUP_MODE_IDLE
  * @ingroup WFM_GROUP_MODE_STA
@@ -1754,7 +1743,6 @@ typedef struct __attribute__((__packed__)) sl_wfx_start_scan_cnf_s {
  *          | idle           | Yes             |
  *          | station        | Yes             |
  *          | AP             | No              |
- *          | IBSS           | No              |
  * @ingroup WFM_GROUP_MODE_IDLE
  * @ingroup WFM_GROUP_MODE_STA
  */
@@ -1871,168 +1859,6 @@ typedef struct __attribute__((__packed__)) sl_wfx_scan_complete_ind_s {
 } sl_wfx_scan_complete_ind_t;
 
 /**
- * @brief Request message body for sl_wfx_join_ibss_req_t.
- */
-typedef struct __attribute__((__packed__)) sl_wfx_join_ibss_req_body_s {
-  /**
-   * @brief Service Set Identifier (SSID) of the network.
-   */
-  sl_wfx_ssid_def_t ssid_def;
-  /**
-   * @brief Channel of the network.
-   * @details <B>0</B>: The device will connect to a matching network on any channel.
-   *          <BR><B>1 - 13</B>: The device will only connect to a matching network on the given channel.
-   */
-  uint32_t channel;
-  /**
-   * @brief Security mode of the network.
-   * @details <B>WFM_SECURITY_MODE_OPEN</B>: The device will only use unsecured connections.
-   *          <BR><B>WFM_SECURITY_MODE_WEP</B>: The device will only use WEP connections.
-   *          <BR>See wfm_security_mode for enumeration values.
-   */
-  uint16_t security_mode;
-  /**
-   * @brief Length of the network password.
-   * @details <B>0 - 26</B>: The amount of bytes.
-   */
-  uint16_t password_length;
-  /**
-   * @brief Password of the network.
-   * @details <B>64-bit WEP key</B>: 5 bytes in ASCII format or 10 bytes in HEX format.
-   *          <BR><B>128-bit WEP key</B>: 13 bytes in ASCII format or 26 bytes in HEX format.
-   *          <BR>See @ref WFM_CONCEPT_PASSWORD for further details.
-   */
-  uint8_t  password[SL_WFX_PASSWORD_SIZE];
-} sl_wfx_join_ibss_req_body_t;
-
-/**
- * @brief Request message for connecting to or starting an IBSS network.
- * @details The host can use this request to connect to an IBSS network. If no existing network
- *          is found, the device will start a new network.
- *          | Interface mode | Request allowed |
- *          |:---------------|:----------------|
- *          | idle           | Yes             |
- *          | station        | No              |
- *          | AP             | No              |
- *          | IBSS           | No              |
- *          <BR>
- * @ingroup WFM_GROUP_MODE_IDLE
- */
-typedef struct __attribute__((__packed__)) sl_wfx_join_ibss_req_s {
-  /** Common message header. */
-  sl_wfx_header_t header;
-  /** Request message body. */
-  sl_wfx_join_ibss_req_body_t body;
-} sl_wfx_join_ibss_req_t;
-
-/**
- * @brief Confirmation message body for sl_wfx_join_ibss_cnf_t.
- */
-typedef struct __attribute__((__packed__)) sl_wfx_join_ibss_cnf_body_s {
-  /**
-   * @brief Status of the join request.
-   * @details <B>WFM_STATUS_SUCCESS</B>: the join request was accepted. It will be completed by sl_wfx_join_ibss_ind_t.
-   *          <BR><B>any other value</B>: the join request failed.
-   *          <BR>See sl_wfx_fmac_status_t for enumeration values.
-   */
-  uint32_t status;
-} sl_wfx_join_ibss_cnf_body_t;
-
-/**
- * @brief Confirmation message for sl_wfx_join_ibss_req_t.
- * @ingroup WFM_GROUP_MODE_IDLE
- */
-typedef struct __attribute__((__packed__)) sl_wfx_join_ibss_cnf_s {
-  /** Common message header. */
-  sl_wfx_header_t header;
-  /** Confirmation message body. */
-  sl_wfx_join_ibss_cnf_body_t body;
-} sl_wfx_join_ibss_cnf_t;
-
-/**
- * @brief Indication message body for sl_wfx_join_ibss_ind_t.
- */
-typedef struct __attribute__((__packed__)) sl_wfx_join_ibss_ind_body_s {
-  /**
-   * @brief Status of the join request.
-   * @details <B>WFM_STATUS_SUCCESS</B>: the join request was completed successfully.
-   *          <BR><B>any other value</B>: the join request failed.
-   *          <BR>See sl_wfx_fmac_status_t for enumeration values.
-   */
-  uint32_t status;
-  /**
-   * @brief Basic Service Set Identifier (BSSID) of the network.
-   * @details <BR>See @ref WFM_CONCEPT_BSSID for further details.
-   */
-  uint8_t  bssid[SL_WFX_BSSID_SIZE];
-  /**
-   * @brief Reserved.
-   */
-  uint16_t reserved;
-} sl_wfx_join_ibss_ind_body_t;
-
-/**
- * @brief Indication message used to signal the completion of a join request.
- * @details The device will send this indication to signal the join request initiated
- *          with sl_wfx_join_ibss_req_t has been completed.
- * @ingroup WFM_GROUP_MODE_IDLE
- */
-typedef struct __attribute__((__packed__)) sl_wfx_join_ibss_ind_s {
-  /** Common message header. */
-  sl_wfx_header_t header;
-  /** Indication message body. */
-  sl_wfx_join_ibss_ind_body_t body;
-} sl_wfx_join_ibss_ind_t;
-
-/**
- * @struct sl_wfx_leave_ibss_req_t
- * @brief Request message for disconnecting from an IBSS network.
- * @details The host can use this request to disconnect from an IBSS network.
- *          | Interface mode | Request allowed |
- *          |:---------------|:----------------|
- *          | idle           | No              |
- *          | station        | No              |
- *          | AP             | No              |
- *          | IBSS           | Yes             |
- * @ingroup WFM_GROUP_MODE_IBSS
- */
-typedef sl_wfx_header_t sl_wfx_leave_ibss_req_t;
-
-/**
- * @brief Confirmation message body for sl_wfx_leave_ibss_cnf_t.
- */
-typedef struct __attribute__((__packed__)) sl_wfx_leave_ibss_cnf_body_s {
-  /**
-   * @brief Status of the disconnect request.
-   * @details <B>WFM_STATUS_SUCCESS</B>: the disconnect request was accepted. It will be completed by sl_wfx_leave_ibss_ind_t.
-   *          <BR><B>any other value</B>: the disconnect request failed.
-   *          <BR>See sl_wfx_fmac_status_t for enumeration values.
-   */
-  uint32_t status;
-} sl_wfx_leave_ibss_cnf_body_t;
-
-/**
- * @brief Confirmation message for sl_wfx_leave_ibss_req_t.
- * @ingroup WFM_GROUP_MODE_IBSS
- */
-typedef struct __attribute__((__packed__)) sl_wfx_leave_ibss_cnf_s {
-  /** Common message header. */
-  sl_wfx_header_t header;
-  /** Confirmation message body. */
-  sl_wfx_leave_ibss_cnf_body_t body;
-} sl_wfx_leave_ibss_cnf_t;
-
-/**
- * @struct sl_wfx_leave_ibss_ind_t
- * @brief Indication message used to signal the completion of a disconnect operation.
- * @details The device will send this indication to signal the disconnect request initiated
- *          with sl_wfx_leave_ibss_req_t has been completed. The indication is also sent when
- *          the network has encountered a fatal error.
- * @ingroup WFM_GROUP_MODE_IBSS
- */
-typedef sl_wfx_header_t sl_wfx_leave_ibss_ind_t;
-
-/**
  * @brief Request message body for sl_wfx_add_multicast_addr_req_t.
  */
 typedef struct __attribute__((__packed__)) sl_wfx_add_multicast_addr_req_body_s {
@@ -2060,7 +1886,6 @@ typedef struct __attribute__((__packed__)) sl_wfx_add_multicast_addr_req_body_s 
  *          | idle           | No              |
  *          | station        | Yes             |
  *          | AP             | Yes             |
- *          | IBSS           | No              |
  *          <BR>
  * @ingroup WFM_GROUP_MODE_STA
  * @ingroup WFM_GROUP_MODE_AP
@@ -2118,7 +1943,6 @@ typedef struct __attribute__((__packed__)) sl_wfx_remove_multicast_addr_req_body
  *          | idle           | No              |
  *          | station        | Yes             |
  *          | AP             | Yes             |
- *          | IBSS           | No              |
  *          <BR>
  * @ingroup WFM_GROUP_MODE_STA
  * @ingroup WFM_GROUP_MODE_AP
@@ -2181,7 +2005,6 @@ typedef struct __attribute__((__packed__)) sl_wfx_set_max_ap_client_count_req_bo
  *          | idle           | No              |
  *          | station        | No              |
  *          | AP             | Yes             |
- *          | IBSS           | No              |
  *          <BR>
  * @ingroup WFM_GROUP_MODE_AP
  */
@@ -2242,7 +2065,6 @@ typedef struct __attribute__((__packed__)) sl_wfx_set_max_ap_client_inactivity_r
  *          | idle           | No              |
  *          | station        | No              |
  *          | AP             | Yes             |
- *          | IBSS           | No              |
  *          <BR>
  * @ingroup WFM_GROUP_MODE_AP
  */
@@ -2338,7 +2160,6 @@ typedef struct __attribute__((__packed__)) sl_wfx_set_roam_parameters_req_body_s
  *          | idle           | Yes             |
  *          | station        | Yes             |
  *          | AP             | No              |
- *          | IBSS           | No              |
  *          <BR>
  * @ingroup WFM_GROUP_MODE_IDLE
  * @ingroup WFM_GROUP_MODE_STA
@@ -2405,7 +2226,6 @@ typedef struct __attribute__((__packed__)) sl_wfx_set_tx_rate_parameters_req_bod
  *          | idle           | Yes             |
  *          | station        | Yes             |
  *          | AP             | No              |
- *          | IBSS           | No              |
  *          <BR>
  * @ingroup WFM_GROUP_MODE_IDLE
  * @ingroup WFM_GROUP_MODE_STA
@@ -2469,7 +2289,6 @@ typedef struct __attribute__((__packed__)) sl_wfx_set_arp_ip_address_req_body_s 
  *          | idle           | No              |
  *          | station        | Yes             |
  *          | AP             | No              |
- *          | IBSS           | No              |
  *          <BR>
  * @ingroup WFM_GROUP_MODE_STA
  */
@@ -2530,7 +2349,6 @@ typedef struct __attribute__((__packed__)) sl_wfx_set_ns_ip_address_req_body_s {
  *          | idle           | No              |
  *          | station        | Yes             |
  *          | AP             | No              |
- *          | IBSS           | No              |
  *          <BR>
  * @ingroup WFM_GROUP_MODE_STA
  */
@@ -2595,7 +2413,6 @@ typedef struct __attribute__((__packed__)) sl_wfx_set_broadcast_filter_req_body_
  *          | idle           | No              |
  *          | station        | Yes             |
  *          | AP             | No              |
- *          | IBSS           | No              |
  *          <BR>
  * @ingroup WFM_GROUP_MODE_STA
  */
@@ -2668,7 +2485,6 @@ typedef struct __attribute__((__packed__)) sl_wfx_set_scan_parameters_req_body_s
  *          | idle           | Yes             |
  *          | station        | Yes             |
  *          | AP             | No              |
- *          | IBSS           | No              |
  *          <BR>
  * @ingroup WFM_GROUP_MODE_IDLE
  * @ingroup WFM_GROUP_MODE_STA
@@ -2730,7 +2546,6 @@ typedef struct __attribute__((__packed__)) sl_wfx_set_unicast_filter_req_body_s 
  *          | idle           | No              |
  *          | station        | No              |
  *          | AP             | Yes             |
- *          | IBSS           | No              |
  *          <BR>
  * @ingroup WFM_GROUP_MODE_AP
  */
@@ -2791,7 +2606,6 @@ typedef struct __attribute__((__packed__)) sl_wfx_add_whitelist_addr_req_body_s 
  *          | idle           | No              |
  *          | station        | No              |
  *          | AP             | Yes             |
- *          | IBSS           | No              |
  *          <BR>
  * @ingroup WFM_GROUP_MODE_AP
  */
@@ -2852,7 +2666,6 @@ typedef struct __attribute__((__packed__)) sl_wfx_add_blacklist_addr_req_body_s 
  *          | idle           | No              |
  *          | station        | No              |
  *          | AP             | Yes             |
- *          | IBSS           | No              |
  *          <BR>
  * @ingroup WFM_GROUP_MODE_AP
  */
@@ -2913,12 +2726,10 @@ typedef struct __attribute__((__packed__)) sl_wfx_set_max_tx_power_req_body_s {
  *          | idle           | Yes             |
  *          | station        | Yes             |
  *          | AP             | Yes             |
- *          | IBSS           | Yes             |
  *          <BR>
  * @ingroup WFM_GROUP_MODE_IDLE
  * @ingroup WFM_GROUP_MODE_STA
  * @ingroup WFM_GROUP_MODE_AP
- * @ingroup WFM_GROUP_MODE_IBSS
  */
 typedef struct __attribute__((__packed__)) sl_wfx_set_max_tx_power_req_s {
   /** Common message header. */
@@ -2945,7 +2756,6 @@ typedef struct __attribute__((__packed__)) sl_wfx_set_max_tx_power_cnf_body_s {
  * @ingroup WFM_GROUP_MODE_IDLE
  * @ingroup WFM_GROUP_MODE_STA
  * @ingroup WFM_GROUP_MODE_AP
- * @ingroup WFM_GROUP_MODE_IBSS
  */
 typedef struct __attribute__((__packed__)) sl_wfx_set_max_tx_power_cnf_s {
   /** Common message header. */
@@ -2963,11 +2773,9 @@ typedef struct __attribute__((__packed__)) sl_wfx_set_max_tx_power_cnf_s {
  *          | idle           | Yes             |
  *          | station        | Yes             |
  *          | AP             | Yes             |
- *          | IBSS           | Yes             |
  * @ingroup WFM_GROUP_MODE_IDLE
  * @ingroup WFM_GROUP_MODE_STA
  * @ingroup WFM_GROUP_MODE_AP
- * @ingroup WFM_GROUP_MODE_IBSS
  */
 typedef sl_wfx_header_t sl_wfx_get_max_tx_power_req_t;
 
@@ -2999,7 +2807,6 @@ typedef struct __attribute__((__packed__)) sl_wfx_get_max_tx_power_cnf_body_s {
  * @ingroup WFM_GROUP_MODE_IDLE
  * @ingroup WFM_GROUP_MODE_STA
  * @ingroup WFM_GROUP_MODE_AP
- * @ingroup WFM_GROUP_MODE_IBSS
  */
 typedef struct __attribute__((__packed__)) sl_wfx_get_max_tx_power_cnf_s {
   /** Common message header. */
@@ -3020,7 +2827,6 @@ typedef struct __attribute__((__packed__)) sl_wfx_get_max_tx_power_cnf_s {
  *          | idle           | No              |
  *          | station        | Yes             |
  *          | AP             | Yes             |
- *          | IBSS           | No              |
  * @ingroup WFM_GROUP_MODE_STA
  * @ingroup WFM_GROUP_MODE_AP
  */
@@ -3080,7 +2886,6 @@ typedef struct __attribute__((__packed__)) sl_wfx_get_ap_client_signal_strength_
  *          | idle           | No              |
  *          | station        | No              |
  *          | AP             | Yes             |
- *          | IBSS           | No              |
  *          <BR>
  * @ingroup WFM_GROUP_MODE_AP
  */

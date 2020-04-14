@@ -1,6 +1,20 @@
 Wi-Fi FMAC Driver Release Note
 ==============================
 
+# Release 3.0.0
+(release date 2020-04-14)
+
+## New Features/Improvements/Bug Fixes
+* Remove following APIs:
+  * sl_wfx_join_ibss_command()
+  * sl_wfx_leave_ibss_command()
+* Update context MAC address when calling sl_wfx_set_mac_address()
+* Enable writing of Secure Link key in OTP
+* Improved logging of error indications
+* Fix memory issue with Secure Link
+* Change firmware folder structure
+* Aligned on firmware 3.5.0
+
 # Release 2.4.0
 (release date 2020-03-09)
 

@@ -116,10 +116,7 @@ sl_status_t sl_wfx_secure_link_set_mac_key(const uint8_t *sl_mac_key, sl_wfx_sec
   sl_wfx_set_securelink_mac_key_req_body_t request;
   sl_wfx_set_securelink_mac_key_cnf_t *reply = NULL;
 
-  // Hardcode destination to RAM until we have secure link sorted!!
-  destination = SECURE_LINK_MAC_KEY_DEST_RAM;
-
-  request.otp_or_ram= destination;
+  request.otp_or_ram = destination;
   memcpy(request.key_value, sl_mac_key, SL_WFX_KEY_VALUE_SIZE);
 
   status = sl_wfx_send_command(SL_WFX_SET_SECURELINK_MAC_KEY_REQ_ID, &request, sizeof(request), SL_WFX_STA_INTERFACE, (sl_wfx_generic_confirmation_t **)&reply);

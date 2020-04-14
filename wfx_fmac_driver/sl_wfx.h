@@ -112,15 +112,6 @@ sl_status_t sl_wfx_enable_device_power_save(void);
 
 sl_status_t sl_wfx_disable_device_power_save(void);
 
-sl_status_t sl_wfx_join_ibss_command(const uint8_t *ssid,
-                                     uint32_t ssid_length,
-                                     uint32_t channel,
-                                     uint16_t security_mode,
-                                     const uint8_t *passkey,
-                                     uint16_t passkey_length);
-
-sl_status_t sl_wfx_leave_ibss_command(void);
-
 sl_status_t sl_wfx_get_signal_strength(uint32_t *rcpi);
 
 sl_status_t sl_wfx_add_multicast_address(const sl_wfx_mac_address_t *mac_address, sl_wfx_interface_t interface);

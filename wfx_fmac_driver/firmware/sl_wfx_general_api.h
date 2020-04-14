@@ -19,6 +19,8 @@
 
 #include <stdint.h>
 
+#include "sl_wfx_general_error_api.h"
+
 //< API Internal Version encoding
 #define SL_WFX_API_VERSION_MINOR                 0x04
 #define SL_WFX_API_VERSION_MAJOR                 0x02
@@ -223,7 +225,7 @@ typedef union __attribute__((__packed__)) sl_wfx_general_commands_ids_u {
 
 /**
  * @brief General confirmation possible values for returned 'status' field
- *WLAN
+ * WLAN
  * All general confirmation messages have a field 'status' just after the message header.@n
  * A value of zero indicates the request is completed successfully.
  *
@@ -470,38 +472,21 @@ typedef struct __attribute__((__packed__)) sl_wfx_generic_ind_s {
   sl_wfx_generic_ind_body_t body;
 } sl_wfx_generic_ind_t;
 
-#define SL_WFX_EXCEPTION_DATA_SIZE               124
+#define SL_WFX_EXCEPTION_DATA_SIZE_MAX          1600
 /**
  * @brief Exception indication message
  *
  * It reports unexpected errors. A reboot is needed after this message.
  * */
 typedef struct __attribute__((__packed__)) sl_wfx_exception_ind_body_s {
-  uint8_t  data[SL_WFX_EXCEPTION_DATA_SIZE];               ///<Raw data array
+  uint32_t reason;                                         ///<Reason of the exception
+  uint8_t  data[];                                         ///<Raw data array
 } sl_wfx_exception_ind_body_t;
 
 typedef struct __attribute__((__packed__)) sl_wfx_exception_ind_s {
   sl_wfx_header_t header;
   sl_wfx_exception_ind_body_t body;
 } sl_wfx_exception_ind_t;
-
-/**
- * @brief specifies the type of error reported by the indication message sl_wfx_error_ind_body_t
- *
- * */
-typedef enum sl_wfx_error_e {
-  SL_WFX_ERROR_FIRMWARE_ROLLBACK             = 0x0,    ///<Firmware rollback error, no data returned
-  SL_WFX_ERROR_FIRMWARE_DEBUG_ENABLED        = 0x1,    ///<Firmware debug feature enabled, no data returned
-  SL_WFX_ERROR_OUTDATED_SESSION_KEY          = 0x2,    ///<SecureLink Session key is outdated, 4 bytes returned (nonce counter)
-  SL_WFX_ERROR_INVALID_SESSION_KEY           = 0x3,    ///<SecureLink Session key is invalid, 0 or 4 bytes returned
-  SL_WFX_ERROR_OOR_VOLTAGE                   = 0x4,    ///<Out-of-range power supply voltage detected, no data returned
-  SL_WFX_ERROR_PDS_VERSION                   = 0x5,    ///<Wrong PDS version detected, no data returned
-  SL_WFX_ERROR_OOR_TEMPERATURE               = 0x6,    ///<Out-of-range temperature, no data returned
-  SL_WFX_ERROR_REQ_DURING_KEY_EXCHANGE       = 0x7,    ///<Requets from Host are forbidden until the end of key exchange (Host should wait for the associated indication)
-  SL_WFX_ERROR_MULTI_TX_CNF_SECURELINK       = 0x8,    ///<'Multi TX conf' feature is not supported in SecureLink mode
-  SL_WFX_ERROR_SECURELINK_OVERFLOW           = 0x9,    ///<HT SecureLink traffic is producing an internal overflow
-  SL_WFX_ERROR_SECURELINK_DECRYPTION         = 0xa     ///<An error occured during message decryption (can be a counter mismatch or wrong CCM tag)
-} sl_wfx_error_t;
 
 /**
  * @brief Error indication message.
@@ -511,7 +496,7 @@ typedef enum sl_wfx_error_e {
  * */
 typedef struct __attribute__((__packed__)) sl_wfx_error_ind_body_s {
   uint32_t type;                                           ///<error type, see enum sl_wfx_error_t
-  uint8_t  data[];                                        ///<Generic data buffer - contents depends on the error type.
+  uint8_t  data[];                                         ///<Generic data buffer - contents depends on the error type.
 } sl_wfx_error_ind_body_t;
 
 typedef struct __attribute__((__packed__)) sl_wfx_error_ind_s {
@@ -873,8 +858,8 @@ typedef struct __attribute__((__packed__)) sl_wfx_pta_settings_req_body_s {
 } sl_wfx_pta_settings_req_body_t;
 
 typedef struct __attribute__((__packed__)) sl_wfx_pta_settings_req_s {
-    sl_wfx_header_t header;
-    sl_wfx_pta_settings_req_body_t body;
+  sl_wfx_header_t header;
+  sl_wfx_pta_settings_req_body_t body;
 } sl_wfx_pta_settings_req_t;
 
 /**
@@ -986,8 +971,8 @@ typedef struct __attribute__((__packed__)) sl_wfx_pta_state_cnf_s {
  * @brief CCA Mode definition
  * */
 typedef enum sl_wfx_cc_thr_mode_e {
-    SL_WFX_CCA_THR_MODE_RELATIVE = 0x0,                    ///< Use CCA defer threshold relative to channel noise
-    SL_WFX_CCA_THR_MODE_ABSOLUTE = 0x1                     ///< Use absolute CCA defer threshold
+  SL_WFX_CCA_THR_MODE_RELATIVE = 0x0,                      ///< Use CCA defer threshold relative to channel noise
+  SL_WFX_CCA_THR_MODE_ABSOLUTE = 0x1                       ///< Use absolute CCA defer threshold
 } sl_wfx_cc_thr_mode_t;
 
 /**
@@ -995,25 +980,25 @@ typedef enum sl_wfx_cc_thr_mode_e {
  * Set the CCA mode and the defer threshold
  */
 typedef struct __attribute__((__packed__)) sl_wfx_set_cca_config_req_body_s {
-    uint8_t  cca_thr_mode;                                 ///< CCA threshold mode. See enum ::sl_wfx_cc_thr_mode_t.
-    uint8_t  reserved[3];                                  ///< reserved for future use, set to 0
+  uint8_t  cca_thr_mode;                                   ///< CCA threshold mode. See enum ::sl_wfx_cc_thr_mode_t.
+  uint8_t  reserved[3];                                    ///< reserved for future use, set to 0
 } sl_wfx_set_cca_config_req_body_t;
 
 typedef struct __attribute__((__packed__)) sl_wfx_set_cca_config_req_s {
-	sl_wfx_header_t header;
-	sl_wfx_set_cca_config_req_body_t body;
+  sl_wfx_header_t header;
+  sl_wfx_set_cca_config_req_body_t body;
 } sl_wfx_set_cca_config_req_t;
 
 /**
  * @brief Confirmation sent by Wlan firmware after a ::SL_WFX_SET_CCA_CONFIG_REQ_ID request.
  */
 typedef struct __attribute__((__packed__)) sl_wfx_set_cca_config_cnf_body_s {
-    uint32_t status;                                       ///< Confirmation status, see enum ::sl_wfx_status_t
+  uint32_t status;                                         ///< Confirmation status, see enum ::sl_wfx_status_t
 } sl_wfx_set_cca_config_cnf_body_t;
 
 typedef struct __attribute__((__packed__)) sl_wfx_set_cca_config_s {
-	sl_wfx_header_t header;
-	sl_wfx_set_cca_config_cnf_body_t body;
+  sl_wfx_header_t header;
+  sl_wfx_set_cca_config_cnf_body_t body;
 } sl_wfx_set_cca_config_t;
 
 /**

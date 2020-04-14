@@ -51,6 +51,7 @@
 sl_wfx_context_t *sl_wfx_context;
 static uint8_t   encryption_keyset;
 static uint16_t  sl_wfx_input_buffer_number;
+
 /******************************************************
 *               Static Function Declarations
 ******************************************************/
@@ -206,8 +207,6 @@ sl_status_t sl_wfx_init(sl_wfx_context_t *context)
           sl_wfx_host_log("--Trusted Eval mode--\r\n");
 #endif
         }
-        // Set the default bitmap in the context
-        memcpy(sl_wfx_context->encryption_bitmap, new_bitmap, SL_WFX_SECURE_LINK_ENCRYPTION_BITMAP_SIZE);
         // Send this bitmap to the device
         result = sl_wfx_secure_link_configure(new_bitmap, 0);
         SL_WFX_ERROR_CHECK(result);
@@ -285,11 +284,27 @@ sl_status_t sl_wfx_deinit(void)
  * @returns Returns SL_STATUS_OK if the request has been sent correctly,
  * SL_STATUS_FAIL otherwise
  *****************************************************************************/
-sl_status_t sl_wfx_set_mac_address(const sl_wfx_mac_address_t *mac, sl_wfx_interface_t interface)
+sl_status_t sl_wfx_set_mac_address(const sl_wfx_mac_address_t *mac,
+                                   sl_wfx_interface_t interface)
 {
+  sl_status_t result;
   sl_wfx_set_mac_address_req_body_t payload;
+
   memcpy(&payload.mac_addr, &mac->octet, sizeof(payload.mac_addr));
-  return sl_wfx_send_command(SL_WFX_SET_MAC_ADDRESS_REQ_ID, &payload, sizeof(payload), interface, NULL);
+  result = sl_wfx_send_command(SL_WFX_SET_MAC_ADDRESS_REQ_ID, &payload,
+                               sizeof(payload), interface, NULL);
+
+  if (result == SL_STATUS_OK) {
+    if (interface == SL_WFX_STA_INTERFACE) {
+      memcpy(&(sl_wfx_context->mac_addr_0.octet), mac->octet,
+             sizeof(sl_wfx_mac_address_t));
+    }
+    if (interface == SL_WFX_SOFTAP_INTERFACE) {
+      memcpy(&(sl_wfx_context->mac_addr_1.octet), mac->octet,
+             sizeof(sl_wfx_mac_address_t));
+    }
+  }
+  return result;
 }
 
 /**************************************************************************//**
@@ -677,50 +692,6 @@ sl_status_t sl_wfx_send_scan_command(uint16_t               scan_mode,
 sl_status_t sl_wfx_send_stop_scan_command(void)
 {
   return sl_wfx_send_command(SL_WFX_STOP_SCAN_REQ_ID, NULL, 0, SL_WFX_STA_INTERFACE, NULL);
-}
-
-/**************************************************************************//**
- * @brief Join or create an IBSS network
- *
- * @param ssid is the name of the IBSS network
- * @param ssid_length is the length of the SSID name
- * @param channel is the channel used by the network
- * @param security_mode is the security mode used by the network
- *   @arg         WFM_SECURITY_MODE_OPEN
- *   @arg         WFM_SECURITY_MODE_WEP
- * @param passkey is the passkey used by the network
- * @param passkey_length is the length of the passkey
- * @returns SL_STATUS_OK if the command has been sent correctly,
- * SL_STATUS_FAIL otherwise
- *****************************************************************************/
-sl_status_t sl_wfx_join_ibss_command(const uint8_t  *ssid,
-                                     uint32_t        ssid_length,
-                                     uint32_t        channel,
-                                     uint16_t        security_mode,
-                                     const uint8_t  *passkey,
-                                     uint16_t        passkey_length)
-{
-  sl_wfx_join_ibss_req_body_t payload;
-
-  payload.ssid_def.ssid_length = sl_wfx_htole32(ssid_length);
-  payload.channel              = sl_wfx_htole32(channel);
-  payload.security_mode        = sl_wfx_htole16(security_mode);
-  payload.password_length      = sl_wfx_htole16(passkey_length);
-  memcpy(payload.ssid_def.ssid, ssid, ssid_length);
-  memcpy(payload.password, passkey, passkey_length);
-
-  return sl_wfx_send_command(SL_WFX_JOIN_IBSS_REQ_ID, &payload, sizeof(payload), SL_WFX_STA_INTERFACE, NULL);
-}
-
-/**************************************************************************//**
- * @brief Send a command to stop the IBSS mode
- *
- * @returns SL_STATUS_OK if the command has been sent correctly,
- * SL_STATUS_FAIL otherwise
- *****************************************************************************/
-sl_status_t sl_wfx_leave_ibss_command(void)
-{
-  return sl_wfx_send_command(SL_WFX_LEAVE_IBSS_REQ_ID, NULL, 0, SL_WFX_STA_INTERFACE, NULL);
 }
 
 /**************************************************************************//**
@@ -2450,9 +2421,10 @@ sl_status_t sl_wfx_allocate_command_buffer(sl_wfx_generic_message_t **buffer,
     uint32_t padding_length = 0;
 
     // The request content (including the Wi-Fi chip buffer header) needs to be padded to the encryption block size
-    if ((buffer_size & 0x0F) > 0) {
-      padding_length = (16 - (uint8_t) (buffer_size & 0x0F) );
+    if (((buffer_size - 2) & 0x0F) > 0) {
+      padding_length = (16 - (uint8_t) ((buffer_size - 2) & 0x0F) );
     }
+
     status = sl_wfx_host_allocate_buffer((void **)buffer,
                                          type,
                                          buffer_size + SL_WFX_SECURE_LINK_HEADER_SIZE + padding_length + SL_WFX_SECURE_LINK_CCM_TAG_SIZE);

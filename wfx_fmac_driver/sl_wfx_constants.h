@@ -216,6 +216,26 @@ static inline uint32_t uint32_identity(uint32_t x)
 #define SL_WFX_SECURE_LINK_NONCE_WATERMARK             1 << 29
 #endif //SL_WFX_USE_SECURE_LINK
 
+#define SL_WFX_ERROR_LOGS {                                                                                          \
+    { SL_WFX_ERROR_FIRMWARE_ROLLBACK, "Rollback error", 0 },                                                         \
+    { SL_WFX_ERROR_DEPRECATED_0, "Not used anymore", 0 },                                                            \
+    { SL_WFX_ERROR_OUTDATED_SESSION_KEY, "Session key is outdated", 4 },                                             \
+    { SL_WFX_ERROR_INVALID_SESSION_KEY, "Session key is invalid", 4 },                                               \
+    { SL_WFX_ERROR_OOR_VOLTAGE, "Out-of-range power supply voltage", 0 },                                            \
+    { SL_WFX_ERROR_PDS_VERSION, "Wrong PDS version", 0 },                                                            \
+    { SL_WFX_ERROR_OOR_TEMPERATURE, "Out-of-range temperature", 0 },                                                 \
+    { SL_WFX_ERROR_REQ_DURING_KEY_EXCHANGE, "Requests from Host are forbidden until the end of key exchange", 0 },   \
+    { SL_WFX_ERROR_MULTI_TX_CNF_SECURELINK, "'Multi TX conf' feature is not supported in SecureLink mode", 0 },      \
+    { SL_WFX_ERROR_SECURELINK_OVERFLOW, "Internal SecureLink overflow", 0 },                                         \
+    { SL_WFX_ERROR_SECURELINK_DECRYPTION, "Error occured during message decryption", 0 },                            \
+    { SL_WFX_ERROR_SECURELINK_WRONG_ENCRYPTION_STATE, "Encryption state of the received message doesn't match", 0 }, \
+    { SL_WFX_SPI_OR_SDIO_FREQ_TOO_LOW, "Bus clock is too slow (<1kHz)", 0 },                                         \
+    { SL_WFX_ERROR_DEPRECATED_1, "Not used anymore", 0 },                                                            \
+    { SL_WFX_HIF_MESSAGE_LENGTH_TOO_LARGE, "HIF message length bigger than maximum Hif buffer size", 4 },            \
+    { SL_WFX_HIF_BUS_ERROR, "HIF HW has reported an error", 4 },                                                     \
+    { SL_WFX_PDS_TESTFEATURE_MODE_ERROR, "Unknown TestFeatureMode", 0 }                                              \
+}
+
 /**************************************************************************//**
  * @addtogroup ENUM
  * @{
@@ -350,6 +370,16 @@ typedef struct {
   uint32_t rx_packet_count; ///< Received packet counter
   uint32_t tx_packet_count; ///< Sent packet counter
 } sl_wfx_nonce_t;
+
+/**************************************************************************//**
+ * @struct sl_wfx_error_log_t
+ * @brief Structure used to display error logs
+ *****************************************************************************/
+typedef struct {
+  uint32_t val;
+  const char *str;
+  uint8_t param_length;
+} sl_wfx_err_log_t;
 
 /**************************************************************************//**
  * @struct sl_wfx_context_t
