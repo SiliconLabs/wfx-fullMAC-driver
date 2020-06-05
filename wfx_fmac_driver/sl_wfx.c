@@ -2107,28 +2107,27 @@ static sl_status_t sl_wfx_download_run_firmware(void)
 
   /* Firmware downloading loop */
   for ( block = 0; block < num_blocks; block++ ) {
-    /* check the download status in NCP */
-    status = sl_wfx_apb_read_32(ADDR_DWL_CTRL_AREA_NCP_STATUS, &value32);
-    SL_WFX_ERROR_CHECK(status);
-
-    if (value32 != NCP_STATE_DOWNLOAD_PENDING) {
-      status = SL_STATUS_FAIL;
-      SL_WFX_ERROR_CHECK(status);
-    }
-
     /* loop until put - get <= 24K */
     for ( i = 0; i < 100; i++ ) {
-      get = 0;
-      status = sl_wfx_apb_read_32(ADDR_DWL_CTRL_AREA_GET, &get);
-      SL_WFX_ERROR_CHECK(status);
-
       if ((put - get) <= (DOWNLOAD_FIFO_SIZE - DOWNLOAD_BLOCK_SIZE)) {
         break;
       }
+
+      get = 0;
+      status = sl_wfx_apb_read_32(ADDR_DWL_CTRL_AREA_GET, &get);
+      SL_WFX_ERROR_CHECK(status);
     }
 
     if ((put - get) > (DOWNLOAD_FIFO_SIZE - DOWNLOAD_BLOCK_SIZE)) {
-      status = SL_STATUS_WIFI_FIRMWARE_DOWNLOAD_TIMEOUT;
+      /* check the download status in NCP */
+      status = sl_wfx_apb_read_32(ADDR_DWL_CTRL_AREA_NCP_STATUS, &value32);
+      SL_WFX_ERROR_CHECK(status);
+
+      if (value32 != NCP_STATE_DOWNLOAD_PENDING) {
+        status = SL_STATUS_FAIL;
+      } else {
+        status = SL_STATUS_WIFI_FIRMWARE_DOWNLOAD_TIMEOUT;
+      }
       SL_WFX_ERROR_CHECK(status);
     }
 
