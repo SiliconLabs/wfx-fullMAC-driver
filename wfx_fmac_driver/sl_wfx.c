@@ -1514,10 +1514,18 @@ sl_status_t sl_wfx_send_command(uint8_t command_id,
  *****************************************************************************/
 sl_status_t sl_wfx_send_request(uint8_t command_id, sl_wfx_generic_message_t *request, uint16_t request_length)
 {
-  sl_status_t result = SL_STATUS_NO_MORE_RESOURCE;
+  sl_status_t result;
+  sl_status_t unlock_result;
 
   result = sl_wfx_host_lock();
-  SL_WFX_ERROR_CHECK(result);
+
+  if (result != SL_STATUS_OK) {
+#if (SL_WFX_DEBUG_MASK & SL_WFX_DEBUG_ERROR)
+    sl_wfx_host_log("Send request lock error %u\n", result);
+#endif
+    //if driver lock is not successful, return
+    return result;
+  }
 
   if (sl_wfx_context->used_buffers < sl_wfx_input_buffer_number) {
     // Write the buffer header
@@ -1585,9 +1593,11 @@ sl_status_t sl_wfx_send_request(uint8_t command_id, sl_wfx_generic_message_t *re
   }
 
   error_handler:
-  if (result == SL_STATUS_NO_MORE_RESOURCE || sl_wfx_host_unlock()) {
-    result = SL_STATUS_FAIL;
+  unlock_result = sl_wfx_host_unlock();
+  if (unlock_result != SL_STATUS_OK) {
+    result = unlock_result;
   }
+
 #if (SL_WFX_DEBUG_MASK & SL_WFX_DEBUG_ERROR)
   if (result != SL_STATUS_OK) {
     sl_wfx_host_log("Send request error %u\n", result);
@@ -1609,13 +1619,21 @@ sl_status_t sl_wfx_send_request(uint8_t command_id, sl_wfx_generic_message_t *re
 sl_status_t sl_wfx_receive_frame(uint16_t *ctrl_reg)
 {
   sl_status_t               result;
+  sl_status_t               unlock_result;
   sl_wfx_generic_message_t *network_rx_buffer = NULL;
   sl_wfx_received_message_type_t message_type;
   sl_wfx_buffer_type_t      buffer_type = SL_WFX_RX_FRAME_BUFFER;
   uint32_t                  read_length, frame_size;
 
   result = sl_wfx_host_lock();
-  SL_WFX_ERROR_CHECK(result);
+
+  if (result != SL_STATUS_OK) {
+#if (SL_WFX_DEBUG_MASK & SL_WFX_DEBUG_ERROR)
+    sl_wfx_host_log("Receive frame lock error %u\n", result);
+#endif
+    //if driver lock is not successful, return immediatly
+    return result;
+  }
 
   frame_size = (*ctrl_reg & SL_WFX_CONT_NEXT_LEN_MASK) * 2;
   /* if frame_size is equal to 0, read the control register to know the frame size */
@@ -1722,9 +1740,12 @@ sl_status_t sl_wfx_receive_frame(uint16_t *ctrl_reg)
     sl_wfx_host_schedule_secure_link_renegotiation();
   }
 #endif //SL_WFX_USE_SECURE_LINK
-  if (result == SL_STATUS_NO_MORE_RESOURCE || sl_wfx_host_unlock()) {
-    result = SL_STATUS_FAIL;
+
+  unlock_result = sl_wfx_host_unlock();
+  if (unlock_result != SL_STATUS_OK) {
+    result = unlock_result;
   }
+
 #if (SL_WFX_DEBUG_MASK & SL_WFX_DEBUG_ERROR)
   if (result != SL_STATUS_OK) {
     sl_wfx_host_log("Receive frame error %u\n", result);

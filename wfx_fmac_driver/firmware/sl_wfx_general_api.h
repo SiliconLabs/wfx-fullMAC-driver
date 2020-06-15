@@ -431,7 +431,8 @@ typedef sl_wfx_header_t sl_wfx_shut_down_req_t;
 typedef enum sl_wfx_generic_indication_type_e {
   SL_WFX_GENERIC_INDICATION_TYPE_RAW             = 0x0,    ///<Byte stream type, currently not used
   SL_WFX_GENERIC_INDICATION_TYPE_STRING          = 0x1,    ///<NULL terminating String
-  SL_WFX_GENERIC_INDICATION_TYPE_RX_STATS        = 0x2     ///<Rx statistics structure
+  SL_WFX_GENERIC_INDICATION_TYPE_RX_STATS        = 0x2,    ///<Rx statistics structure
+  SL_WFX_GENERIC_INDICATION_TYPE_TX_PWR_LOOP_INFO = 0x3     ///<Tx power loop info structure
 } sl_wfx_generic_indication_type_t;
 
 /**
@@ -450,10 +451,25 @@ typedef struct __attribute__((__packed__)) sl_wfx_rx_stats_s {
   uint32_t date;                                           ///<This message transmission date in firmware timebase (microsecond)
   uint32_t pwr_clk_freq;                                   ///<Frequency of the low power clock in Hz
   uint8_t  is_ext_pwr_clk;                                 ///<Indicate if the low power clock is external
+  int8_t   current_temp;                                   ///<Current die temperature in Celsius
 } sl_wfx_rx_stats_t;
+
+/**
+ * @brief TX power loop info from the GENERIC indication message sl_wfx_generic_ind_body_t
+ */
+typedef struct __attribute__((__packed__)) sl_wfx_tx_pwr_loop_info_s {
+  uint16_t   dig_gain;                                     ///<Used Tx digital gain
+  uint16_t   ppa_gain;                                     ///<Used Tx PA gain
+  int16_t    target_pout;                                  ///<Power target in qdBm
+  int16_t    pestimation;                                  ///<FEM output power in qdBm
+  uint16_t   vpdet;                                        ///<Measured Vpdet in mV
+  uint8_t    meas_index;                                   ///<Vpdet measurement index
+  uint8_t    reserved;                                     ///<Reserved
+} sl_wfx_tx_pwr_loop_info_t;
 
 typedef union __attribute__((__packed__)) sl_wfx_indication_data_u {
   sl_wfx_rx_stats_t rx_stats;
+  sl_wfx_tx_pwr_loop_info_t tx_pwr_loop_info;
   uint8_t  raw_data[376];
 } sl_wfx_indication_data_t;
 
@@ -878,9 +894,9 @@ typedef struct __attribute__((__packed__)) sl_wfx_pta_settings_cnf_s {
  * @brief Priority levels used by PTA for concurrent (Coex and WLAN) request arbitration.
  */
 typedef enum sl_wfx_pta_priority_e {
-  SL_WFX_PTA_PRIORITY_COEX_MAXIMIZED             = 0x00000562,  ///< Maximizes priority to COEX, WLAN connection is not ensured
+  SL_WFX_PTA_PRIORITY_COEX_MAXIMIZED             = 0x00000562,  ///< Maximizes priority to COEX
   SL_WFX_PTA_PRIORITY_COEX_HIGH                  = 0x00000462,  ///< High priority to COEX, targets low-latency to COEX
-  SL_WFX_PTA_PRIORITY_BALANCED                   = 0x00001461,  ///< Balanced PTA arbitration, WLAN acknowledge receptions are protected
+  SL_WFX_PTA_PRIORITY_BALANCED                   = 0x00001461,  ///< Balanced PTA arbitration
   SL_WFX_PTA_PRIORITY_WLAN_HIGH                  = 0x00001851,  ///< High priority to WLAN, protects WLAN transmissions
   SL_WFX_PTA_PRIORITY_WLAN_MAXIMIZED             = 0x00001A51   ///< Maximizes priority to WLAN
 } sl_wfx_pta_priority_t;
