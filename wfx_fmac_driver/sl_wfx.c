@@ -198,17 +198,15 @@ sl_status_t sl_wfx_init(sl_wfx_context_t *context)
         // - For *Trusted Eval* state: all encrypted messages except SL_CONFIGURE.
         // - For *Trusted Enforced* state: all encrypted messages including SL_CONFIGURE.
         // This Host default bitmap mimics the device default bitmap
-        uint8_t new_bitmap[SL_WFX_SECURE_LINK_ENCRYPTION_BITMAP_SIZE];
-        sl_wfx_init_secure_link_encryption_bitmap(new_bitmap);
-        sl_wfx_secure_link_bitmap_set_all_encrypted(new_bitmap);
+        sl_wfx_secure_link_bitmap_set_all_encrypted(sl_wfx_context->encryption_bitmap);
         if (link_mode == SL_WFX_LINK_MODE_TRUSTED_EVAL) {
-          sl_wfx_secure_link_bitmap_remove_request_id(new_bitmap, SL_WFX_SECURELINK_CONFIGURE_REQ_ID);
+          sl_wfx_secure_link_bitmap_remove_request_id(sl_wfx_context->encryption_bitmap, SL_WFX_SECURELINK_CONFIGURE_REQ_ID);
 #if (SL_WFX_DEBUG_MASK & SL_WFX_DEBUG_SLK)
           sl_wfx_host_log("--Trusted Eval mode--\r\n");
 #endif
         }
         // Send this bitmap to the device
-        result = sl_wfx_secure_link_configure(new_bitmap, 0);
+        result = sl_wfx_secure_link_configure(sl_wfx_context->encryption_bitmap, 0);
         SL_WFX_ERROR_CHECK(result);
 #if (SL_WFX_DEBUG_MASK & (SL_WFX_DEBUG_INIT | SL_WFX_DEBUG_SLK))
         sl_wfx_host_log("--Secure Link set--\r\n");

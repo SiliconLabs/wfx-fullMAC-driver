@@ -1,6 +1,12 @@
 Wi-Fi FMAC Driver Release Note
 ==============================
 
+# Release 3.0.3
+(release date 2020-06-19)
+
+## New Features/Improvements/Bug Fixes
+* Fixed an issue with Secure Link Trusted Enforced parts
+
 # Release 3.0.2
 (release date 2020-06-15)
 
@@ -8,6 +14,9 @@ Wi-Fi FMAC Driver Release Note
 * Improve sl_wfx_send_request() and sl_wfx_receive_frame() error reporting
 * Improve sl_wfx_init() execution time
 * Aligned on firmware 3.7.0
+
+## Known issues
+* The driver cannot initialize Secure Link Trusted Enforced parts (sl_wfx_secure_link_configure() not encrypted)
 
 # Release 3.0.0
 (release date 2020-04-14)

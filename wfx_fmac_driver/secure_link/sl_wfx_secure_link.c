@@ -251,7 +251,9 @@ sl_status_t sl_wfx_secure_link_configure(const uint8_t *encryption_bitmap, uint8
   SL_WFX_ERROR_CHECK(status);
 
   /* New bitmap successfully set to wf200, save it as the new working bitmap */
-  memcpy(sl_wfx_context->encryption_bitmap, encryption_bitmap, SL_WFX_SECURE_LINK_ENCRYPTION_BITMAP_SIZE);
+  if (encryption_bitmap != sl_wfx_context->encryption_bitmap) {
+    memcpy(sl_wfx_context->encryption_bitmap, encryption_bitmap, SL_WFX_SECURE_LINK_ENCRYPTION_BITMAP_SIZE);
+  }
 
   error_handler:
   return status;
