@@ -22,8 +22,8 @@
 #include "sl_wfx_general_error_api.h"
 
 //< API Internal Version encoding
-#define SL_WFX_API_VERSION_MINOR                 0x04
-#define SL_WFX_API_VERSION_MAJOR                 0x02
+#define SL_WFX_API_VERSION_MINOR                 0x03
+#define SL_WFX_API_VERSION_MAJOR                 0x03
 
 #define SL_WFX_SSID_SIZE                         32
 #define SL_WFX_MAC_ADDR_SIZE                     6

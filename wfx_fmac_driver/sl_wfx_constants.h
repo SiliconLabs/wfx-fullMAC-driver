@@ -362,6 +362,14 @@ typedef struct {
 } sl_wfx_mac_address_t;
 
 /**************************************************************************//**
+ * @struct sl_wfx_password_t
+ * @brief Structure to handle password format
+ *****************************************************************************/
+typedef struct {
+  uint8_t password[SL_WFX_PASSWORD_SIZE]; ///< Table to store a password
+} sl_wfx_password_t;
+
+/**************************************************************************//**
  * @struct sl_wfx_nonce_t
  * @brief Structure to maintain secure link counters
  *****************************************************************************/

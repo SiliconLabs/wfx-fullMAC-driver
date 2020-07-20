@@ -152,7 +152,7 @@ sl_status_t sl_wfx_get_max_tx_power(int32_t *max_tx_power_rf_port_1,
                                     int32_t *max_tx_power_rf_port_2,
                                     sl_wfx_interface_t interface);
 
-sl_status_t sl_wfx_get_pmk(uint8_t *password,
+sl_status_t sl_wfx_get_pmk(sl_wfx_password_t *password,
                            uint32_t *password_length,
                            sl_wfx_interface_t interface);
 

@@ -300,8 +300,10 @@ void sl_wfx_secure_link_bitmap_set_all_encrypted(uint8_t *bitmap)
   sl_wfx_secure_link_bitmap_remove_request_id(bitmap, SL_WFX_ERROR_IND_ID);
   sl_wfx_secure_link_bitmap_remove_request_id(bitmap, SL_WFX_STARTUP_IND_ID);
   sl_wfx_secure_link_bitmap_remove_request_id(bitmap, SL_WFX_WAKEUP_IND_ID);
+  sl_wfx_secure_link_bitmap_remove_request_id(bitmap, SL_WFX_SET_SECURELINK_MAC_KEY_REQ_ID);
   sl_wfx_secure_link_bitmap_remove_request_id(bitmap, SL_WFX_SECURELINK_EXCHANGE_PUB_KEYS_REQ_ID);
   sl_wfx_secure_link_bitmap_remove_request_id(bitmap, SL_WFX_SECURELINK_EXCHANGE_PUB_KEYS_IND_ID);
+  sl_wfx_secure_link_bitmap_remove_request_id(bitmap, SL_WFX_PREVENT_ROLLBACK_REQ_ID);
   sl_wfx_secure_link_bitmap_remove_request_id(bitmap, SL_WFX_SEND_FRAME_REQ_ID);
   sl_wfx_secure_link_bitmap_remove_request_id(bitmap, SL_WFX_RECEIVED_IND_ID);
 }

@@ -1,6 +1,15 @@
 Wi-Fi FMAC Driver Release Note
 ==============================
 
+# Release 3.0.4
+(release date 2020-07-20)
+
+## New Features/Improvements/Bug Fixes
+* Fix a potential exploit in sl_wfx_get_pmk()
+* Check if received commands have the correct Secure Link encryption state
+* Check 'get' command status before returning values to the application
+* Aligned on firmware 3.8.0
+
 # Release 3.0.3
 (release date 2020-06-19)
 
