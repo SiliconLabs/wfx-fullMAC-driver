@@ -91,7 +91,7 @@ sl_status_t sl_wfx_init(sl_wfx_context_t *context)
   const char           *pds_data;
 #ifdef SL_WFX_USE_SECURE_LINK
   sl_wfx_secure_link_mode_t link_mode;
-  sl_wfx_context->secure_link_renegotiation_state = SL_WFX_SECURELINK_DEFAULT;
+  context->secure_link_renegotiation_state = SL_WFX_SECURELINK_DEFAULT;
 #endif
 
   memset(context, 0, sizeof(*context) );
