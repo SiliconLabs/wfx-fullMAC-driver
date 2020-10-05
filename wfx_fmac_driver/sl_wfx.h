@@ -158,6 +158,10 @@ sl_status_t sl_wfx_get_pmk(sl_wfx_password_t *password,
 
 sl_status_t sl_wfx_get_ap_client_signal_strength(const sl_wfx_mac_address_t *client, uint32_t *signal_strength);
 
+sl_status_t sl_wfx_ext_auth(sl_wfx_ext_auth_data_type_t auth_data_type,
+                            uint16_t auth_data_length,
+                            const uint8_t *auth_data);
+
 /*
  * Asynchronous WF200 commands
  */

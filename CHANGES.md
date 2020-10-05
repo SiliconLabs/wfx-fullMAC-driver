@@ -1,6 +1,20 @@
 Wi-Fi FMAC Driver Release Note
 ==============================
 
+# Release 3.2.0
+(release date 2020-10-05)
+
+## New Features/Improvements/Bug Fixes
+* Add API to allow WPA3 offloading to the host
+* Aligned on firmware 3.10.0
+
+# Release 3.1.0
+(release date 2020-08-04)
+
+## New Features/Improvements/Bug Fixes
+* Sync to the Secure Link bitmap returned by the firmware in sl_wfx_secure_link_configure()
+* Aligned on firmware 3.9.0
+
 # Release 3.0.4
 (release date 2020-07-20)
 

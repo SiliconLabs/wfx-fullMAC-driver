@@ -180,34 +180,35 @@ sl_status_t sl_wfx_init(sl_wfx_context_t *context)
       case SL_WFX_LINK_MODE_UNTRUSTED:
         break;
       case SL_WFX_LINK_MODE_TRUSTED_EVAL:
+#if (SL_WFX_DEBUG_MASK & SL_WFX_DEBUG_SLK)
+        sl_wfx_host_log("--Trusted Eval mode--\r\n");
+#endif
         /* In this mode it is assumed that the key is not burned */
         result = sl_wfx_secure_link_set_mac_key(sl_wfx_context->secure_link_mac_key, SECURE_LINK_MAC_KEY_DEST_RAM);
         SL_WFX_ERROR_CHECK(result);
       /* Falls through on purpose */
       case SL_WFX_LINK_MODE_ACTIVE:
-        // Exchange keys is only message that can be sent unencrypted
-        // when *Trusted* mode is enabled. After exchanging keys we can change
-        // the encryption bitmap without restrictions.
-
         result = sl_wfx_secure_link_renegotiate_session_key();
         SL_WFX_ERROR_CHECK(result);
 #if (SL_WFX_DEBUG_MASK & SL_WFX_DEBUG_SLK)
         sl_wfx_host_log("--Set SL Bitmap--\r\n");
 #endif
-        // Set the initial encryption bitmap regarding the *Secure Link* mode:
-        // - For *Trusted Eval* state: all encrypted messages except SL_CONFIGURE.
-        // - For *Trusted Enforced* state: all encrypted messages including SL_CONFIGURE.
-        // This Host default bitmap mimics the device default bitmap
+
         sl_wfx_secure_link_bitmap_set_all_encrypted(sl_wfx_context->encryption_bitmap);
+
+        /* SL_WFX_SECURELINK_CONFIGURE_REQ_ID encryption state depends on the SecureLink mode:
+         *   - Always encrypted in TRUSTED_ENFORCED mode
+         *   - Always in clear in TRUSTED_EVAL mode
+         */
         if (link_mode == SL_WFX_LINK_MODE_TRUSTED_EVAL) {
           sl_wfx_secure_link_bitmap_remove_request_id(sl_wfx_context->encryption_bitmap, SL_WFX_SECURELINK_CONFIGURE_REQ_ID);
-#if (SL_WFX_DEBUG_MASK & SL_WFX_DEBUG_SLK)
-          sl_wfx_host_log("--Trusted Eval mode--\r\n");
-#endif
         }
+
         // Send this bitmap to the device
         result = sl_wfx_secure_link_configure(sl_wfx_context->encryption_bitmap, 0);
-        SL_WFX_ERROR_CHECK(result);
+        if (result != SL_STATUS_OK && result != SL_STATUS_WIFI_WARNING) {
+          goto error_handler;
+        }
 #if (SL_WFX_DEBUG_MASK & (SL_WFX_DEBUG_INIT | SL_WFX_DEBUG_SLK))
         sl_wfx_host_log("--Secure Link set--\r\n");
 #endif
@@ -317,6 +318,7 @@ sl_status_t sl_wfx_set_mac_address(const sl_wfx_mac_address_t *mac,
  *   @arg         WFM_SECURITY_MODE_WEP
  *   @arg         WFM_SECURITY_MODE_WPA2_WPA1_PSK
  *   @arg         WFM_SECURITY_MODE_WPA2_PSK
+ *   @arg         WFM_SECURITY_MODE_WPA3_SAE
  * @param prevent_roaming is equal to 1 to prevent automatic roaming between APs
  * @param management_frame_protection is equal to 1 to enable PMF mode
  * @param passkey is the passkey used by the AP. Can be the WPA hash key to
@@ -355,7 +357,11 @@ sl_status_t sl_wfx_send_join_command(const uint8_t  *ssid,
   connect_request->channel               = sl_wfx_htole16(channel);
   connect_request->security_mode         = security_mode;
   connect_request->prevent_roaming       = prevent_roaming;
-  connect_request->mgmt_frame_protection = sl_wfx_htole16(management_frame_protection);
+  if (security_mode == WFM_SECURITY_MODE_WPA3_SAE) {
+    connect_request->mgmt_frame_protection = WFM_MGMT_FRAME_PROTECTION_MANDATORY;
+  } else {
+    connect_request->mgmt_frame_protection = sl_wfx_htole16(management_frame_protection);
+  }
   connect_request->password_length       = sl_wfx_htole16(passkey_length);
   connect_request->ie_data_length        = sl_wfx_htole16(ie_data_length);
   memcpy(connect_request->ssid_def.ssid, ssid, ssid_length);
@@ -411,6 +417,7 @@ sl_status_t sl_wfx_send_disconnect_command(void)
  *   @arg         WFM_SECURITY_MODE_WEP
  *   @arg         WFM_SECURITY_MODE_WPA2_WPA1_PSK
  *   @arg         WFM_SECURITY_MODE_WPA2_PSK
+ *   @arg         WFM_SECURITY_MODE_WPA3_SAE
  * @param management_frame_protection is equal to 1 to enable PMF mode
  * @param passkey is the passkey used by the softap. Only applicable in security
  * modes different from WFM_SECURITY_MODE_OPEN.
@@ -1167,6 +1174,61 @@ sl_status_t sl_wfx_get_ap_client_signal_strength(const sl_wfx_mac_address_t *cli
     }
   }
 
+  return result;
+}
+
+/**************************************************************************//**
+ * @brief Send a WPA3 Auth packet
+ *
+ * @param auth_data_type is the type of the packet to send.
+ *   @arg         WFM_EXT_AUTH_DATA_TYPE_SAE_START
+ *   @arg         WFM_EXT_AUTH_DATA_TYPE_SAE_COMMIT
+ *   @arg         WFM_EXT_AUTH_DATA_TYPE_SAE_CONFIRM
+ *   @arg         WFM_EXT_AUTH_DATA_TYPE_MSK
+ * @param auth_data_length is the length of the data to be sent.
+ * @param auth_data is the data.
+ * @returns SL_STATUS_OK if the command has been sent correctly,
+ * SL_STATUS_FAIL otherwise
+ *****************************************************************************/
+sl_status_t sl_wfx_ext_auth(sl_wfx_ext_auth_data_type_t auth_data_type,
+                            uint16_t auth_data_length,
+                            const uint8_t *auth_data)
+{
+  sl_status_t                result;
+  sl_wfx_ext_auth_cnf_t      *reply            = NULL;
+  sl_wfx_generic_message_t   *frame            = NULL;
+  sl_wfx_ext_auth_req_body_t *ext_auth_request = NULL;
+  uint32_t request_length = SL_WFX_ROUND_UP_EVEN(sizeof(sl_wfx_ext_auth_req_t) + auth_data_length);
+
+  result = sl_wfx_allocate_command_buffer(&frame, SL_WFX_EXT_AUTH_REQ_ID, SL_WFX_CONTROL_BUFFER, request_length);
+  SL_WFX_ERROR_CHECK(result);
+
+  memset(&frame->header.length, 0, request_length);
+
+  frame->header.info = SL_WFX_STA_INTERFACE;
+
+  ext_auth_request                   = (sl_wfx_ext_auth_req_body_t *)&frame->body;
+  ext_auth_request->auth_data_type   = sl_wfx_htole16(auth_data_type);
+  ext_auth_request->auth_data_length = sl_wfx_htole16(auth_data_length);
+  memcpy(ext_auth_request + 1, auth_data, auth_data_length);
+
+  result = sl_wfx_send_request(SL_WFX_EXT_AUTH_REQ_ID, frame, request_length);
+  SL_WFX_ERROR_CHECK(result);
+
+  result = sl_wfx_host_wait_for_confirmation(SL_WFX_EXT_AUTH_REQ_ID, SL_WFX_DEFAULT_REQUEST_TIMEOUT_MS, (void **)&reply);
+  SL_WFX_ERROR_CHECK(result);
+
+  result = sl_wfx_get_status_code(sl_wfx_htole32(reply->body.status), SL_WFX_EXT_AUTH_REQ_ID);
+
+  error_handler:
+  if (result == SL_STATUS_TIMEOUT) {
+    if (sl_wfx_context->used_buffers > 0) {
+      sl_wfx_context->used_buffers--;
+    }
+  }
+  if (frame != NULL) {
+    sl_wfx_free_command_buffer(frame, SL_WFX_EXT_AUTH_REQ_ID, SL_WFX_CONTROL_BUFFER);
+  }
   return result;
 }
 

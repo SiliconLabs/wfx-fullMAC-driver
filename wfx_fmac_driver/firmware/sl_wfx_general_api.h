@@ -22,7 +22,7 @@
 #include "sl_wfx_general_error_api.h"
 
 //< API Internal Version encoding
-#define SL_WFX_API_VERSION_MINOR                 0x03
+#define SL_WFX_API_VERSION_MINOR                 0x05
 #define SL_WFX_API_VERSION_MAJOR                 0x03
 
 #define SL_WFX_SSID_SIZE                         32
@@ -136,7 +136,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_generic_message_s {
  */
 typedef struct __attribute__((__packed__)) sl_wfx_generic_confirmation_s {
   sl_wfx_header_t header;                                  ///<4 bytes header
-  uint32_t status;                                         ///<See enum sl_wfx_status_t and (wsm_status or wfm_status)
+  uint32_t status;                                         ///<See enum sl_wfx_status_t
 } sl_wfx_generic_confirmation_t;
 
 /**
@@ -667,7 +667,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_securelink_exchange_pub_keys_i
  *
  * To disable the protection, a given magic word (SL_WFX_SESSION_KEY_PROTECTION_DISABLE_MAGIC) must be provided as _DisableSessionKeyProtection_ parameter value. Any other value will let the protection set.
  *
- * @note When SecureLink is activated, _SL Configure_ API must be called right after the key exchange.
+ * @note When SecureLink is activated, _SL Configure_ API must be called right after the key exchange. Issuing another command instead will result in an error.
  * @note It is not recommended to call this API a second time during the same power cycle.
  */
 typedef struct __attribute__((__packed__)) sl_wfx_securelink_configure_req_body_s {
@@ -683,11 +683,13 @@ typedef struct __attribute__((__packed__)) sl_wfx_securelink_configure_req_s {
 /**
  * @brief Confirmation of Secure Link Layer configuration sl_wfx_securelink_configure_req_body_t
  *
- * The following situation will lead to a SL_WFX_STATUS_FAILURE return value:
- * - Bitmap is set to 1 for SL_WFX_SEND_FRAME_REQ_ID (since encryption is not supported for TX frames)
+ * @return HI_STATUS_SUCCESS
+ *
+ * @note The host driver should wait for this confirmation to update its local bitmap with the returned value
  * */
 typedef struct __attribute__((__packed__)) sl_wfx_securelink_configure_cnf_body_s {
-  uint32_t status;                                         ///<Request status (see enum wsm_status)
+  uint32_t status;                                         ///<Request status (see enum sl_wfx_status_t)
+  uint8_t  encr_bmp[SL_WFX_ENCR_BMP_SIZE];                 ///<Encryption bitmap
 } sl_wfx_securelink_configure_cnf_body_t;
 
 typedef struct __attribute__((__packed__)) sl_wfx_securelink_configure_cnf_s {

@@ -126,7 +126,8 @@ typedef enum sl_wfx_requests_ids_e {
   SL_WFX_SET_MAX_TX_POWER_REQ_ID                 = 0x60,   ///< \b SET_MAX_TX_POWER request ID uses body SL_WFX_SET_MAX_TX_POWER_REQ_BODY and returns SL_WFX_SET_MAX_TX_POWER_CNF_BODY
   SL_WFX_GET_MAX_TX_POWER_REQ_ID                 = 0x61,   ///< \b GET_MAX_TX_POWER request ID uses body SL_WFX_GET_MAX_TX_POWER_REQ_BODY and returns SL_WFX_GET_MAX_TX_POWER_CNF_BODY
   SL_WFX_GET_PMK_REQ_ID                          = 0x62,   ///< \b GET_PMK request ID uses body SL_WFX_GET_PMK_REQ_BODY and returns SL_WFX_GET_PMK_CNF_BODY
-  SL_WFX_GET_AP_CLIENT_SIGNAL_STRENGTH_REQ_ID    = 0x63    ///< \b GET_AP_CLIENT_SIGNAL_STRENGTH request ID uses body SL_WFX_GET_AP_CLIENT_SIGNAL_STRENGTH_BODY and returns SL_WFX_GET_AP_CLIENT_SIGNAL_STRENGTH_CNF_BODY
+  SL_WFX_GET_AP_CLIENT_SIGNAL_STRENGTH_REQ_ID    = 0x63,   ///< \b GET_AP_CLIENT_SIGNAL_STRENGTH request ID uses body SL_WFX_GET_AP_CLIENT_SIGNAL_STRENGTH_BODY and returns SL_WFX_GET_AP_CLIENT_SIGNAL_STRENGTH_CNF_BODY
+  SL_WFX_EXT_AUTH_REQ_ID                         = 0x64    ///< \b EXT_AUTH request ID uses body SL_WFX_EXT_AUTH_BODY and returns SL_WFX_EXT_AUTH_CNF_BODY
 } sl_wfx_requests_ids_t;
 
 /**
@@ -161,7 +162,8 @@ typedef enum sl_wfx_confirmations_ids_e {
   SL_WFX_SET_MAX_TX_POWER_CNF_ID                 = 0x60,   ///< \b SET_MAX_TX_POWER confirmation Id. Returns body SL_WFX_SET_MAX_TX_POWER_CNF_BODY
   SL_WFX_GET_MAX_TX_POWER_CNF_ID                 = 0x61,   ///< \b GET_MAX_TX_POWER confirmation Id. Returns body SL_WFX_GET_MAX_TX_POWER_CNF_BODY
   SL_WFX_GET_PMK_CNF_ID                          = 0x62,   ///< \b GET_PMK confirmation Id. Returns body SL_WFX_GET_PMK_CNF_BODY
-  SL_WFX_GET_AP_CLIENT_SIGNAL_STRENGTH_CNF_ID    = 0x63    ///< \b GET_AP_CLIENT_SIGNAL_STRENGTH confirmation Id. Returns body SL_WFX_GET_AP_CLIENT_SIGNAL_STRENGTH_CNF_BODY
+  SL_WFX_GET_AP_CLIENT_SIGNAL_STRENGTH_CNF_ID    = 0x63,   ///< \b GET_AP_CLIENT_SIGNAL_STRENGTH confirmation Id. Returns body SL_WFX_GET_AP_CLIENT_SIGNAL_STRENGTH_CNF_BODY
+  SL_WFX_EXT_AUTH_CNF_ID                         = 0x64    ///< \b EXT_AUTH confirmation Id. Returns body SL_WFX_EXT_AUTH_BODY
 } sl_wfx_confirmations_ids_t;
 
 /**
@@ -178,6 +180,7 @@ typedef enum sl_wfx_indications_ids_e {
   SL_WFX_AP_CLIENT_CONNECTED_IND_ID              = 0xcd,   ///< \b AP_CLIENT_CONNECTED indication id. Content is SL_WFX_AP_CLIENT_CONNECTED_IND_BODY
   SL_WFX_AP_CLIENT_REJECTED_IND_ID               = 0xce,   ///< \b AP_CLIENT_REJECTED indication id. Content is SL_WFX_AP_CLIENT_REJECTED_IND_BODY
   SL_WFX_AP_CLIENT_DISCONNECTED_IND_ID           = 0xcf,   ///< \b AP_CLIENT_DISCONNECTED indication id. Content is SL_WFX_AP_CLIENT_DISCONNECTED_IND_BODY
+  SL_WFX_EXT_AUTH_IND_ID                         = 0xd2    ///< \b EXT_AUTH indication Id. Content is SL_WFX_EXT_AUTH_IND_BOODY
 } sl_wfx_indications_ids_t;
 
 /**
@@ -318,8 +321,19 @@ typedef enum sl_wfx_security_mode_e {
   WFM_SECURITY_MODE_OPEN                         = 0x0,    ///< No security
   WFM_SECURITY_MODE_WEP                          = 0x1,    ///< Use WEP
   WFM_SECURITY_MODE_WPA2_WPA1_PSK                = 0x2,    ///< Use WPA1 or WPA2
-  WFM_SECURITY_MODE_WPA2_PSK                     = 0x4     ///< Use only WPA2
+  WFM_SECURITY_MODE_WPA2_PSK                     = 0x4,    ///< Use only WPA2
+  WFM_SECURITY_MODE_WPA3_SAE                     = 0x6     ///< Use WPA3 (STA mode only)
 } sl_wfx_security_mode_t;
+
+/**
+ * @brief Type of the authentication message.
+ */
+typedef enum sl_wfx_ext_auth_data_type_e {
+  WFM_EXT_AUTH_DATA_TYPE_SAE_START               = 0x0,    ///<
+  WFM_EXT_AUTH_DATA_TYPE_SAE_COMMIT              = 0x1,    ///<
+  WFM_EXT_AUTH_DATA_TYPE_SAE_CONFIRM             = 0x2,    ///<
+  WFM_EXT_AUTH_DATA_TYPE_MSK                     = 0x3     ///<
+} sl_wfx_ext_auth_data_type_t;
 
 /**
  * @brief Full MAC (UMAC) confirmation possible values for a returned 'status' field.
@@ -340,7 +354,8 @@ typedef enum sl_wfx_fmac_status_e {
   WFM_STATUS_CONNECTION_REJECTED_BY_AP           = 0x9,    ///< The request failed because the AP rejected the connection
   WFM_STATUS_CONNECTION_AUTH_FAILURE             = 0xA,    ///< The request failed because the WPA handshake did not complete successfully
   WFM_STATUS_RETRY_EXCEEDED                      = 0x13,   ///< The request failed because the retry limit was exceeded.
-  WFM_STATUS_TX_LIFETIME_EXCEEDED                = 0x14    ///< The request failed because the MSDU life time was exceeded.
+  WFM_STATUS_TX_LIFETIME_EXCEEDED                = 0x14,   ///< The request failed because the MSDU life time was exceeded.
+  WFM_STATUS_REQUEUE                             = 0x15    ///< The request failed because TX is suspended (temperature too high)
 } sl_wfx_fmac_status_t;
 
 /**
@@ -787,6 +802,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_connect_req_body_s {
    *          <BR><B>WFM_SECURITY_MODE_WEP</B>: The device will only connect to a WEP Access Point.
    *          <BR><B>WFM_SECURITY_MODE_WPA2_WPA1_PSK</B>: The device will only connect to a WPA-Personal or a WPA2-Personal Access Point.
    *          <BR><B>WFM_SECURITY_MODE_WPA2_PSK</B>: The device will only connect to a WPA2-Personal access point.
+   *          <BR><B>WFM_SECURITY_MODE_WPA3_SAE</B>: The device will only connect to a WPA3-SAE access point.
    *          <BR>See wfm_security_mode for enumeration values.
    */
   uint8_t  security_mode;
@@ -1139,6 +1155,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_start_ap_req_body_s {
    *          <BR><B>WFM_SECURITY_MODE_WEP</B>: The device will only allow WEP connections.
    *          <BR><B>WFM_SECURITY_MODE_WPA2_WPA1_PSK</B>: The device will only allow WPA-Personal and WPA2-Personal connections.
    *          <BR><B>WFM_SECURITY_MODE_WPA2_PSK</B>: The device will only allow WPA2-Personal connections.
+   *          <BR><B>WFM_SECURITY_MODE_WPA3_SAE</B>: Unsupported in AP mode
    *          <BR>See wfm_security_mode for enumeration values.
    */
   uint8_t  security_mode;
@@ -2904,7 +2921,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_get_ap_client_signal_strength_
    * @brief Status of the get request.
    * @details <B>WFM_STATUS_SUCCESS</B>: the get request was completed.
    *          <BR><B>any other value</B>: the get request failed.
-   *          <BR>See WFM_STATUS for enumeration values.
+   *          <BR>See sl_wfx_fmac_status_t for enumeration values.
    */
   uint32_t status;
   /**
@@ -2915,7 +2932,7 @@ typedef struct __attribute__((__packed__)) sl_wfx_get_ap_client_signal_strength_
 } sl_wfx_get_ap_client_signal_strength_cnf_body_t;
 
 /**
- * @brief Confirmation message for sl_wfx_get_ap_client_signal_strength_cnf_t.
+ * @brief Confirmation message for sl_wfx_get_ap_client_signal_strength_req_t.
  * @ingroup WFM_GROUP_MODE_AP
  */
 typedef struct __attribute__((__packed__)) sl_wfx_get_ap_client_signal_strength_cnf_s {
@@ -2924,6 +2941,86 @@ typedef struct __attribute__((__packed__)) sl_wfx_get_ap_client_signal_strength_
   /** Confirmation message body. */
   sl_wfx_get_ap_client_signal_strength_cnf_body_t body;
 } sl_wfx_get_ap_client_signal_strength_cnf_t;
+
+/**
+ * @brief Request message body for sl_wfx_ext_auth_req_t.
+ */
+typedef struct __attribute__((__packed__)) sl_wfx_ext_auth_req_body_s {
+  /**
+   * @brief Type of the authentication message
+   * @details See ::sl_wfx_ext_auth_data_type_t for enumeration values.
+   */
+  uint16_t auth_data_type;
+  /**
+   * @brief Length of the authentication message
+   */
+  uint16_t auth_data_length;
+  /**
+   * @brief The authentication message
+   */
+  uint8_t auth_data[];
+} sl_wfx_ext_auth_req_body_t;
+
+/**
+ */
+typedef struct __attribute__((__packed__)) sl_wfx_ext_auth_req_s {
+  /** Common message header. */
+  sl_wfx_header_t header;
+  /** Request message body. */
+  sl_wfx_ext_auth_req_body_t body;
+} sl_wfx_ext_auth_req_t;
+
+/**
+ * @brief Confirmation message body for sl_wfx_ext_auth_cnf_t.
+ */
+typedef struct __attribute__((__packed__)) sl_wfx_ext_auth_cnf_body_s {
+  /**
+   * @brief Status of the update request.
+   * @details <B>WFM_STATUS_SUCCESS</B>: the authentication request was completed.
+   *          <BR><B>any other value</B>: the authentication request failed.
+   *          <BR>See sl_wfx_fmac_status_t for enumeration values.
+   */
+  uint32_t status;
+} sl_wfx_ext_auth_cnf_body_t;
+
+/**
+ * @brief Confirmation message for sl_wfx_ext_auth_req_t.
+ * @ingroup WFM_GROUP_MODE_STA
+ */
+typedef struct __attribute__((__packed__)) sl_wfx_ext_auth_cnf_s {
+  /** Common message header. */
+  sl_wfx_header_t header;
+  /** Confirmation message body. */
+  sl_wfx_ext_auth_cnf_body_t body;
+} sl_wfx_ext_auth_cnf_t;
+
+/**
+ * @brief Indication message body for sl_wfx_ext_auth_ind_t.
+ */
+typedef struct __attribute__((__packed__)) sl_wfx_ext_auth_ind_body_s {
+  /**
+   * @brief Type of the authentication message
+   * @details See ::sl_wfx_ext_auth_data_type_t for enumeration values.
+   */
+  uint16_t auth_data_type;
+  /**
+   * @brief Length of the authentication message
+   */
+  uint16_t auth_data_length;
+  /**
+   * @brief The authentication message
+   */
+  uint8_t auth_data[];
+} sl_wfx_ext_auth_ind_body_t;
+
+/**
+ */
+typedef struct __attribute__((__packed__))  sl_wfx_ext_auth_ind_s {
+  /** Common message header. */
+  sl_wfx_header_t header;
+  /** Indication message body. */
+  sl_wfx_ext_auth_ind_body_t body;
+} sl_wfx_ext_auth_ind_t;
 
 /**************************************************/
 

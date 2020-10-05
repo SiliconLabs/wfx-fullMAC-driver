@@ -41,7 +41,8 @@ typedef enum sl_wfx_error_e {
   SL_WFX_ERROR_DEPRECATED_4                      = 0xd,    ///<Not used anymore
   SL_WFX_ERROR_DEPRECATED_5                      = 0xe,    ///<Not used anymore
   SL_WFX_HIF_BUS_ERROR                           = 0xf,    ///<HIF HW has reported an error. Param: HIF status register
-  SL_WFX_PDS_TESTFEATURE_MODE_ERROR              = 0x10    ///<unknown TestFeatureMode during test feature init */
+  SL_WFX_PDS_TESTFEATURE_MODE_ERROR              = 0x10,   ///<Unknown TestFeatureMode during test feature init
+  SL_WFX_ERROR_SECURELINK_EXPECTED_BITMAP        = 0x11    ///<The SecureLink bitmap must be configured right after key exchange
 } sl_wfx_error_t;
 
 /**
