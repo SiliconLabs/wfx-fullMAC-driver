@@ -1,6 +1,15 @@
 Wi-Fi FMAC Driver Release Note
 ==============================
 
+# Release 3.2.1
+(release date 2020-10-14)
+
+## New Features/Improvements/Bug Fixes
+* Aligned on firmware 3.11.0
+* Improve Secure Link context initialization
+* Optimize power save implementation
+* sl_wfx_send_request() returns a status when HIF queue is full
+
 # Release 3.2.0
 (release date 2020-10-05)
 
