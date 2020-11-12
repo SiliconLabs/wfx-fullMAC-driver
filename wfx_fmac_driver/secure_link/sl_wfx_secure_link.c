@@ -149,7 +149,7 @@ sl_status_t sl_wfx_secure_link_exchange_keys(const uint8_t *sl_mac_key, uint8_t 
 
   request = (sl_wfx_securelink_exchange_pub_keys_req_body_t *)&request_packet->body;
 
-#ifdef SL_WFX_SLK_CURVE25519
+#if SL_WFX_SLK_CURVE25519
   request->algorithm = sl_wfx_htole32(SECURE_LINK_CURVE25519);
 #else
   request->algorithm = sl_wfx_htole32(SECURE_LINK_KDF);

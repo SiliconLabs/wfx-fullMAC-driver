@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *****************************************************************************/
-
+ 
 // <<< Use Configuration Wizard in Context Menu >>>
 
-// <h>WFx FMAC driver configuration
+// <h>WFx Bus SDIO configuration
 
-// <o SL_WFX_DEFAULT_REQUEST_TIMEOUT_MS> Timeout period in milliseconds<250-10000>
-// <i> Default: 5000
-// <i> Timeout period in milliseconds for requests.
-#define SL_WFX_DEFAULT_REQUEST_TIMEOUT_MS             (5000)
+// <o SL_WFX_SDIO_BLOCK_SIZE> SDIO Block size used (64-512)
+// <i> Default: 512
+// <i> Used in SDIO Block mode to round up the memory allocation to the block size used.
+#define SL_WFX_SDIO_BLOCK_SIZE          (512)
 
 // </h>
 

@@ -17,15 +17,20 @@
 #ifndef SL_WFX_H
 #define SL_WFX_H
 
+#include "sl_wfx_configuration_defaults.h"
 #include "sl_wfx_host_api.h"
 #include "sl_wfx_version.h"
-#include "sl_wfx_configuration.h"
 #include "bus/sl_wfx_bus.h"
-#include "firmware/sl_wfx_registers.h"
+#include "sl_wfx_registers.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
+
+/// Define the WEAK macro for GCC compatible compilers
+#ifndef WEAK
+#define WEAK __attribute__((weak))
+#endif
 
 #ifdef __cplusplus
 extern "C"

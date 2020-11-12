@@ -14,15 +14,12 @@
  * limitations under the License.
  *****************************************************************************/
 
+#include "sl_wfx_configuration_defaults.h"
+
 #ifdef SL_WFX_USE_SECURE_LINK
-#include "secure_link/sl_wfx_secure_link.h"
+#include "sl_wfx_secure_link.h"
 #else
 #include "sl_wfx.h"
-#endif
-
-/// Define the WEAK macro for GCC compatible compilers
-#ifndef WEAK
-#define WEAK __attribute__((weak))
 #endif
 
 /******************************************************
@@ -185,7 +182,7 @@ sl_status_t sl_wfx_init(sl_wfx_context_t *context)
         /* In this mode it is assumed that the key is not burned */
         result = sl_wfx_secure_link_set_mac_key(sl_wfx_context->secure_link_mac_key, SECURE_LINK_MAC_KEY_DEST_RAM);
         SL_WFX_ERROR_CHECK(result);
-      /* Falls through on purpose */
+      /* Fallthrough on purpose */
       case SL_WFX_LINK_MODE_ACTIVE:
         result = sl_wfx_secure_link_renegotiate_session_key();
         SL_WFX_ERROR_CHECK(result);
@@ -2264,13 +2261,13 @@ sl_status_t sl_wfx_set_antenna_config(sl_wfx_antenna_config_t config)
   char        pds[32] = { 0 };
   char       *current = pds;
 
-  current += sprintf(current, "{%c:{", PDS_ANTENNA_SEL_KEY);
-  current += sprintf(current, "%c:%X,", PDS_KEY_A, (unsigned int) config);
+  current += sprintf(current, "{%c:{", SL_WFX_PDS_ANTENNA_SEL_KEY);
+  current += sprintf(current, "%c:%X,", SL_WFX_PDS_KEY_A, (unsigned int) config);
   if (config == SL_WFX_ANTENNA_DIVERSITY) {
     // Set diversity mode internal, the Wi-Fi chip will control antenna allocation
-    current += sprintf(current, "%c:%X}}", PDS_KEY_B, 1);
+    current += sprintf(current, "%c:%X}}", SL_WFX_PDS_KEY_B, 1);
   } else {
-    current += sprintf(current, "%c:%X}}", PDS_KEY_B, 0);
+    current += sprintf(current, "%c:%X}}", SL_WFX_PDS_KEY_B, 0);
   }
 
   result = sl_wfx_send_configuration((const char *)pds, strlen(pds));

@@ -161,6 +161,8 @@ static inline uint32_t uint32_identity(uint32_t x)
 
 #define SL_WAIT_FOREVER  0xFFFFFFFF
 
+#define SL_WFX_ROUND_UP_VALUE      SL_WFX_SDIO_BLOCK_SIZE
+
 #ifndef SL_WFX_DEBUG_MASK
 #define SL_WFX_DEBUG_MASK 0x0000
 #endif
@@ -177,13 +179,13 @@ static inline uint32_t uint32_identity(uint32_t x)
 #define SL_WFX_DEBUG_TX_REG  0x0200
 #define SL_WFX_DEBUG_FW_LOAD 0x0400
 
-#define PDS_KEY_A       'a'
-#define PDS_KEY_B       'b'
-#define PDS_KEY_C       'c'
-#define PDS_KEY_D       'd'
-#define PDS_KEY_E       'e'
-#define PDS_KEY_F       'f'
-#define PDS_ANTENNA_SEL_KEY       'j'
+#define SL_WFX_PDS_KEY_A                 'a'
+#define SL_WFX_PDS_KEY_B                 'b'
+#define SL_WFX_PDS_KEY_C                 'c'
+#define SL_WFX_PDS_KEY_D                 'd'
+#define SL_WFX_PDS_KEY_E                 'e'
+#define SL_WFX_PDS_KEY_F                 'f'
+#define SL_WFX_PDS_ANTENNA_SEL_KEY       'j'
 
 #define SL_WFX_PTE_INFO                  0x0900C0C0
 #define SL_WFX_MSG_ID_GENERAL_API_MASK   0x20
@@ -195,7 +197,7 @@ static inline uint32_t uint32_identity(uint32_t x)
 #define SL_WFX_MSG_INFO_SECURE_LINK_OFFSET 6
 #define SL_WFX_MSG_INFO_SECURE_LINK_MASK   0xC0
 /* Secure link constants*/
-#define SECURE_LINK_MAC_KEY_LENGTH         32
+#define SL_WFX_SECURE_LINK_MAC_KEY_LENGTH         32
 
 #define SL_WFX_SECURE_LINK_SESSION_KEY_LENGTH          (16)
 
@@ -406,7 +408,7 @@ typedef struct {
   sl_wfx_mac_address_t mac_addr_1;         ///< Mac address used by WFx interface 1, softap
   sl_wfx_state_t state;                    ///< State of the WFx Wi-Fi chip
 #ifdef SL_WFX_USE_SECURE_LINK
-  uint8_t  secure_link_mac_key[SECURE_LINK_MAC_KEY_LENGTH];
+  uint8_t  secure_link_mac_key[SL_WFX_SECURE_LINK_MAC_KEY_LENGTH];
   sl_wfx_nonce_t secure_link_nonce;
   uint8_t  encryption_bitmap[SL_WFX_SECURE_LINK_ENCRYPTION_BITMAP_SIZE];
   uint8_t  secure_link_session_key[SL_WFX_SECURE_LINK_SESSION_KEY_LENGTH];

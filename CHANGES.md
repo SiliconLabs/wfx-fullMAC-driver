@@ -1,6 +1,13 @@
 Wi-Fi FMAC Driver Release Note
 ==============================
 
+# Release 3.2.2
+(release date 2020-11-12)
+
+## New Features/Improvements/Bug Fixes
+* Add default configuration files
+* Aligned on firmware 3.11.1
+
 # Release 3.2.1
 (release date 2020-10-14)
 

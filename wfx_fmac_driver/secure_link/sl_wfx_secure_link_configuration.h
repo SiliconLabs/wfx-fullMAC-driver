@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *****************************************************************************/
-
+ 
 // <<< Use Configuration Wizard in Context Menu >>>
 
-// <h>WFx FMAC driver configuration
+// <h>WFx Secure Link configuration
 
-// <o SL_WFX_DEFAULT_REQUEST_TIMEOUT_MS> Timeout period in milliseconds<250-10000>
-// <i> Default: 5000
-// <i> Timeout period in milliseconds for requests.
-#define SL_WFX_DEFAULT_REQUEST_TIMEOUT_MS             (5000)
+// <q SL_WFX_SLK_CURVE25519> Use crypto curves
+// <i> Default: 1
+// <i> If this option is enabled ECDH crypto is used, KDF otherwise.
+#define SL_WFX_SLK_CURVE25519          (1)
 
 // </h>
 
