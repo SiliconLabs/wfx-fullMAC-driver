@@ -1,6 +1,13 @@
 Wi-Fi FMAC Driver Release Note
 ==============================
 
+# Release 3.3.0
+(release date 2020-01-06)
+
+## New Features/Improvements/Bug Fixes
+* Add a 'strategy' parameter to sl_wfx_set_power_mode() to select power save mode
+* Aligned on firmware 3.12.0
+
 # Release 3.2.2
 (release date 2020-11-12)
 
@@ -12,10 +19,10 @@ Wi-Fi FMAC Driver Release Note
 (release date 2020-10-14)
 
 ## New Features/Improvements/Bug Fixes
-* Aligned on firmware 3.11.0
 * Improve Secure Link context initialization
 * Optimize power save implementation
 * sl_wfx_send_request() returns a status when HIF queue is full
+* Aligned on firmware 3.11.0
 
 # Release 3.2.0
 (release date 2020-10-05)

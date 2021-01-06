@@ -756,12 +756,13 @@ sl_status_t sl_wfx_disconnect_ap_client_command(const sl_wfx_mac_address_t *clie
  * @note the power mode has to be set once the connection with the AP is
  * established
  *****************************************************************************/
-sl_status_t sl_wfx_set_power_mode(sl_wfx_pm_mode_t mode, uint16_t interval)
+sl_status_t sl_wfx_set_power_mode(sl_wfx_pm_mode_t mode, sl_wfx_pm_poll_t strategy, uint16_t interval)
 {
   sl_wfx_set_pm_mode_req_body_t payload;
 
-  payload.power_mode      = sl_wfx_htole16(mode);
-  payload.listen_interval = sl_wfx_htole16(interval);
+  payload.power_mode       = mode;
+  payload.polling_strategy = strategy;
+  payload.listen_interval  = sl_wfx_htole16(interval);
 
   return sl_wfx_send_command(SL_WFX_SET_PM_MODE_REQ_ID, &payload, sizeof(payload), SL_WFX_STA_INTERFACE, NULL);
 }
