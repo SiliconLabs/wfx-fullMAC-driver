@@ -1,6 +1,13 @@
 Wi-Fi FMAC Driver Release Note
 ==============================
 
+# Release 3.3.2
+(release date 2021-03-24)
+
+## New Features/Improvements/Bug Fixes
+* Remove misuse sl_wfx_host_deinit() call in sl_wfx_download_run_firmware()
+* Aligned on firmware 3.12.2
+
 # Release 3.3.1
 (release date 2021-02-18)
 

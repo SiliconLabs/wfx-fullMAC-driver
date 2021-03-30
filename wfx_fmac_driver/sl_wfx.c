@@ -2180,8 +2180,6 @@ static sl_status_t sl_wfx_download_run_firmware(void)
   SL_WFX_ERROR_CHECK(result);
 
   error_handler:
-  sl_wfx_host_deinit();
-
   return result;
 }
 
