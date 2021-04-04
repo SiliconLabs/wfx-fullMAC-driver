@@ -21,7 +21,7 @@
 #include "sl_wfx_host_api.h"
 #include "sl_wfx_version.h"
 #include "bus/sl_wfx_bus.h"
-#include "sl_wfx_registers.h"
+#include "firmware/sl_wfx_registers.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>

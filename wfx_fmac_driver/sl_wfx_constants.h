@@ -19,7 +19,7 @@
 
 #include "sl_wfx_configuration_defaults.h"
 #include "sl_status.h"
-#include "sl_wfx_api.h"
+#include "firmware/sl_wfx_api.h"
 #include <stdint.h>
 
 /******************************************************

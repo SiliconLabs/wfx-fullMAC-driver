@@ -17,7 +17,7 @@
 #ifndef SL_WFX_HOST_API_H
 #define SL_WFX_HOST_API_H
 
-#include "sl_wfx_api.h"
+#include "firmware/sl_wfx_api.h"
 #include "sl_wfx_constants.h"
 
 /******************************************************
