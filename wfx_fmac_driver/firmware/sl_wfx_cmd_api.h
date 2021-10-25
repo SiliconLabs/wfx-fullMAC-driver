@@ -2251,7 +2251,11 @@ typedef struct __attribute__((__packed__)) sl_wfx_set_tx_rate_parameters_req_bod
   /**
    * @brief Reserved, set to zero.
    */
-  uint32_t reserved;
+  uint16_t reserved;
+  /**
+   * @brief Set to 1 to use Minstrel rate algorithm
+   */
+  uint16_t use_minstrel;
   /**
    * @brief TX rate set parameters.
    */
@@ -2988,6 +2992,8 @@ typedef struct __attribute__((__packed__)) sl_wfx_ext_auth_req_body_s {
 } sl_wfx_ext_auth_req_body_t;
 
 /**
+ * @brief Request message for sl_wfx_ext_auth_req_t.
+ * @ingroup WFM_GROUP_MODE_STA
  */
 typedef struct __attribute__((__packed__)) sl_wfx_ext_auth_req_s {
   /** Common message header. */
@@ -3040,6 +3046,8 @@ typedef struct __attribute__((__packed__)) sl_wfx_ext_auth_ind_body_s {
 } sl_wfx_ext_auth_ind_body_t;
 
 /**
+ * @brief Indication message for sl_wfx_ext_auth_ind_t.
+ * @ingroup WFM_GROUP_MODE_STA
  */
 typedef struct __attribute__((__packed__))  sl_wfx_ext_auth_ind_s {
   /** Common message header. */

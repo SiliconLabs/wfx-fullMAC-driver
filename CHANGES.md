@@ -1,6 +1,14 @@
 Wi-Fi FMAC Driver Release Note
 ==============================
 
+# Release 3.4.0
+(release date 2021-10-20)
+
+## New Features/Improvements/Bug Fixes
+* Add a parameter in sl_wfx_set_tx_rate_parameters() to select the rate
+  algorithm used
+* Aligned on firmware 3.13.0
+
 # Release 3.3.2
 (release date 2021-03-24)
 

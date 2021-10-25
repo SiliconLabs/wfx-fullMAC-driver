@@ -622,6 +622,8 @@ sl_status_t sl_wfx_send_scan_command(uint16_t               scan_mode,
   uint8_t                      *scan_params_copy_pointer = NULL;
   sl_wfx_start_scan_req_body_t *scan_request             = NULL;
   sl_wfx_start_scan_cnf_t      *reply                    = NULL;
+  sl_wfx_ssid_def_t             temp_ssid_list[2];
+  uint8_t                       i;
   uint32_t scan_params_length   = channel_list_count + (ssid_list_count * sizeof(sl_wfx_ssid_def_t) ) + ie_data_length + SL_WFX_BSSID_SIZE;
   uint32_t request_total_length = SL_WFX_ROUND_UP_EVEN(sizeof(sl_wfx_start_scan_req_t) + scan_params_length);
 
@@ -646,9 +648,11 @@ sl_status_t sl_wfx_send_scan_command(uint16_t               scan_mode,
   }
 
   // Write SSID list
-  if (ssid_list_count > 0) {
-    memcpy(scan_params_copy_pointer, ssid_list, ssid_list_count * sizeof(sl_wfx_ssid_def_t) );
-    scan_params_copy_pointer += ssid_list_count * sizeof(sl_wfx_ssid_def_t);
+  for (i = 0; i < ssid_list_count; i++) {
+    memcpy(&temp_ssid_list[i], ssid_list + i, sizeof(sl_wfx_ssid_def_t));
+    temp_ssid_list[i].ssid_length = sl_wfx_htole32(temp_ssid_list[i].ssid_length);
+    memcpy(scan_params_copy_pointer, &temp_ssid_list[i], sizeof(sl_wfx_ssid_def_t));
+    scan_params_copy_pointer += sizeof(sl_wfx_ssid_def_t);
   }
 
   // Write IE
@@ -1037,16 +1041,18 @@ sl_status_t sl_wfx_set_roam_parameters(uint8_t rcpi_threshold,
  * @brief Set the rate mode allowed by the station once connected
  *
  * @param rate_set_bitmask is the list of rates that will be used in STA mode.
+ * @param use_minstrel is equal to 1 to use the Minstrel rate algorithm.
  * @returns SL_STATUS_OK if the setting is applied correctly, SL_STATUS_FAIL otherwise
  *
- * @note Parameters set by sl_wfx_set_roam_parameters() take effect at the next
+ * @note Parameters set by sl_wfx_set_tx_rate_parameters() take effect at the next
  * connection. Calling it while connected has no immediate effect.
  *****************************************************************************/
-sl_status_t sl_wfx_set_tx_rate_parameters(sl_wfx_rate_set_bitmask_t rate_set_bitmask)
+sl_status_t sl_wfx_set_tx_rate_parameters(sl_wfx_rate_set_bitmask_t rate_set_bitmask, uint8_t use_minstrel)
 {
   sl_wfx_set_tx_rate_parameters_req_body_t payload;
 
   payload.reserved = 0;
+  payload.use_minstrel = use_minstrel;
   memcpy(&payload.rate_set_bitmask, &rate_set_bitmask, sizeof(sl_wfx_rate_set_bitmask_t));
 
   return sl_wfx_send_command(SL_WFX_SET_TX_RATE_PARAMETERS_REQ_ID, &payload, sizeof(payload), SL_WFX_STA_INTERFACE, NULL);
