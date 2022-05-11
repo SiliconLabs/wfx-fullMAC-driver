@@ -1,6 +1,17 @@
 Wi-Fi FMAC Driver Release Note
 ==============================
 
+# Release 3.5.0
+(release date 2022-04-29)
+
+## New Features/Improvements/Bug Fixes
+* Aligned on firmware 3.15.0
+* Add new filtering mode in sl_wfx_set_broadcast_filter() for broadcast filtering
+* Add new sl_wfx_set_probe_request_filter() API for probe request filtering
+* Fix a bug with sl_wfx_enable_device_power_save() and
+  sl_wfx_disable_device_power_save() where they could get access to the bus
+  without protection
+
 # Release 3.4.1
 (release date 2022-01-27)
 
