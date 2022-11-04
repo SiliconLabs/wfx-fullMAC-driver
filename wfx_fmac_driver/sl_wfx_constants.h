@@ -373,6 +373,30 @@ typedef struct {
 } sl_wfx_password_t;
 
 /**************************************************************************//**
+ * @struct sl_wfx_statistics_t
+ * @brief Structure to handle per-interface statistics
+ *****************************************************************************/
+typedef struct {  
+  uint32_t beacon_rx_count;         ///< The amount of beacons received.
+  uint32_t beacon_rx_missed_count;  ///< The amount of beacons missed.
+  int32_t beacon_tbtt_diff;         ///< The time difference in microseconds 
+                                    ///< between the expected time and the actual
+                                    ///< receive time of the previous beacon.
+  uint32_t unicast_rx_count;        ///< The amount of unicast data packets
+                                    ///< received and forwarded to the host.
+  uint32_t unicast_tx_success_count;///< The amount of successful unicast data packet
+                                    ///< transmission requests made by the host.
+  uint32_t unicast_tx_failure_count;///< The amount of failed unicast data packet 
+                                    ///< transmission requests made by the host.
+  uint32_t multicast_rx_count;      ///< The amount of multicast/broadcast data packets 
+                                    ///< received and forwarded to the host.
+  uint32_t multicast_tx_success_count;///< The amount of successful multicast/broadcast 
+                                      ///< data packet transmission requests made by the host.
+  uint32_t multicast_tx_failure_count;///< The amount of failed multicast/broadcast data 
+                                      ///< packet transmission requests made by the host.
+} sl_wfx_statistics_t;
+
+/**************************************************************************//**
  * @struct sl_wfx_nonce_t
  * @brief Structure to maintain secure link counters
  *****************************************************************************/

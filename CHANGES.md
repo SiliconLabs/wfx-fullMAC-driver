@@ -1,6 +1,15 @@
 Wi-Fi FMAC Driver Release Note
 ==============================
 
+# Release 3.6.0
+(release date 2022-11-04)
+
+## New Features/Improvements/Bug Fixes
+* Aligned on firmware 3.16.0
+* Add new sl_wfx_get_statistics() API to retrieve per-interface statistics
+* Add new argument in sl_wfx_set_tx_rate_parameters() to apply the tx rate
+  on a chosen interface
+
 # Release 3.5.0
 (release date 2022-04-29)
 

@@ -128,7 +128,8 @@ typedef enum sl_wfx_requests_ids_e {
   SL_WFX_GET_PMK_REQ_ID                          = 0x62,   ///< \b GET_PMK request ID uses body SL_WFX_GET_PMK_REQ_BODY and returns SL_WFX_GET_PMK_CNF_BODY
   SL_WFX_GET_AP_CLIENT_SIGNAL_STRENGTH_REQ_ID    = 0x63,   ///< \b GET_AP_CLIENT_SIGNAL_STRENGTH request ID uses body SL_WFX_GET_AP_CLIENT_SIGNAL_STRENGTH_BODY and returns SL_WFX_GET_AP_CLIENT_SIGNAL_STRENGTH_CNF_BODY
   SL_WFX_EXT_AUTH_REQ_ID                         = 0x64,   ///< \b EXT_AUTH request ID uses body SL_WFX_EXT_AUTH_BODY and returns SL_WFX_EXT_AUTH_CNF_BODY
-  SL_WFX_AP_SCAN_REQUEST_FILTER_REQ_ID           = 0x65    ///< \b AP_SCAN_REQUEST request ID uses body SL_WFX_AP_SCAN_REQUEST_BODY and returns SL_WFX_AP_SCAN_REQUEST_CNF_BODY
+  SL_WFX_AP_SCAN_REQUEST_FILTER_REQ_ID           = 0x65,   ///< \b AP_SCAN_REQUEST request ID uses body SL_WFX_AP_SCAN_REQUEST_BODY and returns SL_WFX_AP_SCAN_REQUEST_CNF_BODY
+  SL_WFX_GET_STATISTICS_REQ_ID                   = 0x66    ///< \b GET_STATISTICS request ID uses body SL_WFX_GET_STATISTICS_REQ_BODY and returns SL_WFX_GET_STATISTICS_CNF_BODY
 } sl_wfx_requests_ids_t;
 
 /**
@@ -165,7 +166,8 @@ typedef enum sl_wfx_confirmations_ids_e {
   SL_WFX_GET_PMK_CNF_ID                          = 0x62,   ///< \b GET_PMK confirmation Id. Returns body SL_WFX_GET_PMK_CNF_BODY
   SL_WFX_GET_AP_CLIENT_SIGNAL_STRENGTH_CNF_ID    = 0x63,   ///< \b GET_AP_CLIENT_SIGNAL_STRENGTH confirmation Id. Returns body SL_WFX_GET_AP_CLIENT_SIGNAL_STRENGTH_CNF_BODY
   SL_WFX_EXT_AUTH_CNF_ID                         = 0x64,   ///< \b EXT_AUTH confirmation Id. Returns body SL_WFX_EXT_AUTH_BODY
-  SL_WFX_AP_SCAN_REQUEST_FILTER_CNF_ID           = 0x65    ///< \b AP_SCAN_REQUEST confirmation Id. Returns body SL_WFX_AP_SCAN_REQUEST_CNF_BODY
+  SL_WFX_AP_SCAN_REQUEST_FILTER_CNF_ID           = 0x65,   ///< \b AP_SCAN_REQUEST confirmation Id. Returns body SL_WFX_AP_SCAN_REQUEST_CNF_BODY
+  SL_WFX_GET_STATISTICS_CNF_ID                   = 0x66    ///< \b GET_STATISTICS confirmation Id. Returns body SL_WFX_GET_STATISTICS_CNF_BODY
 } sl_wfx_confirmations_ids_t;
 
 /**
@@ -3050,6 +3052,11 @@ typedef struct __attribute__((__packed__)) sl_wfx_ext_auth_ind_body_s {
 } sl_wfx_ext_auth_ind_body_t;
 
 /**
+ * @brief Indication message triggered during a WPA3 authentication process.
+ * @details The device will send this indication when an authentication
+ *          packet is received and needs to be handled by the host.
+ * @ingroup WFM_GROUP_MESSAGES
+ * @ingroup WFM_GROUP_MODE_STA
  */
 typedef struct __attribute__((__packed__))  sl_wfx_ext_auth_ind_s {
   /** Common message header. */
@@ -3169,6 +3176,95 @@ typedef struct __attribute__((__packed__)) sl_wfx_ap_scan_filter_ind_s {
   /** Indication message body. */
   sl_wfx_ap_scan_filter_ind_body_t body;
 } sl_wfx_ap_scan_filter_ind_t;
+
+/**
+ * @brief Request message for retrieving interface statistics.
+ * @details The host can use this request to retrieve per-interface statistics.
+ *          Values returned are cumulative, calculated from the start of the
+ *          connection and in case of roaming, calculated over multiple APs.
+ *          | Interface mode | Request allowed |
+ *          |:---------------|:----------------|
+ *          | idle           | No              |
+ *          | station        | Yes             |
+ *          | AP             | No              |
+ * @ingroup WFM_GROUP_MESSAGES
+ * @ingroup WFM_GROUP_MODE_STA
+ */
+typedef sl_wfx_header_t sl_wfx_get_statistics_req_t;
+
+/**
+ * @brief Confirmation message body for SL_WFX_GET_STATISTICS_CNF_ID.
+ */
+typedef struct __attribute__((__packed__)) sl_wfx_get_statistics_cnf_body_s {
+    /** 
+     * @brief Status of the get request.
+     * @details <B>WFM_STATUS_SUCCESS</B>: the get request was completed.
+     *          <BR><B>any other value</B>: the get request failed.
+     *          <BR>See ::WFM_STATUS for enumeration values.
+     */
+    uint32_t status;
+    /**
+     * The amount of beacons received.
+     */
+    uint32_t beacon_rx_count;
+    /**
+     * The amount of beacons missed. This value only includes beacons the
+     * device was expecting to receive but did not. Modifying device sleep
+     * interval with WFM_HI_SET_PM_MODE_REQ command may cause the device
+     * to skip beacons, which are not included in this value.
+     */
+    uint32_t beacon_rx_missed_count;
+    /**
+     * AP is supposed to transmit a beacon on Target Beacon Transmission Time
+     * (TBTT) but the actual transmission time may vary depending on channel
+     * utilization and due to AP-specific functionality. This value shows
+     * the time difference in microseconds between the expected time and the
+     * actual receive time of the previous beacon.
+     */
+    int32_t beacon_tbtt_diff;
+    /**
+     * The amount of unicast data packets received and forwarded to the
+     * host.
+     */
+    uint32_t unicast_rx_count;
+    /**
+     * The amount of successful unicast data packet transmission requests
+     * made by the host.
+     */
+    uint32_t unicast_tx_success_count;
+    /**
+     * The amount of failed unicast data packet transmission requests
+     * made by the host.
+     */
+    uint32_t unicast_tx_failure_count;
+    /**
+     * The amount of multicast/broadcast data packets received and forwarded
+     * to the host.
+     */
+    uint32_t multicast_rx_count;
+    /**
+     * The amount of successful multicast/broadcast data packet transmission
+     * requests made by the host.
+     */
+    uint32_t multicast_tx_success_count;
+    /**
+     * The amount of failed multicast/broadcast data packet transmission
+     * requests made by the host.
+     */
+    uint32_t multicast_tx_failure_count;
+} sl_wfx_get_statistics_cnf_body_t;
+
+/**
+ * @brief Confirmation message for sl_wfx_get_statistics_req_t.
+ * @ingroup WFM_GROUP_MESSAGES
+ * @ingroup WFM_GROUP_MODE_STA
+ */
+typedef struct __attribute__((__packed__)) sl_wfx_get_statistics_cnf_s {
+    /** Common message header. */
+    sl_wfx_header_t header;
+    /** Confirmation message body. */
+    sl_wfx_get_statistics_cnf_body_t body;
+} sl_wfx_get_statistics_cnf_t;
 
 /**************************************************/
 

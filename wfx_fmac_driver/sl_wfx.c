@@ -1042,15 +1042,19 @@ sl_status_t sl_wfx_set_roam_parameters(uint8_t rcpi_threshold,
 }
 
 /**************************************************************************//**
- * @brief Set the rate mode allowed by the station once connected
+ * @brief Set the TX rate for station or softAP mode.
  *
- * @param rate_set_bitmask is the list of rates that will be used in STA mode.
+ * @param rate_set_bitmask is the list of rates that will be used in STA/SOFTAP mode.
+ * @param use_minstrel is to use the Minstrel rate algorithm or not. (0: AARF & 1: Minstrel)
+ * @param interface is the interface (station/softAP) affected by the command.
+ *   @arg         SL_WFX_STA_INTERFACE
+ *   @arg         SL_WFX_SOFTAP_INTERFACE
  * @returns SL_STATUS_OK if the setting is applied correctly, SL_STATUS_FAIL otherwise
  *
- * @note Parameters set by sl_wfx_set_tx_rate_parameters() take effect at the next
- * connection. Calling it while connected has no immediate effect.
+ * @note For station, sl_wfx_set_tx_rate_parameters() should be called before connection.
+ * For softap, the rate can be dynamically set before or after starting the softap
  *****************************************************************************/
-sl_status_t sl_wfx_set_tx_rate_parameters(sl_wfx_rate_set_bitmask_t rate_set_bitmask, uint8_t use_minstrel)
+sl_status_t sl_wfx_set_tx_rate_parameters(sl_wfx_rate_set_bitmask_t rate_set_bitmask, uint8_t use_minstrel, sl_wfx_interface_t interface)
 {
   sl_wfx_set_tx_rate_parameters_req_body_t payload;
 
@@ -1058,7 +1062,7 @@ sl_status_t sl_wfx_set_tx_rate_parameters(sl_wfx_rate_set_bitmask_t rate_set_bit
   payload.use_minstrel = use_minstrel;
   memcpy(&payload.rate_set_bitmask, &rate_set_bitmask, sizeof(sl_wfx_rate_set_bitmask_t));
 
-  return sl_wfx_send_command(SL_WFX_SET_TX_RATE_PARAMETERS_REQ_ID, &payload, sizeof(payload), SL_WFX_STA_INTERFACE, NULL);
+  return sl_wfx_send_command(SL_WFX_SET_TX_RATE_PARAMETERS_REQ_ID, &payload, sizeof(payload), interface, NULL);
 }
 
 /**************************************************************************//**
@@ -1146,6 +1150,44 @@ sl_status_t sl_wfx_get_pmk(sl_wfx_password_t *password,
     }
   }
 
+  return result;
+}
+
+/**************************************************************************//**
+ * @brief Retrieve per-interface statistics. Values returned are cumulative, 
+ * computed from the start of the connection and in case of roaming & over multiple APs.
+ *
+ * @param stats is current retrieved per-interface statistics.
+ * @returns SL_STATUS_OK if the command has been sent correctly,
+ * SL_STATUS_FAIL otherwise
+*****************************************************************************/
+sl_status_t sl_wfx_get_statistics(sl_wfx_statistics_t *stats)
+{
+  sl_status_t result;
+  sl_wfx_get_statistics_cnf_t *reply = NULL;
+
+  result = sl_wfx_send_command(SL_WFX_GET_STATISTICS_REQ_ID,
+                              NULL,
+                              0,
+                              SL_WFX_STA_INTERFACE,
+                              (sl_wfx_generic_confirmation_t **)&reply);
+
+  if (SL_STATUS_OK == result) {
+    result = sl_wfx_get_status_code(sl_wfx_htole32(reply->body.status), SL_WFX_GET_STATISTICS_REQ_ID);
+    if (SL_STATUS_OK == result) {
+      /* Retrieve parameters statistics */
+      stats->beacon_rx_count = sl_wfx_htole32(reply->body.beacon_rx_count);
+      stats->beacon_rx_missed_count = sl_wfx_htole32(reply->body.beacon_rx_missed_count);
+      stats->beacon_tbtt_diff = (int32_t)sl_wfx_htole32(reply->body.beacon_tbtt_diff);
+      stats->unicast_rx_count = sl_wfx_htole32(reply->body.unicast_rx_count);
+      stats->unicast_tx_success_count = sl_wfx_htole32(reply->body.unicast_tx_success_count);
+      stats->unicast_tx_failure_count = sl_wfx_htole32(reply->body.unicast_tx_failure_count);
+      stats->multicast_rx_count = sl_wfx_htole32(reply->body.multicast_rx_count);
+      stats->multicast_tx_success_count = sl_wfx_htole32(reply->body.multicast_tx_success_count);
+      stats->multicast_tx_failure_count = sl_wfx_htole32(reply->body.multicast_tx_failure_count);
+    }
+  }
+  
   return result;
 }
 

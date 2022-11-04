@@ -149,7 +149,9 @@ sl_status_t sl_wfx_set_roam_parameters(uint8_t rcpi_threshold,
                                        const uint8_t *channel_list,
                                        uint8_t channel_list_count);
 
-sl_status_t sl_wfx_set_tx_rate_parameters(sl_wfx_rate_set_bitmask_t rate_set_bitmask, uint8_t use_minstrel);
+sl_status_t sl_wfx_set_tx_rate_parameters(sl_wfx_rate_set_bitmask_t rate_set_bitmask,
+                                          uint8_t use_minstrel,
+                                          sl_wfx_interface_t interface);
 
 sl_status_t sl_wfx_set_max_tx_power(int32_t max_tx_power, sl_wfx_interface_t interface);
 
@@ -170,6 +172,8 @@ sl_status_t sl_wfx_ext_auth(sl_wfx_ext_auth_data_type_t auth_data_type,
 sl_status_t sl_wfx_set_probe_request_filter(const uint8_t *ie_data_mask,
                                             const uint8_t *ie_data,
                                             uint16_t ie_data_length);
+
+sl_status_t sl_wfx_get_statistics(sl_wfx_statistics_t *stats);
 
 /*
  * Asynchronous WF200 commands
