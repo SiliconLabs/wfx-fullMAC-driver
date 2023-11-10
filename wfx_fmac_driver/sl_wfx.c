@@ -165,7 +165,7 @@ sl_status_t sl_wfx_init(sl_wfx_context_t *context)
   // when the Wi-Fi chip is in *Trusted* mode
 
   /* Get secure link mode */
-  link_mode = startup_info->body.capabilities.linkmode;
+  link_mode = (sl_wfx_secure_link_mode_t)startup_info->body.capabilities.linkmode;
 
   result = sl_wfx_host_get_secure_link_mac_key(sl_wfx_context->secure_link_mac_key);
 
@@ -182,7 +182,7 @@ sl_status_t sl_wfx_init(sl_wfx_context_t *context)
         /* In this mode it is assumed that the key is not burned */
         result = sl_wfx_secure_link_set_mac_key(sl_wfx_context->secure_link_mac_key, SECURE_LINK_MAC_KEY_DEST_RAM);
         SL_WFX_ERROR_CHECK(result);
-      /* Fallthrough on purpose */
+      /* FALLTHROUGH */
       case SL_WFX_LINK_MODE_ACTIVE:
         result = sl_wfx_secure_link_renegotiate_session_key();
         SL_WFX_ERROR_CHECK(result);
@@ -355,6 +355,8 @@ sl_status_t sl_wfx_send_join_command(const uint8_t  *ssid,
   connect_request->prevent_roaming       = prevent_roaming;
   if (security_mode == WFM_SECURITY_MODE_WPA3_SAE) {
     connect_request->mgmt_frame_protection = WFM_MGMT_FRAME_PROTECTION_MANDATORY;
+  } else if (security_mode == WFM_SECURITY_MODE_WPA3_SAE_WPA2_PSK) {
+    connect_request->mgmt_frame_protection = WFM_MGMT_FRAME_PROTECTION_OPTIONAL;
   } else {
     connect_request->mgmt_frame_protection = sl_wfx_htole16(management_frame_protection);
   }
@@ -753,20 +755,27 @@ sl_status_t sl_wfx_disconnect_ap_client_command(const sl_wfx_mac_address_t *clie
  *   @arg         WFM_PM_MODE_ACTIVE
  *   @arg         WFM_PM_MODE_BEACON
  *   @arg         WFM_PM_MODE_DTIM
+ * @param strategy is the device power save polling strategy
+ *   @arg         WFM_PM_POLL_UAPSD
+ *   @arg         WFM_PM_POLL_FAST_PS
  * @param interval is the number of beacons/DTIMs to skip while sleeping
+ * @param timeout is the time after which the device switches to power save after having been active in Fast Power Save mode
  * @returns SL_STATUS_OK if the command has been sent correctly,
  * SL_STATUS_FAIL otherwise
  *
  * @note the power mode has to be set once the connection with the AP is
  * established
  *****************************************************************************/
-sl_status_t sl_wfx_set_power_mode(sl_wfx_pm_mode_t mode, sl_wfx_pm_poll_t strategy, uint16_t interval)
+sl_status_t sl_wfx_set_power_mode(sl_wfx_pm_mode_t mode, sl_wfx_pm_poll_t strategy, uint16_t interval, uint8_t timeout)
 {
   sl_wfx_set_pm_mode_req_body_t payload;
 
-  payload.power_mode       = mode;
-  payload.polling_strategy = strategy;
-  payload.listen_interval  = sl_wfx_htole16(interval);
+  payload.power_mode           = mode;
+  payload.polling_strategy     = strategy;
+  payload.listen_interval      = sl_wfx_htole16(interval);
+  if (strategy == WFM_PM_POLL_FAST_PS) {
+    payload.fast_psm_idle_period = timeout;
+  }
 
   return sl_wfx_send_command(SL_WFX_SET_PM_MODE_REQ_ID, &payload, sizeof(payload), SL_WFX_STA_INTERFACE, NULL);
 }
@@ -1251,7 +1260,14 @@ sl_status_t sl_wfx_ext_auth(sl_wfx_ext_auth_data_type_t auth_data_type,
   result = sl_wfx_allocate_command_buffer(&frame, SL_WFX_EXT_AUTH_REQ_ID, SL_WFX_CONTROL_BUFFER, request_length);
   SL_WFX_ERROR_CHECK(result);
 
+#if defined(__ICCARM__)
+/* Suppress warnings originating from use of address of unaligned structure member with IAR Embedded Workbench */
+#pragma diag_suppress=Pa039
+#endif
   memset((void *)&frame->header.length, 0, request_length);
+#if defined(__ICCARM__)
+#pragma diag_default=Pa039
+#endif
 
   frame->header.info = SL_WFX_STA_INTERFACE;
 

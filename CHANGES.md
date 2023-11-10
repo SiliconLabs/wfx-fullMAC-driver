@@ -1,6 +1,15 @@
 Wi-Fi FMAC Driver Release Note
 ==============================
 
+# Release 3.7.0
+(release date 2023-11-10)
+
+## New Features/Improvements/Bug Fixes
+* Aligned on firmware 3.17.0
+* Add H2E (Hash-to-Element) key derivation method and PMKSA caching support in WPA3 security mode
+* Update sl_wfx_set_power_mode() API to allow the Fast-PS timeout configuration
+* Add a reason field in the power save error indication message
+
 # Release 3.6.0
 (release date 2022-11-04)
 
