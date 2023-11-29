@@ -571,20 +571,23 @@ sl_status_t sl_wfx_send_ethernet_frame(sl_wfx_send_frame_req_t *frame,
                                        sl_wfx_interface_t interface,
                                        uint8_t priority)
 {
-  sl_status_t result;
-  uint32_t request_length = SL_WFX_ROUND_UP_EVEN(sizeof(sl_wfx_send_frame_req_t) + data_length);
+  sl_status_t result = SL_STATUS_OK;
 
-  sl_wfx_context->data_frame_id++;
+  if(data_length > 0) {
+    uint32_t request_length = SL_WFX_ROUND_UP_EVEN(sizeof(sl_wfx_send_frame_req_t) + data_length);
 
-  frame->header.length           = sl_wfx_htole16(data_length + sizeof(sl_wfx_send_frame_req_t));
-  frame->header.id               = SL_WFX_SEND_FRAME_REQ_ID;
-  frame->header.info             = (interface << SL_WFX_MSG_INFO_INTERFACE_OFFSET) & SL_WFX_MSG_INFO_INTERFACE_MASK;
-  frame->body.frame_type         = WFM_FRAME_TYPE_DATA;
-  frame->body.priority           = priority;
-  frame->body.packet_id          = sl_wfx_htole16(sl_wfx_context->data_frame_id);
-  frame->body.packet_data_length = sl_wfx_htole32(data_length);
+    sl_wfx_context->data_frame_id++;
 
-  result = sl_wfx_send_request(SL_WFX_SEND_FRAME_REQ_ID, (sl_wfx_generic_message_t*) frame, request_length);
+    frame->header.length           = sl_wfx_htole16(data_length + sizeof(sl_wfx_send_frame_req_t));
+    frame->header.id               = SL_WFX_SEND_FRAME_REQ_ID;
+    frame->header.info             = (interface << SL_WFX_MSG_INFO_INTERFACE_OFFSET) & SL_WFX_MSG_INFO_INTERFACE_MASK;
+    frame->body.frame_type         = WFM_FRAME_TYPE_DATA;
+    frame->body.priority           = priority;
+    frame->body.packet_id          = sl_wfx_htole16(sl_wfx_context->data_frame_id);
+    frame->body.packet_data_length = sl_wfx_htole32(data_length);
+
+    result = sl_wfx_send_request(SL_WFX_SEND_FRAME_REQ_ID, (sl_wfx_generic_message_t*) frame, request_length);
+  }
 
   return result;
 }
